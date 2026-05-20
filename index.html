@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PureHarvest Organics — Sacred Forest Honey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============================
+     ANNOUNCEMENT BAR
+============================ -->
+<div class="ann-bar">
+  <div class="ann-track">
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+  </div>
+</div>
+
+<!-- ============================
+     FLOATING HEADER
+============================ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-shell">
+
+    <div class="header-logo">
+      <div class="logo-mark">🌿</div>
+    </div>
+
+    <div class="header-brand">
+      <p class="brand-name">PUREHARVEST</p>
+      <span class="brand-tagline">RAW · WILD · PURE</span>
+    </div>
+
+    <div class="header-actions">
+      <button class="hdr-btn" aria-label="Search">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="hdr-btn cart-hdr-btn" aria-label="Cart">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-dot"></span>
+      </button>
+      <button class="hdr-btn menu-hdr-btn" id="menuToggle" aria-label="Open menu">
+        <div class="hlines">
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<!-- OVERLAY -->
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- ============================
+     RITUAL DRAWER
+============================ -->
+<div id="ritualDrawer" class="ritual-drawer">
+  <div class="drawer-grip"></div>
+
+  <div class="drawer-head">
+    <div>
+      <p class="drawer-eyebrow">PUREHARVEST</p>
+      <h2 class="drawer-title">Explore Rituals</h2>
+    </div>
+    <button class="drawer-close" id="closeDrawer" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <div class="drawer-orbs">
+    <div class="orb orb-active">
+      <div class="orb-ring">🍯</div>
+      <span>Honey</span>
+    </div>
+    <div class="orb">
+      <div class="orb-ring">🫒</div>
+      <span>Dry Fruits</span>
+    </div>
+    <div class="orb">
+      <div class="orb-ring">☕</div>
+      <span>Coffee</span>
+    </div>
+    <div class="orb">
+      <div class="orb-ring">🌶</div>
+      <span>Spices</span>
+    </div>
+  </div>
+
+  <nav class="drawer-nav">
+    <a href="#" class="d-link">
+      <div class="d-link-l">
+        <div class="d-icon">📖</div>
+        <div>
+          <p class="d-link-name">Journal</p>
+          <p class="d-link-sub">Stories, rituals &amp; slow living</p>
+        </div>
+      </div>
+      <span class="d-arrow">→</span>
+    </a>
+    <a href="#story" class="d-link" onclick="closeMenu()">
+      <div class="d-link-l">
+        <div class="d-icon">🌿</div>
+        <div>
+          <p class="d-link-name">Our Story</p>
+          <p class="d-link-sub">From Araku forests to your table</p>
+        </div>
+      </div>
+      <span class="d-arrow">→</span>
+    </a>
+    <a href="#" class="d-link">
+      <div class="d-link-l">
+        <div class="d-icon">📦</div>
+        <div>
+          <p class="d-link-name">Subscriptions</p>
+          <p class="d-link-sub">Never run out of your ritual</p>
+        </div>
+      </div>
+      <span class="d-arrow">→</span>
+    </a>
+    <a href="#" class="d-link">
+      <div class="d-link-l">
+        <div class="d-icon">🏪</div>
+        <div>
+          <p class="d-link-name">Wholesale</p>
+          <p class="d-link-sub">Partner with PureHarvest</p>
+        </div>
+      </div>
+      <span class="d-arrow">→</span>
+    </a>
+    <a href="#b2b" class="d-link" onclick="closeMenu()">
+      <div class="d-link-l">
+        <div class="d-icon">🌍</div>
+        <div>
+          <p class="d-link-name">Exports &amp; B2B</p>
+          <p class="d-link-sub">Bringing Araku to the world</p>
+        </div>
+      </div>
+      <span class="d-arrow">→</span>
+    </a>
+  </nav>
+
+  <div class="drawer-foot-card">
+    <span class="dfc-icon">🌱</span>
+    <div>
+      <p class="dfc-title">Rooted in nature.</p>
+      <p class="dfc-sub">Crafted with intention.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================
+     1. HERO
+============================ -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="hero-left" data-reveal="up">
+      <p class="hero-origin">
+        <span class="origin-dot"></span>
+        Araku Valley, Eastern Ghats, India
+      </p>
+      <h1 class="hero-h1">
+        The Sacred<br>
+        <em>Nectar</em> of<br>
+        the Forest
+      </h1>
+      <p class="hero-p">Raw, wild, unfiltered honey from the ancient valleys of India — crafted for intentional mornings and mindful living.</p>
+      <div class="hero-ctas">
+        <a href="#honey" class="btn-primary">Shop Honey</a>
+        <a href="#story" class="btn-ghost">Our Story ↗</a>
+      </div>
+      <div class="hero-badges">
+        <span class="trust-pill">★ 4.9 · 2,400+ reviews</span>
+        <span class="trust-pill">Wild Harvested</span>
+        <span class="trust-pill">Lab Certified</span>
+      </div>
+    </div>
+
+    <div class="hero-right" data-reveal="fade">
+      <div class="hero-visual">
+        <div class="honey-sphere"></div>
+        <div class="sphere-glow"></div>
+        <p class="sphere-label">ARAKU FOREST HONEY</p>
+        <div class="float-card">
+          <div class="live-dot"></div>
+          <div>
+            <p class="fc-name">Bestseller</p>
+            <p class="fc-detail">Forest Honey · ₹699</p>
+          </div>
+        </div>
+        <div class="decor-ring"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================
+     2. TRUST MARQUEE
+============================ -->
+<div class="marquee-wrap">
+  <div class="marquee-reel">
+    <div class="marquee-row">
+      <span>Wild Harvested</span><span class="m-sep">◦</span>
+      <span>Single Origin</span><span class="m-sep">◦</span>
+      <span>Raw &amp; Unfiltered</span><span class="m-sep">◦</span>
+      <span>Lab Certified</span><span class="m-sep">◦</span>
+      <span>Araku Valley</span><span class="m-sep">◦</span>
+      <span>Ethically Sourced</span><span class="m-sep">◦</span>
+      <span>Forest to Table</span><span class="m-sep">◦</span>
+      <span>12,000+ Families</span><span class="m-sep">◦</span>
+      <span>No Additives</span><span class="m-sep">◦</span>
+      <span>FSSAI Approved</span><span class="m-sep">◦</span>
+    </div>
+    <div class="marquee-row" aria-hidden="true">
+      <span>Wild Harvested</span><span class="m-sep">◦</span>
+      <span>Single Origin</span><span class="m-sep">◦</span>
+      <span>Raw &amp; Unfiltered</span><span class="m-sep">◦</span>
+      <span>Lab Certified</span><span class="m-sep">◦</span>
+      <span>Araku Valley</span><span class="m-sep">◦</span>
+      <span>Ethically Sourced</span><span class="m-sep">◦</span>
+      <span>Forest to Table</span><span class="m-sep">◦</span>
+      <span>12,000+ Families</span><span class="m-sep">◦</span>
+      <span>No Additives</span><span class="m-sep">◦</span>
+      <span>FSSAI Approved</span><span class="m-sep">◦</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================
+     3. BRAND MISSION (The Act style)
+============================ -->
+<section class="mission" data-reveal="up">
+  <div class="section-wrap">
+    <div class="mission-inner">
+      <div class="mission-col-label">
+        <p class="eyebrow">Brand Mission</p>
+      </div>
+      <div class="mission-col-content">
+        <p class="mission-statement">PureHarvest exists to bring the ancient wisdom of forest-harvested honey to intentional living. We source only from the untouched valleys of Araku, where bees roam free and nature dictates the pace.</p>
+        <a href="#story" class="underline-link">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     4. HONEY COLLECTION (The Act style)
+============================ -->
+<section class="collection" id="honey">
+  <div class="section-wrap">
+
+    <div class="collection-hdr">
+      <div>
+        <p class="cat-label">( honey )</p>
+        <h2 class="section-h2">Our Harvest</h2>
+      </div>
+      <a href="#" class="view-all-link">View All ↗</a>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="p-card" data-reveal="up" data-delay="0">
+        <div class="p-card-top">
+          <span class="p-cat">( forest )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap">
+          <div class="p-img p-forest"></div>
+        </div>
+        <div class="p-info">
+          <p class="p-name">Forest Honey</p>
+          <p class="p-sub">Deep &amp; Rich · Single Origin</p>
+          <div class="p-bottom">
+            <span class="p-price">₹699</span>
+            <button class="p-add" data-product="Forest Honey">Add →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card" data-reveal="up" data-delay="100">
+        <div class="p-card-top">
+          <span class="p-cat">( wildflower )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap">
+          <div class="p-img p-wildflower"></div>
+        </div>
+        <div class="p-info">
+          <p class="p-name">Wildflower Honey</p>
+          <p class="p-sub">Light &amp; Floral · Multi-Bloom</p>
+          <div class="p-bottom">
+            <span class="p-price">₹649</span>
+            <button class="p-add" data-product="Wildflower Honey">Add →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card" data-reveal="up" data-delay="200">
+        <div class="p-card-top">
+          <span class="p-cat">( acacia )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap">
+          <div class="p-img p-acacia"></div>
+        </div>
+        <div class="p-info">
+          <p class="p-name">Acacia Honey</p>
+          <p class="p-sub">Mild &amp; Delicate · Golden Clear</p>
+          <div class="p-bottom">
+            <span class="p-price">₹749</span>
+            <button class="p-add" data-product="Acacia Honey">Add →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card" data-reveal="up" data-delay="300">
+        <div class="p-card-top">
+          <span class="p-cat">( multiflora )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap">
+          <div class="p-img p-multiflora"></div>
+        </div>
+        <div class="p-info">
+          <p class="p-name">Multiflora Honey</p>
+          <p class="p-sub">Balanced &amp; Smooth · Every Season</p>
+          <div class="p-bottom">
+            <span class="p-price">₹599</span>
+            <button class="p-add" data-product="Multiflora Honey">Add →</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     5. CATEGORY GRID (Stretch style)
+============================ -->
+<section class="cat-grid-section">
+  <div class="section-wrap">
+    <div class="cat-grid">
+
+      <div class="cat-card cat-honey">
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <span class="cat-tag">( honey )</span>
+          <div class="cat-bottom">
+            <h3>Sacred<br>Honey</h3>
+            <a href="#honey" class="cat-link">Explore ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-card cat-dryfruits">
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <span class="cat-tag">( dry fruits )</span>
+          <div class="cat-bottom">
+            <h3>Rare<br>Dry Fruits</h3>
+            <a href="#" class="cat-link">Explore ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-card cat-coffee">
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <span class="cat-tag">( coffee )</span>
+          <div class="cat-bottom">
+            <h3>Araku<br>Coffee</h3>
+            <a href="#" class="cat-link">Explore ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-card cat-spices">
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <span class="cat-tag">( spices )</span>
+          <div class="cat-bottom">
+            <h3>Forest<br>Spices</h3>
+            <a href="#" class="cat-link">Explore ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     6. BRAND STORY
+============================ -->
+<section class="story" id="story">
+  <div class="section-wrap">
+    <div class="story-inner">
+
+      <div class="story-text" data-reveal="up">
+        <p class="eyebrow">Our Origin</p>
+        <h2 class="story-h2">
+          Rooted in the<br>
+          <em>Sacred</em> Valleys<br>
+          of Araku
+        </h2>
+        <p class="story-p">Deep within the Eastern Ghats, where mist meets ancient forests and tribal wisdom guides every harvest — this is where PureHarvest begins.</p>
+        <p class="story-p">We work with 12,000+ forest families using traditional practices passed down for generations. Every jar carries the memory of untouched wilderness.</p>
+        <div class="story-pills">
+          <span class="s-pill">Wild Harvested</span>
+          <span class="s-pill">Single Origin</span>
+          <span class="s-pill">Fair Trade</span>
+          <span class="s-pill">No Additives</span>
+        </div>
+        <a href="#" class="btn-primary">Read Full Story →</a>
+      </div>
+
+      <div class="story-visual" data-reveal="fade">
+        <div class="story-stack">
+          <div class="sv-1"></div>
+          <div class="sv-2"></div>
+          <div class="sv-stat">
+            <p class="sv-num">12,000+</p>
+            <p class="sv-label">Forest families</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     7. FEATURED PRODUCT
+============================ -->
+<section class="featured">
+  <div class="section-wrap">
+    <div class="featured-inner">
+
+      <div class="feat-visual" data-reveal="fade">
+        <div class="feat-img-wrap">
+          <div class="feat-img"></div>
+          <div class="feat-badge">Wild Harvested</div>
+        </div>
+      </div>
+
+      <div class="feat-content" data-reveal="up">
+        <p class="eyebrow">Featured Product</p>
+        <h2 class="feat-h2">Araku Forest<br><em>Honey</em></h2>
+        <p class="feat-sub">Wild. Raw. Unfiltered. Harvested once a year from the ancient Araku Valley forests — nature's most sacred offering.</p>
+
+        <div class="size-sel">
+          <button class="sz-btn sz-active" id="size500">500g</button>
+          <button class="sz-btn" id="size1000">1 kg</button>
+        </div>
+
+        <div class="price-blk">
+          <p class="feat-price" id="productPrice">₹699</p>
+          <p class="price-sub" id="gramPrice">₹1.40 per gram · Incl. taxes</p>
+        </div>
+
+        <div class="feat-cards">
+          <div class="feat-card">
+            <span class="feat-icon">🍯</span>
+            <div>
+              <p class="feat-card-t">Raw &amp; Unfiltered</p>
+              <p class="feat-card-s">Nothing removed</p>
+            </div>
+          </div>
+          <div class="feat-card">
+            <span class="feat-icon">🌿</span>
+            <div>
+              <p class="feat-card-t">Single Origin</p>
+              <p class="feat-card-s">Araku forests only</p>
+            </div>
+          </div>
+          <div class="feat-card">
+            <span class="feat-icon">🔥</span>
+            <div>
+              <p class="feat-card-t">Never Heated</p>
+              <p class="feat-card-s">Enzymes intact</p>
+            </div>
+          </div>
+          <div class="feat-card">
+            <span class="feat-icon">⛰️</span>
+            <div>
+              <p class="feat-card-t">Wild Harvested</p>
+              <p class="feat-card-s">Ethically sourced</p>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary btn-block" id="addToCart">Add to Ritual →</button>
+        <p class="ship-note">Ships across India · Secure Packaging · 7-day returns</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     8. TESTIMONIALS
+============================ -->
+<section class="testimonials">
+  <div class="section-wrap">
+
+    <div class="testi-hdr" data-reveal="up">
+      <p class="eyebrow">What people say</p>
+      <h2 class="testi-h2">Trusted by<br><em>ritual seekers</em><br>worldwide</h2>
+    </div>
+
+    <div class="testi-grid">
+
+      <div class="t-card" data-reveal="up" data-delay="0">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"This honey completely changed my morning ritual. The depth of flavour is unlike anything I've tasted — you can genuinely sense the forest in every spoon."</p>
+        <div class="t-user">
+          <div class="t-avatar">A</div>
+          <div>
+            <p class="t-name">Ananya R.</p>
+            <p class="t-loc">Newcastle, Australia</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-card" data-reveal="up" data-delay="100">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"I've been sourcing raw honey for years. PureHarvest is in a different league — the purity is evident, and knowing it supports tribal families makes it meaningful."</p>
+        <div class="t-user">
+          <div class="t-avatar">R</div>
+          <div>
+            <p class="t-name">Rohan M.</p>
+            <p class="t-loc">Bangalore, India</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-card" data-reveal="up" data-delay="200">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"We import PureHarvest for our wellness boutique in London. Our clients immediately notice the quality. It's become our best-selling product."</p>
+        <div class="t-user">
+          <div class="t-avatar">S</div>
+          <div>
+            <p class="t-name">Sophia K.</p>
+            <p class="t-loc">London, UK · Wholesale Partner</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     9. JOURNAL
+============================ -->
+<section class="journal">
+  <div class="section-wrap">
+
+    <div class="journal-hdr" data-reveal="up">
+      <div>
+        <p class="eyebrow">The Journal</p>
+        <h2 class="journal-h2">Stories for<br><em>slower mornings</em></h2>
+      </div>
+      <a href="#" class="view-all-link">All Articles →</a>
+    </div>
+
+    <div class="journal-grid">
+
+      <div class="j-card" data-reveal="up" data-delay="0">
+        <div class="j-img j-img-1"></div>
+        <div class="j-body">
+          <span class="j-cat">( rituals )</span>
+          <h3>The Ritual of<br>Slow Mornings</h3>
+          <p>Creating intentional starts to each day through mindful practices and pure ingredients.</p>
+          <a href="#" class="j-read">Read →</a>
+        </div>
+      </div>
+
+      <div class="j-card" data-reveal="up" data-delay="100">
+        <div class="j-img j-img-2"></div>
+        <div class="j-body">
+          <span class="j-cat">( wellness )</span>
+          <h3>Why Raw Honey<br>Feels Different</h3>
+          <p>The science and soul behind unprocessed honey and its effect on body and mind.</p>
+          <a href="#" class="j-read">Read →</a>
+        </div>
+      </div>
+
+      <div class="j-card" data-reveal="up" data-delay="200">
+        <div class="j-img j-img-3"></div>
+        <div class="j-body">
+          <span class="j-cat">( origin )</span>
+          <h3>Inside the Forests<br>of Araku Valley</h3>
+          <p>A journey into the Eastern Ghats — the landscapes and communities behind every jar.</p>
+          <a href="#" class="j-read">Read →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     10. B2B
+============================ -->
+<section class="b2b" id="b2b">
+  <div class="section-wrap">
+    <div class="b2b-inner" data-reveal="up">
+
+      <div class="b2b-left">
+        <p class="b2b-eyebrow">For Business</p>
+        <h2 class="b2b-h2">Bringing Araku<br>to the <em>World</em></h2>
+        <p class="b2b-p">PureHarvest partners with hotels, wellness brands, retailers, and exporters across 40+ countries. White-label, bulk, and custom solutions available.</p>
+        <div class="b2b-stats">
+          <div class="b-stat">
+            <p class="b-num">40+</p>
+            <p class="b-lab">Countries</p>
+          </div>
+          <div class="b-stat">
+            <p class="b-num">200+</p>
+            <p class="b-lab">B2B Partners</p>
+          </div>
+          <div class="b-stat">
+            <p class="b-num">5T+</p>
+            <p class="b-lab">Annual Exports</p>
+          </div>
+          <div class="b-stat">
+            <p class="b-num">FSSAI</p>
+            <p class="b-lab">Certified</p>
+          </div>
+        </div>
+        <div class="b2b-ctas">
+          <a href="#" class="btn-inv-p">Partner With Us →</a>
+          <a href="#" class="btn-inv-g">Download Catalogue ↓</a>
+        </div>
+      </div>
+
+      <div class="b2b-right">
+        <div class="b2b-perks">
+          <div class="b-perk">🌍 Export-ready packaging</div>
+          <div class="b-perk">🏷️ White-label solutions</div>
+          <div class="b-perk">📦 Bulk &amp; custom orders</div>
+          <div class="b-perk">🔬 Lab tested &amp; certified</div>
+          <div class="b-perk">🚢 Global shipping network</div>
+          <div class="b-perk">🤝 Dedicated account manager</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     11. NEWSLETTER
+============================ -->
+<section class="newsletter">
+  <div class="section-wrap">
+    <div class="nl-inner" data-reveal="up">
+      <p class="eyebrow">Join the Circle</p>
+      <h2 class="nl-h2">Slow mornings.<br><em>Sacred rituals.</em><br>Thoughtful updates.</h2>
+      <p class="nl-p">Receive ritual guides, forest stories, early harvest drops, and seasonal offerings — directly to your inbox.</p>
+      <div class="nl-form">
+        <input type="email" placeholder="Your email address" class="nl-input" id="emailInput" />
+        <button class="btn-primary nl-btn" id="newsletterBtn">Join The Circle →</button>
+      </div>
+      <p class="nl-note">No noise. Only what matters. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     FOOTER
+============================ -->
+<footer class="footer">
+  <div class="section-wrap">
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <h3 class="footer-name">PUREHARVEST</h3>
+        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From Araku Valley to the world.</p>
+        <div class="footer-socials">
+          <a href="#">Instagram</a>
+          <a href="#">WhatsApp</a>
+          <a href="#">Email</a>
+        </div>
+      </div>
+
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <a href="#">Honey</a>
+          <a href="#">Dry Fruits</a>
+          <a href="#">Coffee</a>
+          <a href="#">Spices</a>
+          <a href="#">Subscriptions</a>
+        </div>
+        <div class="footer-col">
+          <h4>Discover</h4>
+          <a href="#">Our Story</a>
+          <a href="#">Journal</a>
+          <a href="#">Rituals</a>
+          <a href="#">Sustainability</a>
+        </div>
+        <div class="footer-col">
+          <h4>Business</h4>
+          <a href="#">Wholesale</a>
+          <a href="#">Exports</a>
+          <a href="#">Partner With Us</a>
+          <a href="#">Catalogue</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="#">Shipping</a>
+          <a href="#">Returns</a>
+          <a href="#">FAQs</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 PureHarvest Organics. All rights reserved.</p>
+      <span>Crafted with intention in India 🌿</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
