@@ -302,9 +302,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     border-radius: 0;
     z-index: 99999;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     transform: translateY(105%);
     transition: transform 0.45s cubic-bezier(0.32,0.72,0,1);
-    box-shadow: 0 -8px 60px rgba(0,0,0,0.12);
+    will-change: transform;
+    touch-action: pan-y;
 
   }
 
@@ -329,6 +331,72 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   width: 80px; height: 4px;
   border-radius: var(--r-pill); background: rgba(0,0,0,0.1);
   margin: 0 auto 24px;
+  position: relative;
+}
+
+/* GESTURE INDICATOR */
+
+.drawer-grip::after {
+
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-right: 2px solid rgba(0,0,0,0.18);
+  border-bottom: 2px solid rgba(0,0,0,0.18);
+  transform:
+  rotate(45deg);
+
+  left: 50%;
+  top: 18px;
+
+  margin-left: -13px;
+
+  animation:
+  dragTutorial 1.8s infinite;
+
+}
+
+/* ANIMATION */
+
+@keyframes dragTutorial {
+
+  0% {
+
+    opacity: 0;
+
+    transform:
+
+    translateY(-6px)
+
+    rotate(45deg);
+
+  }
+
+  40% {
+
+    opacity: 1;
+
+  }
+
+  100% {
+
+    opacity: 0;
+
+    transform:
+
+    translateY(12px)
+
+    rotate(45deg);
+
+  }
+
+}
+
+.hide-hint::after {
+
+  display: none;
+
 }
 
 .drawer-head {

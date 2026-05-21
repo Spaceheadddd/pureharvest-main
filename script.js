@@ -54,75 +54,154 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeMenu();
 });
 
-/* ==============================
-   DRAG TO CLOSE - MOBILE DRAWER
-============================== */
+/* =================================
+   MOBILE NATIVE DRAWER SYSTEM
+================================= */
 
-const drawer = document.querySelector(".ritual-drawer");
-const grip = document.querySelector(".drawer-grip");
+const drawer =
+document.querySelector(".ritual-drawer");
 
 let startY = 0;
 let currentY = 0;
+
 let isDragging = false;
 
 
-/* START TOUCH */
-grip.addEventListener("touchstart", (e) => {
+/* ================================
+   TOUCH START
+================================ */
 
-  startY = e.touches[0].clientY;
-  isDragging = true;
+drawer.addEventListener("touchstart", (e) => {
 
-  drawer.style.transition = "none";
+  /*
+    ONLY ENABLE DRAG
+    IF USER IS AT TOP
+  */
 
-});
+  if (drawer.scrollTop <= 0) {
 
+    startY =
+    e.touches[0].clientY;
 
-/* MOVE TOUCH */
-window.addEventListener("touchmove", (e) => {
+    isDragging = true;
 
-  if (!isDragging) return;
-
-  currentY = e.touches[0].clientY;
-
-  let diff = currentY - startY;
-
-  /* ONLY DRAG DOWN */
-  if (diff > 0) {
-
-    drawer.style.transform =
-      `translateY(${diff}px)`;
+    drawer.style.transition =
+    "none";
 
   }
 
-});
+}, { passive: true });
 
 
-/* END TOUCH */
-window.addEventListener("touchend", () => {
+/* ================================
+   TOUCH MOVE
+================================ */
+
+drawer.addEventListener("touchmove", (e) => {
+
+  if (!isDragging) return;
+
+  currentY =
+  e.touches[0].clientY;
+
+  let diff =
+  currentY - startY;
+
+  /*
+    ONLY DRAG DOWN
+  */
+
+  if (diff > 0) {
+
+    /*
+      SLOW RESISTANCE
+      MAKES IT FEEL PREMIUM
+    */
+
+    let dragAmount =
+    diff * 0.92;
+
+    drawer.style.transform =
+    `translateY(${dragAmount}px)`;
+
+  }
+
+}, { passive: true });
+
+
+/* ================================
+   TOUCH END
+================================ */
+
+drawer.addEventListener("touchend", () => {
 
   if (!isDragging) return;
 
   isDragging = false;
 
   drawer.style.transition =
-    "transform 0.38s cubic-bezier(0.32,0.72,0,1)";
+  "transform 0.42s cubic-bezier(0.32,0.72,0,1)";
 
-  let diff = currentY - startY;
+  let diff =
+  currentY - startY;
 
-  /* CLOSE THRESHOLD */
-  if (diff > 140) {
+  /*
+    CLOSE THRESHOLD
+  */
 
-    drawer.classList.remove("active");
+  if (diff > 160) {
 
-  } else {
+    closeDrawer();
 
-    /* SNAP BACK */
+  }
+
+  else {
+
+    /*
+      SNAP BACK
+    */
+
     drawer.style.transform =
-      "translateY(0)";
+    "translateY(0)";
 
   }
 
 });
+
+/* ================================
+   TUTORIAL HINT AUTO HIDE
+================================ */
+setTimeout(() => {
+
+  document
+    .querySelector(".drawer-grip")
+    ?.classList.add("hide-hint");
+
+}, 5000);
+
+/* ================================
+   CLOSE FUNCTION
+================================ */
+
+function closeDrawer() {
+
+  drawer.style.transform =
+  "translateY(100%)";
+
+  setTimeout(() => {
+
+    drawer.classList.remove("active");
+
+    /*
+      RESET POSITION
+    */
+
+    drawer.style.transform =
+    "";
+
+  }, 400);
+
+}
 
 /* ========================================
    DRAWER ORBS — ACTIVE STATE
@@ -332,3 +411,6 @@ if (marqueeReel) {
     marqueeReel.style.animationPlayState = 'running';
   });
 }
+
+
+
