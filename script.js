@@ -29,7 +29,7 @@ window.addEventListener('scroll', () => {
 
 const menuToggle   = document.getElementById('menuToggle');
 const ritualDrawer = document.getElementById('ritualDrawer');
-const closeDrawer  = document.getElementById('closeDrawer');
+const closeDrawerBtn = document.getElementById('closeDrawer');
 const menuOverlay  = document.getElementById('menuOverlay');
 
 function openMenu() {
@@ -47,7 +47,7 @@ function closeMenu() {
 }
 
 menuToggle.addEventListener('click', openMenu);
-closeDrawer.addEventListener('click', closeMenu);
+closeDrawerBtn.addEventListener('click', closeMenu);
 menuOverlay.addEventListener('click', closeMenu);
 
 document.addEventListener('keydown', (e) => {
