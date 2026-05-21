@@ -1034,3 +1034,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
 .footer-bottom p,
 .footer-bottom span { font-size: 16px; color: rgba(255,255,255,0.32); }
+
+/* ==============================
+   MOBILE - REMOVE CLOSE BUTTON
+============================== */
+@media (max-width: 768px) {
+
+  .drawer-close {
+    display: none !important;
+  }
+
+}
