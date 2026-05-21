@@ -54,6 +54,75 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeMenu();
 });
 
+/* ==============================
+   DRAG TO CLOSE - MOBILE DRAWER
+============================== */
+
+const drawer = document.querySelector(".ritual-drawer");
+const grip = document.querySelector(".drawer-grip");
+
+let startY = 0;
+let currentY = 0;
+let isDragging = false;
+
+
+/* START TOUCH */
+grip.addEventListener("touchstart", (e) => {
+
+  startY = e.touches[0].clientY;
+  isDragging = true;
+
+  drawer.style.transition = "none";
+
+});
+
+
+/* MOVE TOUCH */
+window.addEventListener("touchmove", (e) => {
+
+  if (!isDragging) return;
+
+  currentY = e.touches[0].clientY;
+
+  let diff = currentY - startY;
+
+  /* ONLY DRAG DOWN */
+  if (diff > 0) {
+
+    drawer.style.transform =
+      `translateY(${diff}px)`;
+
+  }
+
+});
+
+
+/* END TOUCH */
+window.addEventListener("touchend", () => {
+
+  if (!isDragging) return;
+
+  isDragging = false;
+
+  drawer.style.transition =
+    "transform 0.38s cubic-bezier(0.32,0.72,0,1)";
+
+  let diff = currentY - startY;
+
+  /* CLOSE THRESHOLD */
+  if (diff > 140) {
+
+    drawer.classList.remove("active");
+
+  } else {
+
+    /* SNAP BACK */
+    drawer.style.transform =
+      "translateY(0)";
+
+  }
+
+});
 
 /* ========================================
    DRAWER ORBS — ACTIVE STATE
