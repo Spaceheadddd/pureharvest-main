@@ -101,6 +101,11 @@ drawer.addEventListener("touchmove", (e) => {
 
   if (!isDragging) return;
 
+  /* ALLOW NORMAL SCROLL
+  WHEN USER IS SCROLLING INSIDE MENU CONTENT */
+  
+  if (drawer.scrollTop > 0) return;
+
   currentY =
   e.touches[0].clientY;
 
@@ -390,7 +395,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', (e) => {
     const target = document.querySelector(link.getAttribute('href'));
     if (target) {
-      e.preventDefault();
+      /*e.preventDefault();*/
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });

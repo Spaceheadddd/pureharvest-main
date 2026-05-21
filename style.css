@@ -307,7 +307,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     transform: translateY(105%);
     transition: transform 0.45s cubic-bezier(0.32,0.72,0,1);
     will-change: transform;
-    
+    overscroll-behavior: contain;
 
   }
 
