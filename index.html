@@ -69,6 +69,149 @@
 <div class="menu-overlay" id="menuOverlay"></div>
 
 <!-- ============================
+     SEARCH OVERLAY
+============================ -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-backdrop" id="searchBackdrop"></div>
+  <div class="search-panel">
+    <div class="search-inner">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search honey, coffee, spices..." autocomplete="off" />
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- ============================
+     CART SIDEBAR
+============================ -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h3 class="cart-title">Your Ritual</h3>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🌿</div>
+        <p>Your basket is empty.</p>
+        <p style="font-size:13px;color:var(--muted)">Add something from the harvest.</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">₹0</span>
+      </div>
+      <button class="btn-primary btn-block" id="checkoutBtn">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================
+     SUBSCRIPTION MODAL
+============================ -->
+<div class="sub-modal" id="subModal">
+  <div class="sub-modal-backdrop" id="subModalBackdrop"></div>
+  <div class="sub-modal-panel">
+
+    <button class="sub-modal-close" id="subModalClose">✕</button>
+
+    <div class="sub-step-indicator">
+      <div class="sub-step-dot sub-dot-active" data-step="1"></div>
+      <div class="sub-step-line"></div>
+      <div class="sub-step-dot" data-step="2"></div>
+      <div class="sub-step-line"></div>
+      <div class="sub-step-dot" data-step="3"></div>
+    </div>
+
+    <!-- STEP 1: Choose Harvest -->
+    <div class="sub-step" id="subStep1">
+      <p class="sub-modal-eye">What you love</p>
+      <h3 class="sub-modal-h3">What does your<br><em>family love?</em></h3>
+      <p class="sub-modal-p">Select everything you'd like in your harvest. We'll curate each delivery around your choices — nothing wasted.</p>
+      <div class="sub-harvest-grid">
+        <label class="sub-harvest-chip">
+          <input type="checkbox" name="harvest" value="honey" checked>
+          <span>🍯 Honey</span>
+        </label>
+        <label class="sub-harvest-chip">
+          <input type="checkbox" name="harvest" value="dryfruits">
+          <span>🫒 Dry Fruits</span>
+        </label>
+        <label class="sub-harvest-chip">
+          <input type="checkbox" name="harvest" value="coffee">
+          <span>☕ Coffee</span>
+        </label>
+        <label class="sub-harvest-chip">
+          <input type="checkbox" name="harvest" value="spices">
+          <span>🌶 Forest Spices</span>
+        </label>
+      </div>
+      <button class="btn-primary" id="subNext1" style="width:100%;padding:17px 28px;">Choose My Harvest →</button>
+      <div class="sub-quick">
+        <span>Short on time?</span>
+        <button class="sub-quick-btn" id="subQuickBtn">Get our Most Loved selection</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Choose Rhythm -->
+    <div class="sub-step sub-step-hidden" id="subStep2">
+      <p class="sub-modal-eye">Your rhythm</p>
+      <h3 class="sub-modal-h3">How often should<br><em>we harvest?</em></h3>
+      <p class="sub-modal-p">You're in full control — change, pause, or cancel anytime. We follow your rhythm, not ours.</p>
+      <div class="sub-rhythm-grid">
+        <button class="sub-rhythm-opt" data-rhythm="weekly">
+          <span class="sub-rhythm-label">Weekly</span>
+          <span class="sub-rhythm-desc">For daily rituals</span>
+        </button>
+        <button class="sub-rhythm-opt" data-rhythm="fortnightly">
+          <span class="sub-rhythm-label">Fortnightly</span>
+          <span class="sub-rhythm-desc">A gentle balance</span>
+        </button>
+        <button class="sub-rhythm-opt sub-rhythm-active" data-rhythm="monthly">
+          <span class="sub-rhythm-label">Monthly</span>
+          <span class="sub-rhythm-desc">Most popular</span>
+        </button>
+        <button class="sub-rhythm-opt" data-rhythm="quarterly">
+          <span class="sub-rhythm-label">Quarterly</span>
+          <span class="sub-rhythm-desc">Seasonal drops</span>
+        </button>
+      </div>
+      <button class="btn-primary" id="subNext2" style="width:100%;padding:17px 28px;">Set My Rhythm →</button>
+      <button class="sub-modal-back" data-back="1">← Back</button>
+    </div>
+
+    <!-- STEP 3: Reserve -->
+    <div class="sub-step sub-step-hidden" id="subStep3">
+      <p class="sub-modal-eye">Reserve your harvest</p>
+      <h3 class="sub-modal-h3">Last step —<br><em>lock it in.</em></h3>
+      <p class="sub-modal-p">Enter your email to reserve your personalised harvest. We'll send your first delivery plan and keep your preferences safe.</p>
+      <div class="sub-form">
+        <input type="text" class="sub-input" id="subName" placeholder="Your name" />
+        <input type="email" class="sub-input" id="subEmail" placeholder="Email address (required)" required />
+        <input type="tel" class="sub-input" id="subPhone" placeholder="Phone number (optional)" />
+        <button class="btn-primary" id="subSubscribeBtn" style="width:100%;padding:18px;font-size:16px;">Reserve My Harvest 🌿</button>
+      </div>
+      <p class="sub-note">We'll also reach out if you need more time — no pressure.</p>
+      <button class="sub-modal-back" data-back="2">← Back</button>
+    </div>
+
+    <!-- STEP 4: Success -->
+    <div class="sub-step sub-step-hidden" id="subStep4">
+      <div class="sub-success">
+        <div class="sub-success-icon">🌿</div>
+        <h3 class="sub-modal-h3">Your harvest is<br><em>reserved.</em></h3>
+        <p class="sub-modal-p">We'll be in touch soon with your first curated delivery. Welcome to the PureHarvest circle — your family is in good hands.</p>
+        <button class="btn-primary" id="subDoneBtn" style="width:100%;padding:17px 28px;">Continue Exploring →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================
      RITUAL DRAWER
 ============================ -->
 <div id="ritualDrawer" class="ritual-drawer">
@@ -300,82 +443,268 @@
 
     <div class="collection-hdr">
       <div>
-        <p class="cat-label">( honey )</p>
+        <p class="cat-label" id="harvestLabel">( honey )</p>
         <h2 class="section-h2">Our Harvest</h2>
       </div>
-      <a href="#" class="view-all-link">View All ↗</a>
+      <a href="#" class="view-all-link" id="viewAllLink">View All ↗</a>
+    </div>
+
+    <div class="cat-filter">
+      <button class="cf-tab cf-active" data-cat="honey">Honey</button>
+      <button class="cf-tab" data-cat="dryfruits">Dry Fruits</button>
+      <button class="cf-tab" data-cat="coffee">Coffee</button>
+      <button class="cf-tab" data-cat="spices">Forest Spices</button>
     </div>
 
     <div class="product-grid">
 
-      <div class="p-card" data-reveal="up" data-delay="0">
+      <!-- HONEY -->
+      <div class="p-card" data-reveal="up" data-delay="0" data-category="honey" data-price-500="699" data-price-1kg="1299">
         <div class="p-card-top">
           <span class="p-cat">( forest )</span>
           <button class="p-arrow">↗</button>
         </div>
-        <div class="p-img-wrap">
-          <div class="p-img p-forest"></div>
-        </div>
+        <div class="p-img-wrap"><div class="p-img p-forest"></div></div>
         <div class="p-info">
           <p class="p-name">Forest Honey</p>
           <p class="p-sub">Deep &amp; Rich · Single Origin</p>
           <div class="p-bottom">
             <span class="p-price">₹699</span>
-            <button class="p-add" data-product="Forest Honey">Add →</button>
+            <div class="p-actions">
+              <button class="p-add" data-product="Forest Honey" data-price="699">Add</button>
+              <button class="p-buy" data-product="Forest Honey" data-price="699">Buy Now</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="p-card" data-reveal="up" data-delay="100">
+      <div class="p-card" data-reveal="up" data-delay="100" data-category="honey" data-price-500="649" data-price-1kg="1199">
         <div class="p-card-top">
           <span class="p-cat">( wildflower )</span>
           <button class="p-arrow">↗</button>
         </div>
-        <div class="p-img-wrap">
-          <div class="p-img p-wildflower"></div>
-        </div>
+        <div class="p-img-wrap"><div class="p-img p-wildflower"></div></div>
         <div class="p-info">
           <p class="p-name">Wildflower Honey</p>
           <p class="p-sub">Light &amp; Floral · Multi-Bloom</p>
           <div class="p-bottom">
             <span class="p-price">₹649</span>
-            <button class="p-add" data-product="Wildflower Honey">Add →</button>
+            <div class="p-actions">
+              <button class="p-add" data-product="Wildflower Honey" data-price="649">Add</button>
+              <button class="p-buy" data-product="Wildflower Honey" data-price="649">Buy Now</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="p-card" data-reveal="up" data-delay="200">
+      <div class="p-card" data-reveal="up" data-delay="200" data-category="honey" data-price-500="749" data-price-1kg="1399">
         <div class="p-card-top">
           <span class="p-cat">( acacia )</span>
           <button class="p-arrow">↗</button>
         </div>
-        <div class="p-img-wrap">
-          <div class="p-img p-acacia"></div>
-        </div>
+        <div class="p-img-wrap"><div class="p-img p-acacia"></div></div>
         <div class="p-info">
           <p class="p-name">Acacia Honey</p>
           <p class="p-sub">Mild &amp; Delicate · Golden Clear</p>
           <div class="p-bottom">
             <span class="p-price">₹749</span>
-            <button class="p-add" data-product="Acacia Honey">Add →</button>
+            <div class="p-actions">
+              <button class="p-add" data-product="Acacia Honey" data-price="749">Add</button>
+              <button class="p-buy" data-product="Acacia Honey" data-price="749">Buy Now</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="p-card" data-reveal="up" data-delay="300">
+      <div class="p-card" data-reveal="up" data-delay="300" data-category="honey" data-price-500="599" data-price-1kg="1099">
         <div class="p-card-top">
           <span class="p-cat">( multiflora )</span>
           <button class="p-arrow">↗</button>
         </div>
-        <div class="p-img-wrap">
-          <div class="p-img p-multiflora"></div>
-        </div>
+        <div class="p-img-wrap"><div class="p-img p-multiflora"></div></div>
         <div class="p-info">
           <p class="p-name">Multiflora Honey</p>
           <p class="p-sub">Balanced &amp; Smooth · Every Season</p>
           <div class="p-bottom">
             <span class="p-price">₹599</span>
-            <button class="p-add" data-product="Multiflora Honey">Add →</button>
+            <div class="p-actions">
+              <button class="p-add" data-product="Multiflora Honey" data-price="599">Add</button>
+              <button class="p-buy" data-product="Multiflora Honey" data-price="599">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DRY FRUITS -->
+      <div class="p-card p-hidden" data-reveal="up" data-delay="0" data-category="dryfruits" data-price-500="849" data-price-1kg="1549">
+        <div class="p-card-top">
+          <span class="p-cat">( almonds )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap"><div class="p-img p-df-1"></div></div>
+        <div class="p-info">
+          <p class="p-name">Wild Almonds</p>
+          <p class="p-sub">Raw &amp; Unroasted · Forest Foraged</p>
+          <div class="p-bottom">
+            <span class="p-price">₹849</span>
+            <div class="p-actions">
+              <button class="p-add" data-product="Wild Almonds" data-price="849">Add</button>
+              <button class="p-buy" data-product="Wild Almonds" data-price="849">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card p-hidden" data-reveal="up" data-delay="100" data-category="dryfruits" data-price-500="999" data-price-1kg="1849">
+        <div class="p-card-top">
+          <span class="p-cat">( cashews )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap"><div class="p-img p-df-2"></div></div>
+        <div class="p-info">
+          <p class="p-name">Araku Cashews</p>
+          <p class="p-sub">Creamy &amp; Whole · Single Estate</p>
+          <div class="p-bottom">
+            <span class="p-price">₹999</span>
+            <div class="p-actions">
+              <button class="p-add" data-product="Araku Cashews" data-price="999">Add</button>
+              <button class="p-buy" data-product="Araku Cashews" data-price="999">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card p-hidden" data-reveal="up" data-delay="200" data-category="dryfruits" data-price-500="549" data-price-1kg="999">
+        <div class="p-card-top">
+          <span class="p-cat">( raisins )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap"><div class="p-img p-df-3"></div></div>
+        <div class="p-info">
+          <p class="p-name">Sun-Dried Raisins</p>
+          <p class="p-sub">Naturally Sweet · Sulphite-Free</p>
+          <div class="p-bottom">
+            <span class="p-price">₹549</span>
+            <div class="p-actions">
+              <button class="p-add" data-product="Sun-Dried Raisins" data-price="549">Add</button>
+              <button class="p-buy" data-product="Sun-Dried Raisins" data-price="549">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COFFEE -->
+      <div class="p-card p-hidden" data-reveal="up" data-delay="0" data-category="coffee" data-price-500="599" data-price-1kg="1099">
+        <div class="p-card-top">
+          <span class="p-cat">( arabica )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap"><div class="p-img p-cof-1"></div></div>
+        <div class="p-info">
+          <p class="p-name">Araku Arabica</p>
+          <p class="p-sub">Single Origin · Light Roast</p>
+          <div class="p-bottom">
+            <span class="p-price">₹599</span>
+            <div class="p-actions">
+              <button class="p-add" data-product="Araku Arabica" data-price="599">Add</button>
+              <button class="p-buy" data-product="Araku Arabica" data-price="599">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card p-hidden" data-reveal="up" data-delay="100" data-category="coffee" data-price-500="649" data-price-1kg="1199">
+        <div class="p-card-top">
+          <span class="p-cat">( dark roast )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap"><div class="p-img p-cof-2"></div></div>
+        <div class="p-info">
+          <p class="p-name">Forest Dark Roast</p>
+          <p class="p-sub">Bold &amp; Earthy · Shade Grown</p>
+          <div class="p-bottom">
+            <span class="p-price">₹649</span>
+            <div class="p-actions">
+              <button class="p-add" data-product="Forest Dark Roast" data-price="649">Add</button>
+              <button class="p-buy" data-product="Forest Dark Roast" data-price="649">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card p-hidden" data-reveal="up" data-delay="200" data-category="coffee" data-price-500="499" data-price-1kg="899">
+        <div class="p-card-top">
+          <span class="p-cat">( blend )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap"><div class="p-img p-cof-3"></div></div>
+        <div class="p-info">
+          <p class="p-name">Valley Blend</p>
+          <p class="p-sub">Smooth &amp; Balanced · Daily Ritual</p>
+          <div class="p-bottom">
+            <span class="p-price">₹499</span>
+            <div class="p-actions">
+              <button class="p-add" data-product="Valley Blend" data-price="499">Add</button>
+              <button class="p-buy" data-product="Valley Blend" data-price="499">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOREST SPICES -->
+      <div class="p-card p-hidden" data-reveal="up" data-delay="0" data-category="spices" data-price-500="349" data-price-1kg="649">
+        <div class="p-card-top">
+          <span class="p-cat">( turmeric )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap"><div class="p-img p-sp-1"></div></div>
+        <div class="p-info">
+          <p class="p-name">Wild Turmeric</p>
+          <p class="p-sub">High Curcumin · Forest Grown</p>
+          <div class="p-bottom">
+            <span class="p-price">₹349</span>
+            <div class="p-actions">
+              <button class="p-add" data-product="Wild Turmeric" data-price="349">Add</button>
+              <button class="p-buy" data-product="Wild Turmeric" data-price="349">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card p-hidden" data-reveal="up" data-delay="100" data-category="spices" data-price-500="429" data-price-1kg="799">
+        <div class="p-card-top">
+          <span class="p-cat">( pepper )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap"><div class="p-img p-sp-2"></div></div>
+        <div class="p-info">
+          <p class="p-name">Araku Black Pepper</p>
+          <p class="p-sub">Wild Harvested · Intensely Aromatic</p>
+          <div class="p-bottom">
+            <span class="p-price">₹429</span>
+            <div class="p-actions">
+              <button class="p-add" data-product="Araku Black Pepper" data-price="429">Add</button>
+              <button class="p-buy" data-product="Araku Black Pepper" data-price="429">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card p-hidden" data-reveal="up" data-delay="200" data-category="spices" data-price-500="499" data-price-1kg="929">
+        <div class="p-card-top">
+          <span class="p-cat">( cardamom )</span>
+          <button class="p-arrow">↗</button>
+        </div>
+        <div class="p-img-wrap"><div class="p-img p-sp-3"></div></div>
+        <div class="p-info">
+          <p class="p-name">Green Cardamom</p>
+          <p class="p-sub">Fragrant &amp; Whole · Eastern Ghats</p>
+          <div class="p-bottom">
+            <span class="p-price">₹499</span>
+            <div class="p-actions">
+              <button class="p-add" data-product="Green Cardamom" data-price="499">Add</button>
+              <button class="p-buy" data-product="Green Cardamom" data-price="499">Buy Now</button>
+            </div>
           </div>
         </div>
       </div>
@@ -390,6 +719,13 @@
 ============================ -->
 <section class="cat-grid-section">
   <div class="section-wrap">
+
+    <div class="cat-header" data-reveal>
+      <p class="eyebrow">The Araku Valley</p>
+      <h2 class="section-h2">From the Wild</h2>
+      <p class="cat-desc">Gathered by indigenous tribal families deep within the Eastern Ghats of Araku Valley. Every purchase flows directly back to the communities who tend these forests.</p>
+    </div>
+
     <div class="cat-grid">
 
       <div class="cat-card cat-honey">
@@ -669,15 +1005,15 @@
         <p class="b2b-p">PureHarvest partners with hotels, wellness brands, retailers, and exporters across 40+ countries. White-label, bulk, and custom solutions available.</p>
         <div class="b2b-stats">
           <div class="b-stat">
-            <p class="b-num">40+</p>
+            <p class="b-num" data-count="40" data-suffix="+">40+</p>
             <p class="b-lab">Countries</p>
           </div>
           <div class="b-stat">
-            <p class="b-num">200+</p>
+            <p class="b-num" data-count="200" data-suffix="+">200+</p>
             <p class="b-lab">B2B Partners</p>
           </div>
           <div class="b-stat">
-            <p class="b-num">5T+</p>
+            <p class="b-num" data-count="5" data-suffix="T+">5T+</p>
             <p class="b-lab">Annual Exports</p>
           </div>
           <div class="b-stat">
@@ -708,7 +1044,76 @@
 
 
 <!-- ============================
-     11. NEWSLETTER
+     11. SUBSCRIPTIONS
+============================ -->
+<section class="subscriptions" id="subscriptions">
+  <div class="section-wrap">
+    <div class="subs-inner" data-reveal="up">
+
+      <div class="subs-hdr">
+        <p class="eyebrow">Ritual Subscription</p>
+        <h2 class="subs-h2">Your Harvest,<br><em>Your Way.</em></h2>
+        <p class="subs-p">We harvest what your family loves — curated fresh, delivered on your rhythm. No fixed boxes. Fully customisable from day one.</p>
+      </div>
+
+      <div class="subs-grid">
+
+        <div class="sub-card" data-reveal="up" data-delay="0">
+          <div class="sub-tag">Starter</div>
+          <div class="sub-img sub-img-1"></div>
+          <div class="sub-body">
+            <h3>The Essential</h3>
+            <p>Begin your ritual with our signature honey selection — nature's most essential harvest, chosen for your family.</p>
+            <div class="sub-price-row">
+              <span class="sub-price">₹1,199/cycle</span>
+              <span class="sub-save">Save 12%</span>
+            </div>
+            <button class="btn-primary sub-open-modal">Build My Ritual →</button>
+          </div>
+        </div>
+
+        <div class="sub-card sub-featured" data-reveal="up" data-delay="100">
+          <div class="sub-tag sub-tag-feat">Most Loved</div>
+          <div class="sub-img sub-img-2"></div>
+          <div class="sub-body">
+            <h3>The Ritual Box</h3>
+            <p>Honey, coffee &amp; forest spices — a complete family well-being collection from the heart of Araku.</p>
+            <div class="sub-price-row">
+              <span class="sub-price">₹2,499/cycle</span>
+              <span class="sub-save">Save 18%</span>
+            </div>
+            <button class="btn-primary sub-open-modal">Build My Ritual →</button>
+          </div>
+        </div>
+
+        <div class="sub-card" data-reveal="up" data-delay="200">
+          <div class="sub-tag">Full Harvest</div>
+          <div class="sub-img sub-img-3"></div>
+          <div class="sub-body">
+            <h3>The Forest Collection</h3>
+            <p>Everything we grow and gather — priority drops, rare single-origin varieties, and seasonal discoveries.</p>
+            <div class="sub-price-row">
+              <span class="sub-price">₹3,999/cycle</span>
+              <span class="sub-save">Save 22%</span>
+            </div>
+            <button class="btn-primary sub-open-modal">Build My Ritual →</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="subs-footer">
+        <p class="subs-footer-p">Every box is a starting point — not a fixed formula. Tell us what your family loves and we curate the rest.</p>
+        <button class="btn-ghost sub-open-modal subs-build-btn">Start from Scratch →</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     12. NEWSLETTER
 ============================ -->
 <section class="newsletter">
   <div class="section-wrap">
@@ -730,12 +1135,14 @@
      FOOTER
 ============================ -->
 <footer class="footer">
-  <div class="section-wrap">
+
+  <!-- Top: brand blurb + nav columns -->
+  <div class="section-wrap footer-inner">
     <div class="footer-top">
 
       <div class="footer-brand">
-        <h3 class="footer-name">PUREHARVEST</h3>
-        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From Araku Valley to the world.</p>
+        <span class="footer-origin">Est. 2018 · Araku Valley, India</span>
+        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From the valley to the world.</p>
         <div class="footer-socials">
           <a href="#">Instagram</a>
           <a href="#">WhatsApp</a>
@@ -776,12 +1183,24 @@
       </div>
 
     </div>
+  </div>
 
-    <div class="footer-bottom">
-      <p>© 2026 PureHarvest Organics. All rights reserved.</p>
-      <span>Crafted with intention in India 🌿</span>
+  <!-- Big brand wordmark -->
+  <div class="footer-wordmark-wrap">
+    <p class="footer-wordmark">PureHarvest</p>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom-bar">
+    <p>© 2026 PureHarvest Organics</p>
+    <p class="footer-credit">Designed &amp; developed by <span id="arcaneText">Arcane Labs</span></p>
+    <div class="footer-legal">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Refund Policy</a>
     </div>
   </div>
+
 </footer>
 
 <script src="script.js"></script>
