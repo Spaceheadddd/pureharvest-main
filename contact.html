@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — PureHarvest Organics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Contact Page Styles ─────────────── */
+    .contact-hero {
+      background: var(--forest);
+      padding: 72px 20px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .contact-hero::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(196,144,58,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .contact-hero-inner {
+      max-width: 580px;
+      position: relative;
+      z-index: 1;
+    }
+    .contact-hero-inner .eyebrow { color: rgba(255,255,255,0.45); margin-bottom: 14px; }
+    .contact-hero-title {
+      font-family: var(--serif);
+      font-size: clamp(40px, 6vw, 68px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+    .contact-hero-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 48px;
+    }
+
+    /* ── Body ──────────────────────────── */
+    .contact-body {
+      background: var(--white);
+      padding: 72px 20px 100px;
+    }
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 52px; }
+    }
+
+    /* ── Info Panel ────────────────────── */
+    .contact-info { }
+    .contact-info-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-family: var(--sans);
+    }
+    .contact-info-title {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 400;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .contact-info-desc {
+      font-size: 14.5px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .contact-cards { display: flex; flex-direction: column; gap: 16px; }
+    .contact-card {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--warm);
+      border-radius: var(--r-md);
+      padding: 20px 24px;
+    }
+    .contact-card-icon {
+      width: 40px; height: 40px;
+      background: var(--forest);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .contact-card-body { }
+    .contact-card-label {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: var(--sans);
+      margin-bottom: 4px;
+    }
+    .contact-card-value {
+      font-size: 14px;
+      color: var(--dark);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .contact-card-value a { color: var(--forest); }
+    .contact-card-value a:hover { text-decoration: underline; }
+    .contact-card-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .contact-response-note {
+      margin-top: 28px;
+      padding: 16px 20px;
+      background: rgba(196,144,58,0.08);
+      border-left: 3px solid var(--honey);
+      border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    }
+    .contact-response-note p {
+      font-size: 13px;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    /* ── Form Panel ────────────────────── */
+    .contact-form-wrap {
+      background: var(--off-white);
+      border-radius: var(--r-lg);
+      padding: 40px 40px;
+    }
+    @media (max-width: 520px) { .contact-form-wrap { padding: 28px 20px; } }
+
+    .contact-form-title {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .contact-form-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group:last-of-type { margin-bottom: 0; }
+    .form-label {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--dark);
+      font-family: var(--sans);
+      font-weight: 500;
+    }
+    .form-label span { color: var(--honey); margin-left: 2px; }
+    .form-optional {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: none;
+      letter-spacing: 0;
+      margin-left: 4px;
+      font-weight: 400;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 12px 14px;
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: rgba(0,0,0,0.28); }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--forest);
+      box-shadow: 0 0 0 3px rgba(26,48,40,0.08);
+    }
+    .form-input.error,
+    .form-select.error,
+    .form-textarea.error {
+      border-color: #c0392b;
+      box-shadow: 0 0 0 3px rgba(192,57,43,0.08);
+    }
+
+    .form-select-wrap { position: relative; }
+    .form-select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 13px;
+      pointer-events: none;
+    }
+    .form-select { padding-right: 36px; cursor: pointer; }
+
+    .form-textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+
+    .form-error-msg {
+      font-size: 11.5px;
+      color: #c0392b;
+      margin-top: 2px;
+      display: none;
+    }
+    .form-group.has-error .form-error-msg { display: block; }
+
+    .form-submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    .form-privacy-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .form-privacy-note a { color: var(--forest); }
+
+    .btn-contact-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--forest);
+      color: #fff;
+      border: none;
+      border-radius: var(--r-pill);
+      padding: 14px 28px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .btn-contact-submit:hover { background: var(--forest-2); transform: translateY(-1px); }
+    .btn-contact-submit:active { transform: translateY(0); }
+    .btn-contact-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* ── Success State ─────────────────── */
+    .contact-success {
+      display: none;
+      text-align: center;
+      padding: 48px 20px;
+    }
+    .contact-success.visible { display: block; }
+    .success-icon {
+      width: 64px; height: 64px;
+      background: rgba(26,48,40,0.08);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 20px;
+    }
+    .success-title {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+    .success-sub {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.7;
+      max-width: 340px;
+      margin: 0 auto 28px;
+    }
+    .btn-back-form {
+      font-size: 13px;
+      color: var(--forest);
+      font-weight: 500;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      font-family: var(--sans);
+    }
+
+    /* ── Enquiry Types Strip ───────────── */
+    .enquiry-types {
+      padding: 40px 20px;
+      background: var(--forest);
+    }
+    .enquiry-types-inner {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .eq-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--r-pill);
+      padding: 10px 18px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      font-family: var(--sans);
+    }
+    .eq-chip span { font-size: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar">
+  <div class="ann-track">
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-shell">
+    <div class="header-logo"><div class="logo-mark">🌿</div></div>
+    <div class="header-brand">
+      <a href="index.html"><p class="brand-name">PUREHARVEST</p></a>
+      <span class="brand-tagline">RAW · WILD · PURE</span>
+    </div>
+    <div class="header-actions">
+      <button class="hdr-btn" aria-label="Search">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="hdr-btn cart-hdr-btn" aria-label="Cart">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-dot"></span>
+      </button>
+      <button class="hdr-btn menu-hdr-btn" id="menuToggle" aria-label="Open menu">
+        <div class="hlines"><span></span><span></span></div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-backdrop" id="searchBackdrop"></div>
+  <div class="search-panel">
+    <div class="search-inner">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search honey, coffee, spices..." autocomplete="off" />
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h3 class="cart-title">Your Ritual</h3>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🌿</div>
+        <p>Your basket is empty.</p>
+        <p style="font-size:13px;color:var(--muted)">Add something from the harvest.</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+      <button class="btn-primary btn-block" id="checkoutBtn">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RITUAL DRAWER -->
+<div id="ritualDrawer" class="ritual-drawer">
+  <div class="drawer-grip"></div>
+  <div class="drawer-head">
+    <div><p class="drawer-eyebrow">PUREHARVEST</p><h2 class="drawer-title">Explore Rituals</h2></div>
+    <button class="drawer-close" id="closeDrawer" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-orbs">
+    <div class="orb orb-active"><div class="orb-ring">🍯</div><span>Honey</span></div>
+    <div class="orb"><div class="orb-ring">🫒</div><span>Dry Fruits</span></div>
+    <div class="orb"><div class="orb-ring">☕</div><span>Coffee</span></div>
+    <div class="orb"><div class="orb-ring">🌶</div><span>Spices</span></div>
+  </div>
+  <nav class="drawer-nav">
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">📖</div><div><p class="d-link-name">Journal</p><p class="d-link-sub">Stories, rituals &amp; slow living</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#story" class="d-link"><div class="d-link-l"><div class="d-icon">🌿</div><div><p class="d-link-name">Our Story</p><p class="d-link-sub">From Araku forests to your table</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#subscriptions" class="d-link"><div class="d-link-l"><div class="d-icon">📦</div><div><p class="d-link-name">Subscriptions</p><p class="d-link-sub">Never run out of your ritual</p></div></div><span class="d-arrow">→</span></a>
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">🏪</div><div><p class="d-link-name">Wholesale</p><p class="d-link-sub">Partner with PureHarvest</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#b2b" class="d-link"><div class="d-link-l"><div class="d-icon">🌍</div><div><p class="d-link-name">Exports &amp; B2B</p><p class="d-link-sub">Bringing Araku to the world</p></div></div><span class="d-arrow">→</span></a>
+  </nav>
+  <div class="drawer-foot-card">
+    <span class="dfc-icon">🌱</span>
+    <div><p class="dfc-title">Rooted in nature.</p><p class="dfc-sub">Crafted with intention.</p></div>
+  </div>
+</div>
+
+
+<!-- ── HERO ───────────────────────── -->
+<section class="contact-hero">
+  <div class="section-wrap">
+    <div class="contact-hero-inner">
+      <p class="eyebrow">Get In Touch</p>
+      <h1 class="contact-hero-title">We'd love to hear from you.</h1>
+      <p class="contact-hero-sub">Questions about an order, a partnership, or just want to talk about honey? We're here — and we actually read every message.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── ENQUIRY TYPE CHIPS ──────────── -->
+<div class="enquiry-types">
+  <div class="enquiry-types-inner">
+    <div class="eq-chip"><span>🛍</span> Order Support</div>
+    <div class="eq-chip"><span>🤝</span> Wholesale &amp; B2B</div>
+    <div class="eq-chip"><span>🌍</span> Export Enquiries</div>
+    <div class="eq-chip"><span>📰</span> Media &amp; Press</div>
+    <div class="eq-chip"><span>🌱</span> Careers</div>
+    <div class="eq-chip"><span>💬</span> General</div>
+  </div>
+</div>
+
+
+<!-- ── CONTACT BODY ───────────────── -->
+<div class="contact-body">
+  <div class="section-wrap contact-layout">
+
+    <!-- LEFT: Info -->
+    <div class="contact-info">
+      <p class="contact-info-label">Contact Information</p>
+      <h2 class="contact-info-title">Reach us through any channel that works for you.</h2>
+      <p class="contact-info-desc">We're a small, passionate team. Every enquiry is read and replied to personally — no bots, no auto-responders for real questions.</p>
+
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="contact-card-icon">📧</div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">Email Us</p>
+            <p class="contact-card-value"><a href="mailto:support@pureharvest.com">support@pureharvest.com</a></p>
+            <p class="contact-card-note">For orders, shipping &amp; general questions</p>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">🤝</div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">Business &amp; Wholesale</p>
+            <p class="contact-card-value"><a href="mailto:b2b@pureharvest.com">b2b@pureharvest.com</a></p>
+            <p class="contact-card-note">Wholesale, B2B, export &amp; distribution enquiries</p>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">📍</div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">Our Location</p>
+            <p class="contact-card-value">Araku Valley, Visakhapatnam<br/>Andhra Pradesh, India</p>
+            <p class="contact-card-note">Sourced from the Eastern Ghats</p>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">🕐</div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">Support Hours</p>
+            <p class="contact-card-value">Mon – Sat · 10 AM – 6 PM IST</p>
+            <p class="contact-card-note">Closed Sundays &amp; national holidays</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-response-note">
+        <p>⏱ <strong>Response time:</strong> We aim to respond to all enquiries within <strong>24–48 business hours</strong>. For urgent order issues, please include your order number in the subject line.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div class="contact-form-wrap">
+      <div id="contactFormArea">
+        <h3 class="contact-form-title">Send us a message</h3>
+        <p class="contact-form-subtitle">All fields marked with <span style="color:var(--honey);font-weight:600">*</span> are required.</p>
+
+        <form id="contactForm" novalidate>
+
+          <div class="form-row">
+            <div class="form-group" id="fg-name">
+              <label class="form-label" for="contactName">Full Name <span>*</span></label>
+              <input type="text" id="contactName" class="form-input" placeholder="Your full name" autocomplete="name" />
+              <span class="form-error-msg">Please enter your name.</span>
+            </div>
+            <div class="form-group" id="fg-email">
+              <label class="form-label" for="contactEmail">Email Address <span>*</span></label>
+              <input type="email" id="contactEmail" class="form-input" placeholder="you@example.com" autocomplete="email" />
+              <span class="form-error-msg">Please enter a valid email.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" id="fg-phone">
+              <label class="form-label" for="contactPhone">Phone <span class="form-optional">(optional)</span></label>
+              <input type="tel" id="contactPhone" class="form-input" placeholder="+91 98765 43210" autocomplete="tel" />
+            </div>
+            <div class="form-group" id="fg-type">
+              <label class="form-label" for="contactType">Enquiry Type <span>*</span></label>
+              <div class="form-select-wrap">
+                <select id="contactType" class="form-select">
+                  <option value="" disabled selected>Select a topic</option>
+                  <option value="order">Order Support</option>
+                  <option value="general">General Enquiry</option>
+                  <option value="wholesale">Wholesale / Bulk</option>
+                  <option value="b2b">B2B &amp; Export</option>
+                  <option value="subscription">Subscription Help</option>
+                  <option value="media">Media &amp; Press</option>
+                  <option value="careers">Careers</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <span class="form-error-msg">Please select an enquiry type.</span>
+            </div>
+          </div>
+
+          <div class="form-group" id="fg-subject">
+            <label class="form-label" for="contactSubject">Subject <span>*</span></label>
+            <input type="text" id="contactSubject" class="form-input" placeholder="Brief subject of your message" />
+            <span class="form-error-msg">Please enter a subject.</span>
+          </div>
+
+          <div class="form-group" id="fg-message">
+            <label class="form-label" for="contactMessage">Message <span>*</span></label>
+            <textarea id="contactMessage" class="form-textarea" placeholder="Tell us more — the more detail you share, the better we can help you."></textarea>
+            <span class="form-error-msg">Please enter your message.</span>
+          </div>
+
+          <!-- Order number field — shown conditionally -->
+          <div class="form-group" id="fg-order" style="display:none">
+            <label class="form-label" for="contactOrder">Order Number <span class="form-optional">(if applicable)</span></label>
+            <input type="text" id="contactOrder" class="form-input" placeholder="e.g. PH-20260526-001" />
+          </div>
+
+          <div class="form-submit-row">
+            <p class="form-privacy-note">By submitting, you agree to our <a href="privacy.html">Privacy Policy</a>. We'll only use your details to respond to your enquiry.</p>
+            <button type="submit" class="btn-contact-submit" id="submitBtn">
+              Send Message
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z"/></svg>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Success State -->
+      <div class="contact-success" id="contactSuccess">
+        <div class="success-icon">🌿</div>
+        <h3 class="success-title">Message received.</h3>
+        <p class="success-sub">Thank you for reaching out. We'll get back to you within 24–48 business hours at the email you provided.</p>
+        <button class="btn-back-form" id="backToForm">Send another message</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="section-wrap footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-origin">Est. 2018 · Araku Valley, India</span>
+        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From the valley to the world.</p>
+        <div class="footer-socials"><a href="#">Instagram</a><a href="#">WhatsApp</a><a href="#">Email</a></div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Shop</h4><a href="index.html#honey">Honey</a><a href="#">Dry Fruits</a><a href="#">Coffee</a><a href="#">Spices</a><a href="index.html#subscriptions">Subscriptions</a></div>
+        <div class="footer-col"><h4>Discover</h4><a href="#">Our Story</a><a href="#">Journal</a><a href="#">Rituals</a><a href="#">Sustainability</a></div>
+        <div class="footer-col"><h4>Business</h4><a href="#">Wholesale</a><a href="#">Exports</a><a href="#">Partner With Us</a><a href="#">Catalogue</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="shipping.html">Shipping</a><a href="refund.html">Returns</a><a href="#">FAQs</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a><a href="refund.html">Refund Policy</a><a href="shipping.html">Shipping Policy</a><a href="cookie.html">Cookie Policy</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-wordmark-wrap"><p class="footer-wordmark">PureHarvest</p></div>
+  <div class="footer-bottom-bar">
+    <p>© 2026 PureHarvest Organics</p>
+    <p class="footer-credit">Designed &amp; developed by <span id="arcaneText">Arcane Labs</span></p>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="refund.html">Refund Policy</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="cookie.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  // Show order number field when "Order Support" is selected
+  const typeSelect = document.getElementById('contactType');
+  const orderGroup = document.getElementById('fg-order');
+  typeSelect.addEventListener('change', () => {
+    orderGroup.style.display = typeSelect.value === 'order' ? 'flex' : 'none';
+  });
+
+  // Form validation + submit
+  const form = document.getElementById('contactForm');
+  const formArea = document.getElementById('contactFormArea');
+  const successEl = document.getElementById('contactSuccess');
+  const submitBtn = document.getElementById('submitBtn');
+
+  const required = [
+    { id: 'contactName',    fg: 'fg-name',    check: v => v.trim().length >= 2 },
+    { id: 'contactEmail',   fg: 'fg-email',   check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
+    { id: 'contactType',    fg: 'fg-type',    check: v => v !== '' },
+    { id: 'contactSubject', fg: 'fg-subject', check: v => v.trim().length >= 3 },
+    { id: 'contactMessage', fg: 'fg-message', check: v => v.trim().length >= 10 },
+  ];
+
+  required.forEach(({ id }) => {
+    document.getElementById(id).addEventListener('input', () => clearError(id));
+    document.getElementById(id).addEventListener('change', () => clearError(id));
+  });
+
+  function clearError(id) {
+    const el = document.getElementById(id);
+    el.classList.remove('error');
+    el.closest('.form-group').classList.remove('has-error');
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let valid = true;
+    required.forEach(({ id, fg, check }) => {
+      const el = document.getElementById(id);
+      if (!check(el.value)) {
+        el.classList.add('error');
+        document.getElementById(fg).classList.add('has-error');
+        valid = false;
+      }
+    });
+    if (!valid) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    // Simulate network delay — replace with real fetch() when backend is ready
+    setTimeout(() => {
+      formArea.style.display = 'none';
+      successEl.classList.add('visible');
+    }, 900);
+  });
+
+  document.getElementById('backToForm').addEventListener('click', () => {
+    form.reset();
+    orderGroup.style.display = 'none';
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Send Message <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z"/></svg>';
+    successEl.classList.remove('visible');
+    formArea.style.display = 'block';
+  });
+</script>
+</body>
+</html>

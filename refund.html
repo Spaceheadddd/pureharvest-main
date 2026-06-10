@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Refund Policy — PureHarvest Organics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="legal.css" />
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar">
+  <div class="ann-track">
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-shell">
+    <div class="header-logo"><div class="logo-mark">🌿</div></div>
+    <div class="header-brand">
+      <a href="index.html"><p class="brand-name">PUREHARVEST</p></a>
+      <span class="brand-tagline">RAW · WILD · PURE</span>
+    </div>
+    <div class="header-actions">
+      <button class="hdr-btn" aria-label="Search">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="hdr-btn cart-hdr-btn" aria-label="Cart">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-dot"></span>
+      </button>
+      <button class="hdr-btn menu-hdr-btn" id="menuToggle" aria-label="Open menu">
+        <div class="hlines"><span></span><span></span></div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-backdrop" id="searchBackdrop"></div>
+  <div class="search-panel">
+    <div class="search-inner">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search honey, coffee, spices..." autocomplete="off" />
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h3 class="cart-title">Your Ritual</h3>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🌿</div>
+        <p>Your basket is empty.</p>
+        <p style="font-size:13px;color:var(--muted)">Add something from the harvest.</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+      <button class="btn-primary btn-block" id="checkoutBtn">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RITUAL DRAWER -->
+<div id="ritualDrawer" class="ritual-drawer">
+  <div class="drawer-grip"></div>
+  <div class="drawer-head">
+    <div><p class="drawer-eyebrow">PUREHARVEST</p><h2 class="drawer-title">Explore Rituals</h2></div>
+    <button class="drawer-close" id="closeDrawer" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-orbs">
+    <div class="orb orb-active"><div class="orb-ring">🍯</div><span>Honey</span></div>
+    <div class="orb"><div class="orb-ring">🫒</div><span>Dry Fruits</span></div>
+    <div class="orb"><div class="orb-ring">☕</div><span>Coffee</span></div>
+    <div class="orb"><div class="orb-ring">🌶</div><span>Spices</span></div>
+  </div>
+  <nav class="drawer-nav">
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">📖</div><div><p class="d-link-name">Journal</p><p class="d-link-sub">Stories, rituals &amp; slow living</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#story" class="d-link"><div class="d-link-l"><div class="d-icon">🌿</div><div><p class="d-link-name">Our Story</p><p class="d-link-sub">From Araku forests to your table</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#subscriptions" class="d-link"><div class="d-link-l"><div class="d-icon">📦</div><div><p class="d-link-name">Subscriptions</p><p class="d-link-sub">Never run out of your ritual</p></div></div><span class="d-arrow">→</span></a>
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">🏪</div><div><p class="d-link-name">Wholesale</p><p class="d-link-sub">Partner with PureHarvest</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#b2b" class="d-link"><div class="d-link-l"><div class="d-icon">🌍</div><div><p class="d-link-name">Exports &amp; B2B</p><p class="d-link-sub">Bringing Araku to the world</p></div></div><span class="d-arrow">→</span></a>
+  </nav>
+  <div class="drawer-foot-card">
+    <span class="dfc-icon">🌱</span>
+    <div><p class="dfc-title">Rooted in nature.</p><p class="dfc-sub">Crafted with intention.</p></div>
+  </div>
+</div>
+
+
+<!-- ── LEGAL HERO ─────────────────── -->
+<section class="legal-hero">
+  <div class="section-wrap">
+    <p class="eyebrow">Legal</p>
+    <h1 class="legal-title">Refund Policy</h1>
+    <p class="legal-meta">Last updated: <span>26 May 2026</span> · Effective: <span>26 May 2026</span></p>
+  </div>
+</section>
+
+
+<!-- ── LEGAL BODY ─────────────────── -->
+<div class="legal-body">
+  <div class="section-wrap legal-layout">
+
+    <aside class="legal-toc">
+      <p class="toc-label">Contents</p>
+      <nav class="toc-nav">
+        <a href="#s1">1. Our Commitment</a>
+        <a href="#s2">2. Return Eligibility</a>
+        <a href="#s3">3. Non-Returnable Items</a>
+        <a href="#s4">4. How to Initiate a Return</a>
+        <a href="#s5">5. Return Shipping</a>
+        <a href="#s6">6. Refund Process</a>
+        <a href="#s7">7. Refund Timelines</a>
+        <a href="#s8">8. Damaged or Defective Items</a>
+        <a href="#s9">9. Wrong Item Delivered</a>
+        <a href="#s10">10. Exchanges</a>
+        <a href="#s11">11. Subscription Refunds</a>
+        <a href="#s12">12. COD Orders</a>
+        <a href="#s13">13. Failed Delivery Refunds</a>
+        <a href="#s14">14. Contact Us</a>
+      </nav>
+    </aside>
+
+    <main class="legal-content">
+
+      <div class="legal-box-forest">
+        <p>We stand behind every product we sell. If something isn't right with your order, we will make it right. This policy explains exactly how returns, refunds, and replacements work at PureHarvest Organics.</p>
+      </div>
+
+      <div class="legal-section" id="s1">
+        <h2>1. Our Commitment</h2>
+        <p>At PureHarvest, every product leaves our hands with care. We source raw, natural products directly from tribal forest communities and pack them with the intention that they arrive at your door in perfect condition.</p>
+        <p>We understand that issues can occasionally arise — damaged packaging, transit mishaps, or a product that simply didn't meet your expectations. In each case, we commit to a fair, prompt, and hassle-free resolution.</p>
+        <div class="legal-box">
+          <p><strong>Our promise:</strong> If your product arrives damaged, defective, or incorrect — we will replace it or refund it in full, no questions asked.</p>
+        </div>
+      </div>
+
+      <div class="legal-section" id="s2">
+        <h2>2. Return Eligibility</h2>
+        <p>You may request a return and refund under the following conditions:</p>
+        <ul>
+          <li>The return request is raised <strong>within 7 days of delivery</strong> of your order</li>
+          <li>The product is <strong>unused, unopened, and in its original packaging</strong> with all seals intact</li>
+          <li>The product was purchased directly through the PureHarvest website (not through a third-party retailer or marketplace)</li>
+          <li>You have a valid order number and proof of purchase (order confirmation email)</li>
+        </ul>
+        <p>For damaged, defective, or incorrect items, different conditions apply — see Sections 8 and 9 below. These cases are always handled in your favour regardless of the 7-day window.</p>
+      </div>
+
+      <div class="legal-section" id="s3">
+        <h2>3. Non-Returnable Items</h2>
+        <p>The following items are not eligible for return due to the nature of the products:</p>
+        <ul>
+          <li><strong>Opened or partially used products</strong> — for hygiene and food safety reasons, opened products cannot be accepted back unless they are confirmed defective</li>
+          <li><strong>Products returned more than 7 days after delivery</strong> — unless the item is confirmed damaged or defective</li>
+          <li><strong>Products not in original packaging</strong> — items returned without intact seals or original packaging will not be accepted</li>
+          <li><strong>Gift cards and digital products</strong></li>
+          <li><strong>Subscription boxes already delivered and accepted</strong> — individual subscription deliveries cannot be returned unless items are damaged or defective</li>
+          <li><strong>Products purchased during clearance or final sale promotions</strong> — these are marked clearly at the time of sale</li>
+        </ul>
+        <p>We reserve the right to refuse returns that do not meet these criteria. If you are unsure whether your item qualifies, contact us before initiating a return.</p>
+      </div>
+
+      <div class="legal-section" id="s4">
+        <h2>4. How to Initiate a Return</h2>
+        <p>To start a return, follow these steps:</p>
+        <ol>
+          <li><strong>Email us</strong> at <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a> with the subject line: <em>"Return Request — Order #[Your Order Number]"</em></li>
+          <li><strong>Include the following</strong> in your email:
+            <ul>
+              <li>Your full name and registered email address</li>
+              <li>Order number</li>
+              <li>Product(s) you wish to return</li>
+              <li>Reason for the return</li>
+              <li>Clear photographs of the product and packaging (required for all returns; essential for damaged/defective claims)</li>
+            </ul>
+          </li>
+          <li><strong>Wait for confirmation</strong> — our team will review your request within <strong>2 business days</strong> and send you return instructions including the return shipping address</li>
+          <li><strong>Pack and ship</strong> — securely pack the item(s) in their original packaging and ship using a trackable courier. Do not ship items back without receiving confirmation from us first.</li>
+        </ol>
+        <p>Returns sent without prior authorisation from our team will not be accepted and may be returned to sender at the customer's expense.</p>
+      </div>
+
+      <div class="legal-section" id="s5">
+        <h2>5. Return Shipping</h2>
+        <p>Return shipping costs are handled as follows:</p>
+        <ul>
+          <li><strong>Damaged, defective, or incorrect items</strong> — PureHarvest will arrange and bear the cost of return pickup at no charge to you</li>
+          <li><strong>Change of mind returns</strong> — the customer is responsible for return shipping costs. We recommend using a trackable courier service. PureHarvest is not responsible for items lost or damaged during return transit.</li>
+        </ul>
+        <p>For authorised returns, we will provide a return shipping address in Andhra Pradesh, India. Please ensure the package is securely sealed to prevent damage during return transit. We recommend retaining your shipping receipt and tracking number until your refund is processed.</p>
+      </div>
+
+      <div class="legal-section" id="s6">
+        <h2>6. Refund Process</h2>
+        <p>Once we receive your returned item(s), our quality team will inspect the product within <strong>2 business days</strong>. You will be notified by email of the inspection outcome.</p>
+        <ul>
+          <li><strong>If the return is approved</strong> — a refund will be initiated to your original payment method within <strong>2 business days</strong> of approval</li>
+          <li><strong>If the return is partially approved</strong> — a partial refund may be issued where only some items in the order qualify, or where the product shows signs of use</li>
+          <li><strong>If the return is rejected</strong> — we will explain the reason by email. You may request that the item be shipped back to you at your expense.</li>
+        </ul>
+
+        <h3>Refund Method</h3>
+        <p>Refunds are always issued to the <strong>original payment method</strong> used at the time of purchase:</p>
+        <ul>
+          <li>UPI payments — refunded to the originating UPI account</li>
+          <li>Credit/debit cards — refunded to the card used</li>
+          <li>Net banking — refunded to the originating bank account</li>
+          <li>Wallets — refunded to the originating wallet</li>
+          <li>COD (Cash on Delivery) — refunded via bank transfer (NEFT/IMPS). You will need to provide your bank account details.</li>
+        </ul>
+        <p>We are unable to issue refunds to a different account, card, or payment method than the one used for the original purchase.</p>
+      </div>
+
+      <div class="legal-section" id="s7">
+        <h2>7. Refund Timelines</h2>
+        <p>Once a refund is initiated from our end, timelines are as follows:</p>
+
+        <div class="legal-table-wrap">
+          <table class="legal-table">
+            <thead>
+              <tr>
+                <th>Payment Method</th>
+                <th>Estimated Refund Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>UPI</td><td>Within 24–48 hours of initiation</td></tr>
+              <tr><td>Credit Card</td><td>5–7 business days (subject to issuing bank)</td></tr>
+              <tr><td>Debit Card</td><td>5–7 business days (subject to issuing bank)</td></tr>
+              <tr><td>Net Banking</td><td>3–5 business days</td></tr>
+              <tr><td>Wallets (Paytm etc.)</td><td>1–3 business days</td></tr>
+              <tr><td>COD (bank transfer)</td><td>5–7 business days after bank details confirmed</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>These timelines are estimates and may vary depending on your bank or payment provider. If your refund has not appeared within the stated timeframe, contact us at <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a> with your order number and we will investigate immediately.</p>
+      </div>
+
+      <div class="legal-section" id="s8">
+        <h2>8. Damaged or Defective Items</h2>
+        <p>We take quality extremely seriously. If your product arrives damaged, leaking, contaminated, or in any way not as described, we want to know immediately.</p>
+
+        <h3>Reporting Window</h3>
+        <p>Damaged or defective items must be reported to us <strong>within 48 hours of delivery</strong>. This tight window exists because natural products can change after delivery, and we need to verify the condition at the time of receipt.</p>
+
+        <h3>How to Report</h3>
+        <p>Email <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a> with:</p>
+        <ul>
+          <li>Order number</li>
+          <li>Clear photographs of the damaged product</li>
+          <li>Clear photographs of the outer packaging (to identify if damage occurred in transit)</li>
+          <li>A brief description of the issue</li>
+        </ul>
+
+        <h3>Resolution</h3>
+        <p>Upon verification of the damage or defect, we will offer you <strong>your choice</strong> of:</p>
+        <ul>
+          <li>A full replacement shipped at no additional cost, or</li>
+          <li>A full refund to your original payment method</li>
+        </ul>
+        <p>We will not ask you to return a damaged product before issuing a resolution in most cases. Your time is valuable.</p>
+
+        <div class="legal-box">
+          <p><strong>Note on natural products:</strong> Crystallisation of honey is a natural process and is not a defect. Raw honey crystallises over time — this is a sign of purity and can be reversed by gently warming the jar. This does not qualify as a defect for refund purposes.</p>
+        </div>
+      </div>
+
+      <div class="legal-section" id="s9">
+        <h2>9. Wrong Item Delivered</h2>
+        <p>If you receive a product different from what you ordered, please contact us at <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a> within <strong>48 hours of delivery</strong> with your order number and a photo of the item received.</p>
+        <p>We will arrange collection of the incorrect item and dispatch the correct product to you at no additional cost. Alternatively, if the correct product is unavailable, we will issue a full refund.</p>
+        <p>You are not required to pay any return shipping costs in cases of incorrect delivery — this is entirely our responsibility.</p>
+      </div>
+
+      <div class="legal-section" id="s10">
+        <h2>10. Exchanges</h2>
+        <p>We currently do not offer direct product exchanges. If you would like a different product, the recommended process is:</p>
+        <ol>
+          <li>Initiate a return for the unwanted item (subject to return eligibility in Section 2)</li>
+          <li>Once your return is approved and refund confirmed, place a new order for the product you want</li>
+        </ol>
+        <p>This ensures faster processing and avoids delays. If you need help with this process, contact our team and we will assist you personally.</p>
+      </div>
+
+      <div class="legal-section" id="s11">
+        <h2>11. Subscription Refunds &amp; Cancellations</h2>
+
+        <h3>Cancellation Before Dispatch</h3>
+        <p>If you cancel your subscription at least 48 hours before your next billing date, no charge will be made for that cycle. See our <a href="terms.html#s9" style="color:var(--forest);font-weight:500">Terms &amp; Conditions — Section 9</a> for full subscription cancellation terms.</p>
+
+        <h3>Refund for Delivered Subscription Box</h3>
+        <p>Delivered subscription boxes follow the same return and refund policy as regular orders. Individual items that are damaged, defective, or incorrect will be replaced or refunded as per Sections 8 and 9 above.</p>
+
+        <h3>Accidental Charge After Cancellation</h3>
+        <p>If you are charged after properly cancelling your subscription (with documented confirmation from us), you are entitled to a full refund of that charge. Email us immediately with proof of cancellation and we will process the refund within 2 business days.</p>
+      </div>
+
+      <div class="legal-section" id="s12">
+        <h2>12. Cash on Delivery (COD) Orders</h2>
+        <p>COD orders follow the same return eligibility and process as prepaid orders. Because payment was made in cash at delivery, refunds for COD orders are processed via <strong>bank transfer (NEFT/IMPS)</strong>.</p>
+        <p>To receive your refund, you will need to provide:</p>
+        <ul>
+          <li>Full account holder name</li>
+          <li>Bank account number</li>
+          <li>IFSC code</li>
+          <li>Bank name and branch</li>
+        </ul>
+        <p>Refunds to bank accounts typically complete within 5–7 business days of verification. We do not issue COD refunds via cash, cheque, or any other method.</p>
+      </div>
+
+      <div class="legal-section" id="s13">
+        <h2>13. Failed Delivery Refunds</h2>
+        <p>If our logistics partner is unable to deliver your order after 3 attempts and the package is returned to us, we will contact you by email to arrange re-delivery or issue a refund.</p>
+        <ul>
+          <li><strong>Re-delivery</strong> — a flat re-shipping charge of ₹60–₹120 applies depending on your location</li>
+          <li><strong>Refund</strong> — if you prefer a refund, we will refund the product cost in full. Original shipping charges (if any) are non-refundable in cases of failed delivery due to customer unavailability or incorrect address provided at checkout.</li>
+        </ul>
+        <p>If the delivery failed due to an error on our end (incorrect label, logistics partner fault), we will re-dispatch at no additional cost and refund any shipping charges paid.</p>
+      </div>
+
+      <div class="legal-section" id="s14">
+        <h2>14. Contact Us</h2>
+        <p>For all return and refund requests, or any questions about this policy:</p>
+        <div class="legal-contact-card">
+          <h4>PureHarvest Organics — Customer Support</h4>
+          <p>📧 <a href="mailto:support@pureharvest.com">support@pureharvest.com</a></p>
+          <p>📬 [Company Address], Araku Valley, Visakhapatnam, Andhra Pradesh — [PIN], India</p>
+          <p>🕐 Support hours: Monday – Saturday, 10:00 AM – 6:00 PM IST</p>
+          <p style="margin-top:8px;font-size:12.5px;color:var(--muted)">We aim to respond to all support requests within <strong style="color:var(--dark)">24 business hours</strong>.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="section-wrap footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-origin">Est. 2018 · Araku Valley, India</span>
+        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From the valley to the world.</p>
+        <div class="footer-socials"><a href="#">Instagram</a><a href="#">WhatsApp</a><a href="#">Email</a></div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Shop</h4><a href="index.html#honey">Honey</a><a href="#">Dry Fruits</a><a href="#">Coffee</a><a href="#">Spices</a><a href="index.html#subscriptions">Subscriptions</a></div>
+        <div class="footer-col"><h4>Discover</h4><a href="#">Our Story</a><a href="#">Journal</a><a href="#">Rituals</a><a href="#">Sustainability</a></div>
+        <div class="footer-col"><h4>Business</h4><a href="#">Wholesale</a><a href="#">Exports</a><a href="#">Partner With Us</a><a href="#">Catalogue</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="shipping.html">Shipping</a><a href="refund.html">Returns</a><a href="#">FAQs</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a><a href="refund.html">Refund Policy</a><a href="shipping.html">Shipping Policy</a><a href="cookie.html">Cookie Policy</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-wordmark-wrap"><p class="footer-wordmark">PureHarvest</p></div>
+  <div class="footer-bottom-bar">
+    <p>© 2026 PureHarvest Organics</p>
+    <p class="footer-credit">Designed &amp; developed by <span id="arcaneText">Arcane Labs</span></p>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="refund.html">Refund Policy</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="cookie.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

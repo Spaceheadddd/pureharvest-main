@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms &amp; Conditions — PureHarvest Organics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="legal.css" />
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar">
+  <div class="ann-track">
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-shell">
+    <div class="header-logo"><div class="logo-mark">🌿</div></div>
+    <div class="header-brand">
+      <a href="index.html"><p class="brand-name">PUREHARVEST</p></a>
+      <span class="brand-tagline">RAW · WILD · PURE</span>
+    </div>
+    <div class="header-actions">
+      <button class="hdr-btn" aria-label="Search">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="hdr-btn cart-hdr-btn" aria-label="Cart">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-dot"></span>
+      </button>
+      <button class="hdr-btn menu-hdr-btn" id="menuToggle" aria-label="Open menu">
+        <div class="hlines"><span></span><span></span></div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-backdrop" id="searchBackdrop"></div>
+  <div class="search-panel">
+    <div class="search-inner">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search honey, coffee, spices..." autocomplete="off" />
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h3 class="cart-title">Your Ritual</h3>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🌿</div>
+        <p>Your basket is empty.</p>
+        <p style="font-size:13px;color:var(--muted)">Add something from the harvest.</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+      <button class="btn-primary btn-block" id="checkoutBtn">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RITUAL DRAWER -->
+<div id="ritualDrawer" class="ritual-drawer">
+  <div class="drawer-grip"></div>
+  <div class="drawer-head">
+    <div><p class="drawer-eyebrow">PUREHARVEST</p><h2 class="drawer-title">Explore Rituals</h2></div>
+    <button class="drawer-close" id="closeDrawer" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-orbs">
+    <div class="orb orb-active"><div class="orb-ring">🍯</div><span>Honey</span></div>
+    <div class="orb"><div class="orb-ring">🫒</div><span>Dry Fruits</span></div>
+    <div class="orb"><div class="orb-ring">☕</div><span>Coffee</span></div>
+    <div class="orb"><div class="orb-ring">🌶</div><span>Spices</span></div>
+  </div>
+  <nav class="drawer-nav">
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">📖</div><div><p class="d-link-name">Journal</p><p class="d-link-sub">Stories, rituals &amp; slow living</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#story" class="d-link"><div class="d-link-l"><div class="d-icon">🌿</div><div><p class="d-link-name">Our Story</p><p class="d-link-sub">From Araku forests to your table</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#subscriptions" class="d-link"><div class="d-link-l"><div class="d-icon">📦</div><div><p class="d-link-name">Subscriptions</p><p class="d-link-sub">Never run out of your ritual</p></div></div><span class="d-arrow">→</span></a>
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">🏪</div><div><p class="d-link-name">Wholesale</p><p class="d-link-sub">Partner with PureHarvest</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#b2b" class="d-link"><div class="d-link-l"><div class="d-icon">🌍</div><div><p class="d-link-name">Exports &amp; B2B</p><p class="d-link-sub">Bringing Araku to the world</p></div></div><span class="d-arrow">→</span></a>
+  </nav>
+  <div class="drawer-foot-card">
+    <span class="dfc-icon">🌱</span>
+    <div><p class="dfc-title">Rooted in nature.</p><p class="dfc-sub">Crafted with intention.</p></div>
+  </div>
+</div>
+
+
+<!-- ── LEGAL HERO ─────────────────── -->
+<section class="legal-hero">
+  <div class="section-wrap">
+    <p class="eyebrow">Legal</p>
+    <h1 class="legal-title">Terms &amp; Conditions</h1>
+    <p class="legal-meta">Last updated: <span>26 May 2026</span> · Effective: <span>26 May 2026</span></p>
+  </div>
+</section>
+
+
+<!-- ── LEGAL BODY ─────────────────── -->
+<div class="legal-body">
+  <div class="section-wrap legal-layout">
+
+    <aside class="legal-toc">
+      <p class="toc-label">Contents</p>
+      <nav class="toc-nav">
+        <a href="#s1">1. Acceptance</a>
+        <a href="#s2">2. About PureHarvest</a>
+        <a href="#s3">3. Products</a>
+        <a href="#s4">4. Pricing & GST</a>
+        <a href="#s5">5. Orders</a>
+        <a href="#s6">6. Payment</a>
+        <a href="#s7">7. Shipping & Delivery</a>
+        <a href="#s8">8. Returns & Refunds</a>
+        <a href="#s9">9. Subscriptions</a>
+        <a href="#s10">10. User Accounts</a>
+        <a href="#s11">11. Intellectual Property</a>
+        <a href="#s12">12. Prohibited Uses</a>
+        <a href="#s13">13. Disclaimers</a>
+        <a href="#s14">14. Limitation of Liability</a>
+        <a href="#s15">15. Indemnification</a>
+        <a href="#s16">16. Governing Law</a>
+        <a href="#s17">17. Dispute Resolution</a>
+        <a href="#s18">18. Changes</a>
+        <a href="#s19">19. Contact Us</a>
+      </nav>
+    </aside>
+
+    <main class="legal-content">
+
+      <div class="legal-box-forest">
+        <p>Please read these Terms &amp; Conditions carefully before using our website or placing an order. By accessing our site or making a purchase, you confirm that you have read, understood, and agree to be bound by these terms.</p>
+      </div>
+
+      <div class="legal-section" id="s1">
+        <h2>1. Acceptance of Terms</h2>
+        <p>These Terms &amp; Conditions ("Terms") govern your use of the PureHarvest Organics website and all purchases made through it. They constitute a legally binding agreement between you ("the Customer") and PureHarvest Organics ("PureHarvest", "we", "us", "our").</p>
+        <p>By visiting our website, browsing our products, creating an account, or placing an order, you acknowledge that you have read and agree to these Terms in full. If you do not agree to any part of these Terms, you must not use this website or make purchases from us.</p>
+        <p>These Terms should be read alongside our <a href="privacy.html" style="color:var(--forest);font-weight:500">Privacy Policy</a>, <a href="refund.html" style="color:var(--forest);font-weight:500">Refund Policy</a>, and <a href="shipping.html" style="color:var(--forest);font-weight:500">Shipping Policy</a>, all of which form part of the agreement between us.</p>
+      </div>
+
+      <div class="legal-section" id="s2">
+        <h2>2. About PureHarvest</h2>
+        <p><strong>PureHarvest Organics</strong> is an Indian food and wellness brand established in 2018, sourcing raw forest honey, single-origin coffee, wild dry fruits, and forest spices from indigenous tribal communities of Araku Valley, Eastern Ghats, Andhra Pradesh, India.</p>
+        <p>Registered address: <strong>[Company Address], Araku Valley, Visakhapatnam, Andhra Pradesh — [PIN Code], India.</strong></p>
+        <p>FSSAI License No: <strong>[FSSAI LICENSE NUMBER]</strong></p>
+        <p>GST Registration No: <strong>[GST NUMBER]</strong></p>
+        <p>For all customer support matters: <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a></p>
+      </div>
+
+      <div class="legal-section" id="s3">
+        <h2>3. Products</h2>
+
+        <h3>Product Descriptions</h3>
+        <p>We make every effort to ensure that product descriptions, ingredients, weights, and images on our website are accurate and up to date. However, natural food products may vary slightly in colour, texture, crystallisation, and flavour between batches due to seasonal and geographic variation — this is a hallmark of authentic, unprocessed products and not a defect.</p>
+        <p>Product images are for illustrative purposes. Actual product appearance, including packaging, may differ slightly from images shown on the website. We reserve the right to update or modify product descriptions and images without prior notice.</p>
+
+        <h3>Product Availability</h3>
+        <p>All products are subject to availability. Because we source single-origin, seasonally harvested products, certain varieties may be limited in stock or temporarily unavailable between harvest seasons. We will endeavour to display accurate stock availability on the product listings.</p>
+        <p>If a product you have ordered is out of stock after your order is placed, we will notify you by email and offer either a full refund or the option to wait for the next available stock. We will not substitute products without your explicit consent.</p>
+
+        <h3>FSSAI Compliance</h3>
+        <p>All PureHarvest products are manufactured, stored, and distributed in compliance with the <strong>Food Safety and Standards Act, 2006</strong> and regulations issued by the Food Safety and Standards Authority of India (FSSAI). Our FSSAI license number is displayed on all product packaging.</p>
+      </div>
+
+      <div class="legal-section" id="s4">
+        <h2>4. Pricing &amp; GST</h2>
+        <p>All prices displayed on our website are in <strong>Indian Rupees (INR)</strong> and are <strong>inclusive of all applicable Goods and Services Tax (GST)</strong> unless stated otherwise. No additional taxes will be added at checkout for domestic India orders.</p>
+        <p>Prices are subject to change without prior notice. The price applicable to your order is the price displayed at the time you complete checkout — not the price at the time you added the item to your cart.</p>
+        <p>For international orders (where available), prices may be displayed in INR and will be converted to your local currency at the exchange rate applied by your payment provider at the time of the transaction. Additional import duties, customs charges, or local taxes may apply and are the responsibility of the customer.</p>
+
+        <div class="legal-box">
+          <p><strong>Price errors:</strong> In the event of a pricing error on our website, we reserve the right to cancel any orders placed at the incorrect price and issue a full refund. We will notify you as soon as possible if this occurs.</p>
+        </div>
+      </div>
+
+      <div class="legal-section" id="s5">
+        <h2>5. Orders</h2>
+
+        <h3>Placing an Order</h3>
+        <p>By completing checkout and submitting payment, you are making a binding offer to purchase the selected products at the stated price. An order confirmation email sent to your registered email address constitutes acceptance of your order by PureHarvest and forms a binding contract between us.</p>
+        <p>We reserve the right to refuse or cancel any order at our sole discretion, including in cases of suspected fraud, pricing errors, stock issues, or where we are unable to verify payment. If we cancel your order, you will receive a full refund within 5–7 business days.</p>
+
+        <h3>Order Confirmation</h3>
+        <p>You will receive an order confirmation email within minutes of placing your order. Please check your spam or junk folder if you do not receive it. If you have not received confirmation within 24 hours, contact us at <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a>.</p>
+
+        <h3>Order Cancellation by Customer</h3>
+        <p>You may cancel an order <strong>within 2 hours of placing it</strong>, provided it has not yet been dispatched. To cancel, email <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a> with your order number as soon as possible. Once dispatched, orders cannot be cancelled but may be returned as per our <a href="refund.html" style="color:var(--forest);font-weight:500">Refund Policy</a>.</p>
+        <p>For subscription orders, cancellation rules are governed by Section 9 below.</p>
+      </div>
+
+      <div class="legal-section" id="s6">
+        <h2>6. Payment</h2>
+
+        <h3>Accepted Payment Methods</h3>
+        <p>We accept the following payment methods for Indian customers:</p>
+        <ul>
+          <li>UPI (GPay, PhonePe, Paytm, BHIM, and all UPI-enabled apps)</li>
+          <li>Credit cards (Visa, Mastercard, RuPay, American Express)</li>
+          <li>Debit cards (all major Indian banks)</li>
+          <li>Net banking (all major Indian banks)</li>
+          <li>Wallets (Paytm, Mobikwik, and others via Razorpay)</li>
+          <li>No-cost EMI (on eligible cards — subject to bank availability)</li>
+        </ul>
+
+        <h3>Payment Security</h3>
+        <p>All payment transactions are processed securely through <strong>Razorpay</strong>, a PCI DSS-compliant payment gateway authorised by the Reserve Bank of India (RBI). We do not store, process, or transmit your payment credentials on our servers. Razorpay's terms and privacy policy govern the processing of your financial data.</p>
+
+        <h3>Payment Failure</h3>
+        <p>If your payment fails, your order will not be confirmed. Any amount debited from your account during a failed transaction will be automatically refunded to the original payment source within 5–7 business days, subject to your bank's processing timelines. We are not responsible for delays caused by your bank or payment provider.</p>
+
+        <h3>Invoice</h3>
+        <p>A GST-compliant tax invoice will be emailed to you upon successful payment. This invoice will reflect the breakdown of product price and applicable GST. Physical invoices are included with all shipped orders.</p>
+      </div>
+
+      <div class="legal-section" id="s7">
+        <h2>7. Shipping &amp; Delivery</h2>
+        <p>Full details of our shipping zones, timelines, partners, and policies are set out in our <a href="shipping.html" style="color:var(--forest);font-weight:500">Shipping Policy</a>, which forms part of these Terms. By placing an order, you agree to the terms set out therein.</p>
+        <p>Key points: free shipping on all India orders above ₹999; standard delivery within 2–7 business days depending on location; tracking provided for all shipments.</p>
+      </div>
+
+      <div class="legal-section" id="s8">
+        <h2>8. Returns &amp; Refunds</h2>
+        <p>Full details of our return eligibility, process, and refund timelines are set out in our <a href="refund.html" style="color:var(--forest);font-weight:500">Refund Policy</a>, which forms part of these Terms. By placing an order, you agree to the terms set out therein.</p>
+        <p>Key points: 7-day return window from delivery; items must be unused and in original packaging; damaged or defective items must be reported within 48 hours of delivery.</p>
+      </div>
+
+      <div class="legal-section" id="s9">
+        <h2>9. Subscriptions</h2>
+
+        <h3>Overview</h3>
+        <p>PureHarvest offers recurring subscription plans ("Ritual Subscriptions") that deliver curated product selections on your chosen frequency — weekly, fortnightly, monthly, or quarterly. Subscriptions are governed by these Terms in addition to any specific terms presented at the time of subscription sign-up.</p>
+
+        <h3>Billing</h3>
+        <p>Subscription charges are billed in advance at the start of each delivery cycle. By subscribing, you authorise PureHarvest (via Razorpay) to charge your chosen payment method automatically at the beginning of each billing cycle. You will receive a reminder email at least 3 days before each charge.</p>
+
+        <h3>Pause &amp; Skip</h3>
+        <p>You may pause or skip a delivery at any time through your account dashboard, provided you do so at least <strong>48 hours before your next billing date</strong>. Changes made within 48 hours of billing may not take effect until the following cycle.</p>
+
+        <h3>Cancellation</h3>
+        <p>You may cancel your subscription at any time with no penalties or cancellation fees. Cancellations must be made at least <strong>48 hours before your next billing date</strong> to avoid being charged for the next cycle. If you cancel within 48 hours of billing, the charge for that cycle will proceed and the products will be dispatched; cancellation will take effect from the following cycle.</p>
+        <p>To cancel, log in to your account and manage your subscription, or email <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a>.</p>
+
+        <h3>Modifications</h3>
+        <p>You may modify your product selection, delivery address, or delivery frequency at any time through your account dashboard. Changes must be made at least 48 hours before your next billing date to take effect in the current cycle.</p>
+
+        <h3>Price Changes</h3>
+        <p>We reserve the right to adjust subscription pricing. We will provide at least <strong>30 days' written notice</strong> by email before any price change takes effect. Your continued subscription after the notice period constitutes acceptance of the new price.</p>
+      </div>
+
+      <div class="legal-section" id="s10">
+        <h2>10. User Accounts</h2>
+
+        <h3>Registration</h3>
+        <p>You may create an account on our website to manage orders, subscriptions, and preferences. You must be at least 18 years of age to create an account. You agree to provide accurate, complete, and current information during registration and to keep your account information up to date.</p>
+
+        <h3>Account Security</h3>
+        <p>You are responsible for maintaining the confidentiality of your password and for all activities that occur under your account. You must notify us immediately at <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a> if you suspect any unauthorised use of your account.</p>
+        <p>We will never ask for your password by email, phone, or any other communication. Do not share your password with anyone.</p>
+
+        <h3>Account Termination</h3>
+        <p>We reserve the right to suspend or terminate your account at our discretion if you breach these Terms, engage in fraudulent activity, or misuse our platform. You may also close your account at any time by contacting us. Account closure does not affect any outstanding order obligations.</p>
+      </div>
+
+      <div class="legal-section" id="s11">
+        <h2>11. Intellectual Property</h2>
+        <p>All content on this website — including but not limited to text, graphics, photographs, product descriptions, logos, brand identity, design, layout, and code — is the exclusive property of PureHarvest Organics or its licensors and is protected by Indian and international copyright, trademark, and other intellectual property laws.</p>
+        <p>You may not reproduce, copy, distribute, republish, display, modify, or create derivative works from any part of this website without our prior written consent. Personal, non-commercial use (e.g., sharing a product link) is permitted.</p>
+        <p>The PureHarvest name, logo, and taglines are trademarks of PureHarvest Organics. Unauthorised use of our trademarks is strictly prohibited.</p>
+      </div>
+
+      <div class="legal-section" id="s12">
+        <h2>12. Prohibited Uses</h2>
+        <p>By using this website, you agree not to:</p>
+        <ul>
+          <li>Use the site for any unlawful purpose or in violation of any applicable laws or regulations</li>
+          <li>Attempt to gain unauthorised access to any part of the website, its servers, or databases</li>
+          <li>Introduce malicious code, viruses, or any disruptive or harmful software</li>
+          <li>Engage in data scraping, automated querying, or harvesting of user data</li>
+          <li>Impersonate PureHarvest, its employees, or any other person or entity</li>
+          <li>Submit false, fraudulent, or misleading information in any form or order</li>
+          <li>Resell products purchased from us without our prior written consent</li>
+          <li>Post or transmit content that is defamatory, offensive, or infringes third-party rights</li>
+          <li>Interfere with or disrupt the integrity or performance of the website</li>
+        </ul>
+        <p>Violation of these prohibited uses may result in immediate account termination and may expose you to civil or criminal liability.</p>
+      </div>
+
+      <div class="legal-section" id="s13">
+        <h2>13. Disclaimers</h2>
+
+        <h3>No Medical Advice</h3>
+        <p>Information on our website regarding the properties or benefits of our products is provided for general informational purposes only and does not constitute medical advice. Our products are food items, not medicines. Nothing on this website should be construed as a substitute for professional medical advice, diagnosis, or treatment. If you have a medical condition or dietary concern, consult a qualified healthcare professional before using our products.</p>
+
+        <h3>Website Availability</h3>
+        <p>We do not guarantee that our website will be available at all times, free from errors, or free from viruses or other harmful components. We reserve the right to suspend, modify, or discontinue the website at any time without notice.</p>
+
+        <h3>Third-Party Content</h3>
+        <p>Our website may contain links to or integrations with third-party websites and services. We are not responsible for the content, practices, or privacy policies of any third-party sites. Links are provided for convenience only and do not constitute an endorsement.</p>
+      </div>
+
+      <div class="legal-section" id="s14">
+        <h2>14. Limitation of Liability</h2>
+        <p>To the fullest extent permitted by applicable Indian law, PureHarvest Organics shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, goodwill, or other intangible losses, arising from:</p>
+        <ul>
+          <li>Your use of or inability to use our website or products</li>
+          <li>Any errors or omissions in website content</li>
+          <li>Delays or interruptions in delivery beyond our reasonable control</li>
+          <li>Third-party actions, including payment processors, logistics providers, or social media platforms</li>
+        </ul>
+        <p>Our total liability to you for any claim arising from these Terms or your use of our website shall not exceed the amount you paid for the specific order or subscription giving rise to the claim.</p>
+        <p>Nothing in these Terms excludes or limits liability for death or personal injury caused by our negligence, fraud or fraudulent misrepresentation, or any liability that cannot be excluded under applicable law.</p>
+      </div>
+
+      <div class="legal-section" id="s15">
+        <h2>15. Indemnification</h2>
+        <p>You agree to indemnify, defend, and hold harmless PureHarvest Organics, its directors, employees, agents, and partners from and against any claims, liabilities, damages, losses, costs, and expenses (including reasonable legal fees) arising from your violation of these Terms, your misuse of the website, or your infringement of any third-party rights.</p>
+      </div>
+
+      <div class="legal-section" id="s16">
+        <h2>16. Governing Law &amp; Jurisdiction</h2>
+        <p>These Terms are governed by and construed in accordance with the laws of the <strong>Republic of India</strong>. Any disputes arising from or relating to these Terms, the website, or any purchase shall be subject to the exclusive jurisdiction of the courts of <strong>Visakhapatnam, Andhra Pradesh, India</strong>.</p>
+        <p>If you are accessing our site from outside India, you do so at your own risk and are responsible for compliance with local laws to the extent they are applicable.</p>
+      </div>
+
+      <div class="legal-section" id="s17">
+        <h2>17. Dispute Resolution</h2>
+        <p>We believe disputes are best resolved through open communication. If you have a concern, we encourage you to contact us first at <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a> and allow us the opportunity to resolve it within <strong>14 business days</strong>.</p>
+        <p>If a resolution cannot be reached through direct communication, disputes shall be resolved through binding arbitration under the <strong>Arbitration and Conciliation Act, 1996</strong>, conducted in Visakhapatnam, Andhra Pradesh, India, in the English language. The decision of the arbitrator shall be final and binding on both parties.</p>
+        <p>Consumer disputes may also be referred to the appropriate Consumer Forum under the <strong>Consumer Protection Act, 2019</strong>. Nothing in this clause prevents you from exercising your statutory rights as a consumer.</p>
+      </div>
+
+      <div class="legal-section" id="s18">
+        <h2>18. Changes to These Terms</h2>
+        <p>We reserve the right to modify these Terms at any time. Material changes will be communicated via email to registered customers and by posting a notice on our website at least <strong>14 days</strong> before the changes take effect.</p>
+        <p>Your continued use of the website or placing of new orders after changes take effect constitutes your acceptance of the revised Terms. If you do not agree with the changes, you must stop using our website and services.</p>
+        <p>The date at the top of this page reflects when these Terms were last updated. We recommend reviewing this page periodically.</p>
+      </div>
+
+      <div class="legal-section" id="s19">
+        <h2>19. Contact Us</h2>
+        <p>For any questions, concerns, or queries related to these Terms, please contact us:</p>
+        <div class="legal-contact-card">
+          <h4>PureHarvest Organics — Legal &amp; Support</h4>
+          <p>📧 General: <a href="mailto:support@pureharvest.com">support@pureharvest.com</a></p>
+          <p>📧 Legal matters: <a href="mailto:legal@pureharvest.com">legal@pureharvest.com</a></p>
+          <p>📬 [Company Address], Araku Valley, Visakhapatnam, Andhra Pradesh — [PIN], India</p>
+          <p>🕐 Support hours: Monday – Saturday, 10:00 AM – 6:00 PM IST</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="section-wrap footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-origin">Est. 2018 · Araku Valley, India</span>
+        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From the valley to the world.</p>
+        <div class="footer-socials">
+          <a href="#">Instagram</a>
+          <a href="#">WhatsApp</a>
+          <a href="#">Email</a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Shop</h4><a href="index.html#honey">Honey</a><a href="#">Dry Fruits</a><a href="#">Coffee</a><a href="#">Spices</a><a href="index.html#subscriptions">Subscriptions</a></div>
+        <div class="footer-col"><h4>Discover</h4><a href="#">Our Story</a><a href="#">Journal</a><a href="#">Rituals</a><a href="#">Sustainability</a></div>
+        <div class="footer-col"><h4>Business</h4><a href="#">Wholesale</a><a href="#">Exports</a><a href="#">Partner With Us</a><a href="#">Catalogue</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="shipping.html">Shipping</a><a href="refund.html">Returns</a><a href="#">FAQs</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a><a href="refund.html">Refund Policy</a><a href="shipping.html">Shipping Policy</a><a href="cookie.html">Cookie Policy</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-wordmark-wrap">
+    <p class="footer-wordmark">PureHarvest</p>
+  </div>
+  <div class="footer-bottom-bar">
+    <p>© 2026 PureHarvest Organics</p>
+    <p class="footer-credit">Designed &amp; developed by <span id="arcaneText">Arcane Labs</span></p>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="refund.html">Refund Policy</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="cookie.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

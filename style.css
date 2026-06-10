@@ -1201,7 +1201,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   gap: 40px 24px;
 }
 @media (min-width: 768px) {
-  .footer-cols { grid-template-columns: repeat(4, 1fr); gap: 0 24px; }
+  .footer-cols { grid-template-columns: repeat(5, 1fr); gap: 0 20px; }
 }
 
 .footer-col { display: flex; flex-direction: column; gap: 10px; }
@@ -1279,10 +1279,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .footer-legal { display: flex; gap: 20px; }
 .footer-legal a {
-  font-size: 12px; color: rgba(255,255,255,0.22);
+  font-size: 12px; color: rgba(255,255,255,0.50);
   transition: color var(--ease);
 }
-.footer-legal a:hover { color: rgba(255,255,255,0.6); }
+.footer-legal a:hover { color: rgba(255,255,255,0.85); }
 
 /* ==============================
    PRODUCT CATEGORY GRADIENTS

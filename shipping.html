@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shipping Policy — PureHarvest Organics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="legal.css" />
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar">
+  <div class="ann-track">
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-shell">
+    <div class="header-logo"><div class="logo-mark">🌿</div></div>
+    <div class="header-brand">
+      <a href="index.html"><p class="brand-name">PUREHARVEST</p></a>
+      <span class="brand-tagline">RAW · WILD · PURE</span>
+    </div>
+    <div class="header-actions">
+      <button class="hdr-btn" aria-label="Search">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="hdr-btn cart-hdr-btn" aria-label="Cart">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-dot"></span>
+      </button>
+      <button class="hdr-btn menu-hdr-btn" id="menuToggle" aria-label="Open menu">
+        <div class="hlines"><span></span><span></span></div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-backdrop" id="searchBackdrop"></div>
+  <div class="search-panel">
+    <div class="search-inner">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search honey, coffee, spices..." autocomplete="off" />
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h3 class="cart-title">Your Ritual</h3>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🌿</div>
+        <p>Your basket is empty.</p>
+        <p style="font-size:13px;color:var(--muted)">Add something from the harvest.</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+      <button class="btn-primary btn-block" id="checkoutBtn">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RITUAL DRAWER -->
+<div id="ritualDrawer" class="ritual-drawer">
+  <div class="drawer-grip"></div>
+  <div class="drawer-head">
+    <div><p class="drawer-eyebrow">PUREHARVEST</p><h2 class="drawer-title">Explore Rituals</h2></div>
+    <button class="drawer-close" id="closeDrawer" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-orbs">
+    <div class="orb orb-active"><div class="orb-ring">🍯</div><span>Honey</span></div>
+    <div class="orb"><div class="orb-ring">🫒</div><span>Dry Fruits</span></div>
+    <div class="orb"><div class="orb-ring">☕</div><span>Coffee</span></div>
+    <div class="orb"><div class="orb-ring">🌶</div><span>Spices</span></div>
+  </div>
+  <nav class="drawer-nav">
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">📖</div><div><p class="d-link-name">Journal</p><p class="d-link-sub">Stories, rituals &amp; slow living</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#story" class="d-link"><div class="d-link-l"><div class="d-icon">🌿</div><div><p class="d-link-name">Our Story</p><p class="d-link-sub">From Araku forests to your table</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#subscriptions" class="d-link"><div class="d-link-l"><div class="d-icon">📦</div><div><p class="d-link-name">Subscriptions</p><p class="d-link-sub">Never run out of your ritual</p></div></div><span class="d-arrow">→</span></a>
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">🏪</div><div><p class="d-link-name">Wholesale</p><p class="d-link-sub">Partner with PureHarvest</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#b2b" class="d-link"><div class="d-link-l"><div class="d-icon">🌍</div><div><p class="d-link-name">Exports &amp; B2B</p><p class="d-link-sub">Bringing Araku to the world</p></div></div><span class="d-arrow">→</span></a>
+  </nav>
+  <div class="drawer-foot-card">
+    <span class="dfc-icon">🌱</span>
+    <div><p class="dfc-title">Rooted in nature.</p><p class="dfc-sub">Crafted with intention.</p></div>
+  </div>
+</div>
+
+
+<!-- ── LEGAL HERO ─────────────────── -->
+<section class="legal-hero">
+  <div class="section-wrap">
+    <p class="eyebrow">Legal</p>
+    <h1 class="legal-title">Shipping Policy</h1>
+    <p class="legal-meta">Last updated: <span>26 May 2026</span> · Effective: <span>26 May 2026</span></p>
+  </div>
+</section>
+
+
+<!-- ── LEGAL BODY ─────────────────── -->
+<div class="legal-body">
+  <div class="section-wrap legal-layout">
+
+    <aside class="legal-toc">
+      <p class="toc-label">Contents</p>
+      <nav class="toc-nav">
+        <a href="#s1">1. Overview</a>
+        <a href="#s2">2. Shipping Zones</a>
+        <a href="#s3">3. Shipping Charges</a>
+        <a href="#s4">4. Order Processing</a>
+        <a href="#s5">5. Delivery Timeframes</a>
+        <a href="#s6">6. Shipping Partners</a>
+        <a href="#s7">7. Order Tracking</a>
+        <a href="#s8">8. Delivery Attempts</a>
+        <a href="#s9">9. Incorrect Address</a>
+        <a href="#s10">10. Damaged in Transit</a>
+        <a href="#s11">11. Lost Shipments</a>
+        <a href="#s12">12. Public Holidays</a>
+        <a href="#s13">13. Subscription Deliveries</a>
+        <a href="#s14">14. International Shipping</a>
+        <a href="#s15">15. Contact Us</a>
+      </nav>
+    </aside>
+
+    <main class="legal-content">
+
+      <div class="legal-box-forest">
+        <p>We ship across India with care. Every PureHarvest order is packed thoughtfully to ensure your products arrive exactly as they left our facility — intact, fresh, and ready for your ritual.</p>
+      </div>
+
+      <div class="legal-section" id="s1">
+        <h2>1. Overview</h2>
+        <p>PureHarvest Organics ships all orders directly from our fulfilment facility in Andhra Pradesh, India. We currently ship to all states and union territories across India. International shipping is coming soon.</p>
+        <p>Orders placed on our website are processed on business days (Monday to Saturday, excluding public holidays). Orders are typically dispatched within 1–2 business days of payment confirmation.</p>
+        <div class="legal-box">
+          <p><strong>Free shipping on all India orders above ₹999.</strong> Orders below this threshold attract a flat shipping fee — see Section 3 for details.</p>
+        </div>
+      </div>
+
+      <div class="legal-section" id="s2">
+        <h2>2. Shipping Zones</h2>
+        <p>We ship to <strong>all 28 states and 8 union territories</strong> of India, including remote areas. Delivery timelines vary by zone — see Section 5 for full timeframe details.</p>
+        <p>Certain remote pin codes (especially in Ladakh, Andaman &amp; Nicobar Islands, Lakshadweep, and parts of North-East India) may attract longer delivery timelines or additional shipping charges. If your pin code is in a restricted or difficult-to-reach area, we will notify you before confirming dispatch.</p>
+        <p>We reserve the right to decline shipping to specific pin codes where reliable delivery cannot be guaranteed. In such cases, a full refund will be issued.</p>
+      </div>
+
+      <div class="legal-section" id="s3">
+        <h2>3. Shipping Charges</h2>
+
+        <div class="legal-table-wrap">
+          <table class="legal-table">
+            <thead>
+              <tr>
+                <th>Order Value</th>
+                <th>Shipping Charge</th>
+                <th>Applies To</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>₹999 and above</td><td><strong>Free</strong></td><td>All India</td></tr>
+              <tr><td>Below ₹999</td><td>₹60 flat rate</td><td>Metro &amp; Tier 1 cities</td></tr>
+              <tr><td>Below ₹999</td><td>₹80 flat rate</td><td>Tier 2 &amp; Tier 3 cities</td></tr>
+              <tr><td>Below ₹999</td><td>₹120 flat rate</td><td>Remote / difficult-to-reach areas</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Shipping charges are calculated and displayed at checkout before you complete payment. The charge is based on your delivery pin code.</p>
+        <p>Subscription orders above ₹999 per cycle always qualify for free shipping. Where a subscription cycle total falls below ₹999, standard shipping charges apply and will be reflected clearly before billing.</p>
+      </div>
+
+      <div class="legal-section" id="s4">
+        <h2>4. Order Processing</h2>
+
+        <h3>Processing Time</h3>
+        <p>Orders are processed within <strong>1–2 business days</strong> of payment confirmation. Orders placed before <strong>2:00 PM IST on a business day</strong> are typically processed the same day and dispatched the following morning. Orders placed after 2:00 PM, or on Sundays and public holidays, are processed the next business day.</p>
+
+        <h3>Order Confirmation</h3>
+        <p>You will receive an order confirmation email immediately after payment. A separate shipping confirmation email with your tracking number will be sent once your order is dispatched from our facility.</p>
+
+        <h3>Peak Periods</h3>
+        <p>During peak seasons (Diwali, New Year, harvest launch periods, major sale events), processing times may extend to 2–3 business days due to higher order volumes. We will communicate any delays proactively on our website and via email.</p>
+
+        <h3>Order Modifications</h3>
+        <p>If you need to change your delivery address or modify your order, contact us at <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a> within <strong>2 hours</strong> of placing the order. Once an order has been dispatched, address changes are not possible.</p>
+      </div>
+
+      <div class="legal-section" id="s5">
+        <h2>5. Delivery Timeframes</h2>
+        <p>Estimated delivery timelines from the date of dispatch:</p>
+
+        <div class="legal-table-wrap">
+          <table class="legal-table">
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>Estimated Delivery</th>
+                <th>Examples</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Metro Cities</strong></td>
+                <td>2–3 business days</td>
+                <td>Hyderabad, Bangalore, Mumbai, Delhi, Chennai, Kolkata, Pune</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 1 Cities</strong></td>
+                <td>3–4 business days</td>
+                <td>Ahmedabad, Jaipur, Lucknow, Chandigarh, Kochi, Coimbatore</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 2 Cities</strong></td>
+                <td>4–6 business days</td>
+                <td>Visakhapatnam, Nagpur, Indore, Vadodara, Patna, Bhopal</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 3 &amp; Rural</strong></td>
+                <td>5–8 business days</td>
+                <td>Smaller towns, district headquarters, rural pin codes</td>
+              </tr>
+              <tr>
+                <td><strong>Remote Areas</strong></td>
+                <td>8–14 business days</td>
+                <td>Ladakh, North-East states, Andaman &amp; Nicobar, Lakshadweep</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>These are estimates only and are not guarantees. Delivery timelines may be affected by factors outside our control including adverse weather, logistics network disruptions, strikes, and national emergencies. We will keep you informed of any significant delays.</p>
+        <p>Saturdays are counted as business days for delivery purposes. Sundays and national public holidays are not.</p>
+      </div>
+
+      <div class="legal-section" id="s6">
+        <h2>6. Shipping Partners</h2>
+        <p>We work with a network of trusted logistics partners to ensure reliable and timely delivery across India. Our primary shipping partners include:</p>
+        <ul>
+          <li><strong>Delhivery</strong> — pan-India coverage, including Tier 2 &amp; 3 cities</li>
+          <li><strong>BlueDart</strong> — premium express delivery for metros and major cities</li>
+          <li><strong>DTDC</strong> — wide coverage including remote pin codes</li>
+          <li><strong>Ekart Logistics</strong> — regional partner for select zones</li>
+          <li><strong>India Post</strong> — last-mile delivery for remote areas where private carriers do not operate</li>
+        </ul>
+        <p>We automatically select the most appropriate carrier for your location based on pin code, delivery timeline, and product weight. You will be notified of which carrier is handling your order in your shipping confirmation email.</p>
+      </div>
+
+      <div class="legal-section" id="s7">
+        <h2>7. Order Tracking</h2>
+        <p>Once your order is dispatched, you will receive a <strong>shipping confirmation email</strong> containing:</p>
+        <ul>
+          <li>Your tracking number (AWB number)</li>
+          <li>The name of the logistics carrier</li>
+          <li>A direct link to track your shipment on the carrier's website</li>
+          <li>Estimated delivery date</li>
+        </ul>
+        <p>You can also track your order at any time by logging into your PureHarvest account and viewing your order history (account system coming soon).</p>
+        <p>If your tracking link shows no updates for more than <strong>3 business days</strong> after dispatch, please contact us at <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a> and we will investigate with the carrier on your behalf.</p>
+      </div>
+
+      <div class="legal-section" id="s8">
+        <h2>8. Delivery Attempts &amp; Failed Deliveries</h2>
+        <p>Our logistics partners will make up to <strong>3 delivery attempts</strong> to your address. Between attempts, a delivery notification (SMS or physical slip) will be left. After 3 failed attempts, the package will be held at the nearest carrier hub for up to <strong>5 days</strong>, after which it will be returned to us.</p>
+
+        <h3>What Happens After Return to Sender</h3>
+        <p>If your package is returned to us due to failed delivery, we will contact you by email with two options:</p>
+        <ul>
+          <li><strong>Re-dispatch</strong> — we will re-ship to the same or a new address. A flat re-shipping fee of ₹60–₹120 applies depending on your location.</li>
+          <li><strong>Refund</strong> — we will refund the product cost. Original shipping charges (if any were paid) are non-refundable in cases of failed delivery due to customer unavailability or wrong address.</li>
+        </ul>
+        <p>You have <strong>7 days</strong> to respond to our re-delivery offer. If we do not hear from you within 7 days, a refund (minus original shipping) will be issued automatically.</p>
+      </div>
+
+      <div class="legal-section" id="s9">
+        <h2>9. Incorrect or Incomplete Address</h2>
+        <p>It is your responsibility to provide a complete and accurate delivery address at checkout. PureHarvest is not liable for delays or failed deliveries resulting from an incorrect, incomplete, or undeliverable address entered by the customer.</p>
+        <p>If you realise you have entered an incorrect address, contact us <strong>immediately</strong> at <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a>. If the order has not yet been dispatched, we can update the address at no charge. Once dispatched, address changes are subject to carrier policies and may not be possible.</p>
+        <p>If an order is returned to us due to an address error made by the customer, re-shipping charges will apply as per Section 8.</p>
+      </div>
+
+      <div class="legal-section" id="s10">
+        <h2>10. Damaged in Transit</h2>
+        <p>Despite our careful packaging, products can occasionally be damaged during transit. If you receive a damaged package:</p>
+        <ol>
+          <li><strong>Document everything</strong> — photograph the outer packaging (showing damage) and the product(s) inside before opening fully</li>
+          <li><strong>Report within 48 hours</strong> — email <a href="mailto:support@pureharvest.com" style="color:var(--forest);font-weight:500">support@pureharvest.com</a> with your order number and photographs</li>
+          <li><strong>Do not discard</strong> — keep the damaged packaging and product until we advise you otherwise; we may need it for a carrier damage claim</li>
+        </ol>
+        <p>Upon verification, we will ship a replacement at no cost or issue a full refund — your choice. See our <a href="refund.html" style="color:var(--forest);font-weight:500">Refund Policy — Section 8</a> for full details.</p>
+        <p>We use food-grade, tamper-evident packaging and bubble wrap or foam inserts for fragile products. If you notice tamper evidence on delivery, please refuse the package and contact us immediately.</p>
+      </div>
+
+      <div class="legal-section" id="s11">
+        <h2>11. Lost Shipments</h2>
+        <p>A shipment is considered lost if tracking shows no movement for <strong>10 or more consecutive business days</strong> or if the carrier confirms it as lost.</p>
+        <p>In the event of a lost shipment:</p>
+        <ul>
+          <li>We will file a claim with the carrier on your behalf</li>
+          <li>We will offer you a full replacement or a full refund — your choice — without waiting for the carrier claim to be resolved</li>
+          <li>We bear the cost of lost shipments entirely</li>
+        </ul>
+        <p>If your tracking has been static for more than 5 business days, please reach out so we can investigate proactively before the 10-day threshold.</p>
+      </div>
+
+      <div class="legal-section" id="s12">
+        <h2>12. Public Holidays &amp; Disruptions</h2>
+        <p>Orders are not processed or dispatched on the following days:</p>
+        <ul>
+          <li>National public holidays (Republic Day, Independence Day, Gandhi Jayanti)</li>
+          <li>Major regional holidays in Andhra Pradesh</li>
+          <li>Sunday</li>
+        </ul>
+        <p>During extended festive periods (Diwali week, Christmas/New Year week), logistics networks across India experience high load. Deliveries during these periods may take 1–3 additional business days beyond standard timelines. We will communicate known delays via the website and email.</p>
+        <p>We are not responsible for delays caused by natural disasters, extreme weather, civil disturbances, government-mandated lockdowns, or other force majeure events beyond our reasonable control.</p>
+      </div>
+
+      <div class="legal-section" id="s13">
+        <h2>13. Subscription Deliveries</h2>
+        <p>Subscription orders are processed and dispatched on the same timeline as regular orders — within 1–2 business days of each billing cycle. Delivery timelines follow the same zone-based schedule in Section 5.</p>
+        <p>If you need to change your delivery address for a subscription, update it in your account dashboard at least <strong>48 hours before your next billing date</strong>. Changes made after billing may apply from the following cycle.</p>
+        <p>Subscription deliveries will be made to the address saved on your account at the time of billing. It is your responsibility to keep your delivery address current.</p>
+        <p>If a subscription delivery is returned to us due to a failed delivery or address issue, we will follow the same process as Section 8 above. Redelivery charges apply for customer-caused failures.</p>
+      </div>
+
+      <div class="legal-section" id="s14">
+        <h2>14. International Shipping</h2>
+        <p>International shipping is not currently available on our website. We are actively working to enable international orders and will announce availability through our newsletter and website.</p>
+        <p>If you are a business or institutional buyer outside India looking to import PureHarvest products, please visit our <a href="index.html#b2b" style="color:var(--forest);font-weight:500">B2B &amp; Exports</a> page or contact us at <a href="mailto:exports@pureharvest.com" style="color:var(--forest);font-weight:500">exports@pureharvest.com</a>. We work with importers, distributors, and wellness brands across 40+ countries.</p>
+        <div class="legal-box">
+          <p><strong>For international B2B enquiries:</strong> <a href="mailto:exports@pureharvest.com" style="color:var(--honey-dk);font-weight:600">exports@pureharvest.com</a></p>
+        </div>
+      </div>
+
+      <div class="legal-section" id="s15">
+        <h2>15. Contact Us</h2>
+        <p>For all shipping-related queries — tracking, delays, address changes, or delivery issues:</p>
+        <div class="legal-contact-card">
+          <h4>PureHarvest Organics — Shipping Support</h4>
+          <p>📧 <a href="mailto:support@pureharvest.com">support@pureharvest.com</a></p>
+          <p>📬 [Company Address], Araku Valley, Visakhapatnam, Andhra Pradesh — [PIN], India</p>
+          <p>🕐 Support hours: Monday – Saturday, 10:00 AM – 6:00 PM IST</p>
+          <p style="margin-top:8px;font-size:12.5px;color:var(--muted)">Please include your <strong style="color:var(--dark)">order number</strong> in all shipping enquiries so we can assist you faster.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="section-wrap footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-origin">Est. 2018 · Araku Valley, India</span>
+        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From the valley to the world.</p>
+        <div class="footer-socials"><a href="#">Instagram</a><a href="#">WhatsApp</a><a href="#">Email</a></div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Shop</h4><a href="index.html#honey">Honey</a><a href="#">Dry Fruits</a><a href="#">Coffee</a><a href="#">Spices</a><a href="index.html#subscriptions">Subscriptions</a></div>
+        <div class="footer-col"><h4>Discover</h4><a href="#">Our Story</a><a href="#">Journal</a><a href="#">Rituals</a><a href="#">Sustainability</a></div>
+        <div class="footer-col"><h4>Business</h4><a href="#">Wholesale</a><a href="#">Exports</a><a href="#">Partner With Us</a><a href="#">Catalogue</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="shipping.html">Shipping</a><a href="refund.html">Returns</a><a href="#">FAQs</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a><a href="refund.html">Refund Policy</a><a href="shipping.html">Shipping Policy</a><a href="cookie.html">Cookie Policy</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-wordmark-wrap"><p class="footer-wordmark">PureHarvest</p></div>
+  <div class="footer-bottom-bar">
+    <p>© 2026 PureHarvest Organics</p>
+    <p class="footer-credit">Designed &amp; developed by <span id="arcaneText">Arcane Labs</span></p>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="refund.html">Refund Policy</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="cookie.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

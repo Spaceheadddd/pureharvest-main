@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — PureHarvest Organics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="legal.css" />
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar">
+  <div class="ann-track">
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-shell">
+    <div class="header-logo">
+      <div class="logo-mark">🌿</div>
+    </div>
+    <div class="header-brand">
+      <a href="index.html"><p class="brand-name">PUREHARVEST</p></a>
+      <span class="brand-tagline">RAW · WILD · PURE</span>
+    </div>
+    <div class="header-actions">
+      <button class="hdr-btn" aria-label="Search">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="hdr-btn cart-hdr-btn" aria-label="Cart">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-dot"></span>
+      </button>
+      <button class="hdr-btn menu-hdr-btn" id="menuToggle" aria-label="Open menu">
+        <div class="hlines"><span></span><span></span></div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-backdrop" id="searchBackdrop"></div>
+  <div class="search-panel">
+    <div class="search-inner">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search honey, coffee, spices..." autocomplete="off" />
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h3 class="cart-title">Your Ritual</h3>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🌿</div>
+        <p>Your basket is empty.</p>
+        <p style="font-size:13px;color:var(--muted)">Add something from the harvest.</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+      <button class="btn-primary btn-block" id="checkoutBtn">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RITUAL DRAWER -->
+<div id="ritualDrawer" class="ritual-drawer">
+  <div class="drawer-grip"></div>
+  <div class="drawer-head">
+    <div>
+      <p class="drawer-eyebrow">PUREHARVEST</p>
+      <h2 class="drawer-title">Explore Rituals</h2>
+    </div>
+    <button class="drawer-close" id="closeDrawer" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-orbs">
+    <div class="orb orb-active"><div class="orb-ring">🍯</div><span>Honey</span></div>
+    <div class="orb"><div class="orb-ring">🫒</div><span>Dry Fruits</span></div>
+    <div class="orb"><div class="orb-ring">☕</div><span>Coffee</span></div>
+    <div class="orb"><div class="orb-ring">🌶</div><span>Spices</span></div>
+  </div>
+  <nav class="drawer-nav">
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">📖</div><div><p class="d-link-name">Journal</p><p class="d-link-sub">Stories, rituals &amp; slow living</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#story" class="d-link"><div class="d-link-l"><div class="d-icon">🌿</div><div><p class="d-link-name">Our Story</p><p class="d-link-sub">From Araku forests to your table</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#subscriptions" class="d-link"><div class="d-link-l"><div class="d-icon">📦</div><div><p class="d-link-name">Subscriptions</p><p class="d-link-sub">Never run out of your ritual</p></div></div><span class="d-arrow">→</span></a>
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">🏪</div><div><p class="d-link-name">Wholesale</p><p class="d-link-sub">Partner with PureHarvest</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#b2b" class="d-link"><div class="d-link-l"><div class="d-icon">🌍</div><div><p class="d-link-name">Exports &amp; B2B</p><p class="d-link-sub">Bringing Araku to the world</p></div></div><span class="d-arrow">→</span></a>
+  </nav>
+  <div class="drawer-foot-card">
+    <span class="dfc-icon">🌱</span>
+    <div><p class="dfc-title">Rooted in nature.</p><p class="dfc-sub">Crafted with intention.</p></div>
+  </div>
+</div>
+
+
+<!-- ── LEGAL HERO ─────────────────── -->
+<section class="legal-hero">
+  <div class="section-wrap">
+    <p class="eyebrow">Legal</p>
+    <h1 class="legal-title">Privacy Policy</h1>
+    <p class="legal-meta">Last updated: <span>26 May 2026</span> · Effective: <span>26 May 2026</span></p>
+  </div>
+</section>
+
+
+<!-- ── LEGAL BODY ─────────────────── -->
+<div class="legal-body">
+  <div class="section-wrap legal-layout">
+
+    <!-- TABLE OF CONTENTS -->
+    <aside class="legal-toc">
+      <p class="toc-label">Contents</p>
+      <nav class="toc-nav">
+        <a href="#s1">1. Who We Are</a>
+        <a href="#s2">2. Information We Collect</a>
+        <a href="#s3">3. How We Collect It</a>
+        <a href="#s4">4. How We Use It</a>
+        <a href="#s5">5. Legal Basis</a>
+        <a href="#s6">6. Cookies</a>
+        <a href="#s7">7. Data Sharing</a>
+        <a href="#s8">8. Data Retention</a>
+        <a href="#s9">9. Your Rights</a>
+        <a href="#s10">10. Children's Privacy</a>
+        <a href="#s11">11. Security</a>
+        <a href="#s12">12. International Transfers</a>
+        <a href="#s13">13. Third-Party Links</a>
+        <a href="#s14">14. Changes</a>
+        <a href="#s15">15. Contact Us</a>
+      </nav>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="legal-content">
+
+      <div class="legal-box-forest">
+        <p>This Privacy Policy describes how PureHarvest Organics collects, uses, stores, and protects your personal information. By using our website or purchasing from us, you agree to the practices described here. Please read this carefully.</p>
+      </div>
+
+      <div class="legal-section" id="s1">
+        <h2>1. Who We Are</h2>
+        <p><strong>PureHarvest Organics</strong> is a food and wellness brand based in Araku Valley, Andhra Pradesh, India. We sell raw forest honey, single-origin coffee, wild dry fruits, and forest spices sourced from indigenous tribal communities of the Eastern Ghats.</p>
+        <p>Our registered office is located at: <strong>[Company Address], Araku Valley, Visakhapatnam, Andhra Pradesh — [PIN Code], India.</strong></p>
+        <p>For all privacy-related matters, you may contact our Data Officer at <a href="mailto:privacy@pureharvest.com" style="color:var(--forest);font-weight:500">privacy@pureharvest.com</a>.</p>
+        <p>This policy is published in compliance with the <strong>Information Technology Act, 2000</strong>, the <strong>Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011</strong>, and the <strong>Consumer Protection Act, 2019</strong>. Where applicable, we also comply with the <strong>General Data Protection Regulation (GDPR)</strong> for visitors from the European Economic Area.</p>
+      </div>
+
+      <div class="legal-section" id="s2">
+        <h2>2. Information We Collect</h2>
+        <p>We collect the following categories of personal information:</p>
+
+        <h3>Identity & Contact Information</h3>
+        <ul>
+          <li>Full name</li>
+          <li>Email address</li>
+          <li>Phone number (including WhatsApp, if provided)</li>
+          <li>Billing and shipping address (including city, state, PIN code)</li>
+        </ul>
+
+        <h3>Order & Transaction Information</h3>
+        <ul>
+          <li>Products purchased, quantities, and sizes</li>
+          <li>Order history, order status, and delivery tracking data</li>
+          <li>Subscription preferences (products, delivery frequency, pauses, cancellations)</li>
+          <li>Payment method type (UPI, card, net banking — <strong>we do not store card numbers or UPI IDs</strong>; all payment data is processed by Razorpay)</li>
+          <li>Transaction reference numbers and payment confirmation records</li>
+        </ul>
+
+        <h3>Account Information</h3>
+        <ul>
+          <li>Username and encrypted password (if you create an account)</li>
+          <li>Saved addresses and preferences</li>
+          <li>Wishlist and saved products</li>
+          <li>Communication preferences and marketing opt-in status</li>
+        </ul>
+
+        <h3>Device & Usage Information</h3>
+        <ul>
+          <li>IP address and approximate geographic location (city/region level)</li>
+          <li>Browser type, version, and operating system</li>
+          <li>Device type (desktop, mobile, tablet)</li>
+          <li>Pages visited, time spent, clicks, and navigation path</li>
+          <li>Referral source (how you arrived at our site)</li>
+          <li>Search queries entered on our site</li>
+        </ul>
+
+        <h3>Communications</h3>
+        <ul>
+          <li>Emails, messages, or enquiries you send to us</li>
+          <li>Responses to customer surveys or feedback forms</li>
+          <li>Product reviews or testimonials you submit</li>
+          <li>Wholesale or B2B enquiry details</li>
+        </ul>
+
+        <h3>Sensitive Personal Data (SPDI)</h3>
+        <p>We do not intentionally collect sensitive personal data such as financial account credentials, biometric data, health information, or government identity numbers. If you choose to share such information with us (e.g., in a message), you do so voluntarily and at your own discretion.</p>
+      </div>
+
+      <div class="legal-section" id="s3">
+        <h2>3. How We Collect Information</h2>
+
+        <h3>Directly from You</h3>
+        <p>When you place an order, create an account, sign up for our newsletter, fill out the subscription modal, complete a contact or wholesale enquiry form, or communicate with us via email or WhatsApp.</p>
+
+        <h3>Automatically</h3>
+        <p>When you browse our website, we automatically collect certain device and usage data through cookies, web beacons, and server logs. This happens whether or not you are logged in or have made a purchase. See Section 6 for full details on cookies.</p>
+
+        <h3>From Third Parties</h3>
+        <ul>
+          <li><strong>Razorpay</strong> — our payment processor may share payment confirmation data, transaction IDs, and fraud risk signals with us</li>
+          <li><strong>Shipping partners</strong> — logistics providers may share delivery status and recipient confirmation data</li>
+          <li><strong>Analytics providers</strong> — aggregated, anonymised behavioural data about site usage</li>
+          <li><strong>Social media platforms</strong> — if you interact with our social media pages or use social login, those platforms may share limited profile data with us subject to their own privacy policies</li>
+        </ul>
+      </div>
+
+      <div class="legal-section" id="s4">
+        <h2>4. How We Use Your Information</h2>
+        <p>We use the information we collect only for lawful, legitimate purposes:</p>
+
+        <h3>To Process and Fulfil Orders</h3>
+        <ul>
+          <li>Processing payments and verifying transactions</li>
+          <li>Packing, shipping, and delivering your orders</li>
+          <li>Sending order confirmations, invoices, and shipping notifications</li>
+          <li>Managing returns, refunds, and exchanges</li>
+          <li>Resolving delivery disputes with logistics partners</li>
+        </ul>
+
+        <h3>To Manage Your Account & Subscription</h3>
+        <ul>
+          <li>Creating and maintaining your customer account</li>
+          <li>Managing your subscription — delivery rhythm, product preferences, pauses, and cancellations</li>
+          <li>Personalising your experience based on past orders and preferences</li>
+        </ul>
+
+        <h3>To Communicate With You</h3>
+        <ul>
+          <li>Responding to your enquiries, support requests, and complaints</li>
+          <li>Sending transactional emails (order updates, shipping confirmations, subscription reminders)</li>
+          <li>Sending marketing emails, offers, and seasonal harvest updates — <strong>only with your explicit consent and only if you have opted in</strong></li>
+          <li>Conducting satisfaction surveys and requesting product reviews</li>
+        </ul>
+
+        <h3>To Improve Our Products & Site</h3>
+        <ul>
+          <li>Analysing purchase patterns to improve our product catalogue</li>
+          <li>Understanding how users navigate the site to improve usability</li>
+          <li>Testing new features and measuring their effectiveness</li>
+          <li>Detecting and preventing fraud, abuse, and security incidents</li>
+        </ul>
+
+        <h3>To Comply With Legal Obligations</h3>
+        <ul>
+          <li>Maintaining transaction records as required by GST and Indian tax law</li>
+          <li>Responding to lawful requests from law enforcement or regulatory authorities</li>
+          <li>Enforcing our Terms & Conditions and other legal agreements</li>
+        </ul>
+
+        <div class="legal-box">
+          <p><strong>We do not sell your personal data.</strong> We do not sell, rent, or trade your personal information to third parties for their own marketing purposes. Full stop.</p>
+        </div>
+      </div>
+
+      <div class="legal-section" id="s5">
+        <h2>5. Legal Basis for Processing</h2>
+        <p>Under the SPDI Rules (India) and GDPR (EU), we process your personal data on the following legal bases:</p>
+        <ul>
+          <li><strong>Contract performance</strong> — processing necessary to fulfil an order you have placed or a subscription you have entered into</li>
+          <li><strong>Legitimate interests</strong> — fraud prevention, site security, improving our products and service, and communicating about your existing orders</li>
+          <li><strong>Consent</strong> — sending marketing communications, using non-essential cookies, and processing any sensitive data you voluntarily share. You may withdraw consent at any time.</li>
+          <li><strong>Legal obligation</strong> — retaining transaction records and responding to lawful government requests</li>
+        </ul>
+      </div>
+
+      <div class="legal-section" id="s6">
+        <h2>6. Cookies</h2>
+        <p>Cookies are small text files stored on your device when you visit our website. We use them to make the site work properly, understand how it is used, and (with your consent) to personalise your experience.</p>
+
+        <h3>Essential Cookies</h3>
+        <p>These are required for the website to function. They cannot be disabled.</p>
+        <ul>
+          <li>Session state (your cart contents, login status)</li>
+          <li>Security tokens (CSRF protection)</li>
+          <li>Cookie consent preferences</li>
+        </ul>
+
+        <h3>Analytics Cookies</h3>
+        <p>Set with your consent. Help us understand how visitors use the site — which pages are visited, where users drop off, and how traffic arrives.</p>
+        <ul>
+          <li>PostHog (product analytics — page views, clicks, conversion funnels)</li>
+        </ul>
+
+        <h3>Marketing Cookies</h3>
+        <p>Set only with explicit consent. Used to measure the effectiveness of advertising campaigns and to show you relevant ads on other platforms.</p>
+        <ul>
+          <li>Meta Pixel (Facebook / Instagram advertising)</li>
+          <li>Google Ads conversion tracking</li>
+        </ul>
+
+        <h3>Managing Cookies</h3>
+        <p>You can control and delete cookies through your browser settings at any time. Note that disabling essential cookies may prevent parts of the site from working correctly. You may also withdraw consent for analytics and marketing cookies by contacting us at <a href="mailto:privacy@pureharvest.com" style="color:var(--forest);font-weight:500">privacy@pureharvest.com</a>.</p>
+      </div>
+
+      <div class="legal-section" id="s7">
+        <h2>7. Data Sharing</h2>
+        <p>We share your personal information only where necessary and with parties who are contractually obligated to protect it:</p>
+
+        <h3>Payment Processors</h3>
+        <p><strong>Razorpay</strong> processes all payment transactions on our behalf. When you pay, your financial details go directly to Razorpay and are governed by <a href="https://razorpay.com/privacy/" target="_blank" rel="noopener" style="color:var(--forest);font-weight:500">Razorpay's Privacy Policy</a>. We receive only a transaction confirmation and reference number — never your card or UPI details.</p>
+
+        <h3>Logistics & Shipping Partners</h3>
+        <p>We share your name, phone number, and delivery address with our logistics partners (including but not limited to Delhivery, BlueDart, DTDC, and India Post) solely for the purpose of delivering your order. These partners are not authorised to use your data for any other purpose.</p>
+
+        <h3>Technology Service Providers</h3>
+        <ul>
+          <li><strong>Supabase</strong> — database infrastructure for storing order and account data, hosted within secure cloud environments</li>
+          <li><strong>Netlify</strong> — website hosting and delivery infrastructure</li>
+          <li><strong>Email service providers</strong> — for sending transactional and marketing emails (e.g., Resend, SendGrid)</li>
+        </ul>
+
+        <h3>Legal & Regulatory Disclosure</h3>
+        <p>We may disclose your information to law enforcement agencies, courts, or government authorities if required by applicable Indian law, court order, or other legal process. We will notify you of such requests where legally permitted to do so.</p>
+
+        <h3>Business Transfers</h3>
+        <p>In the event of a merger, acquisition, or sale of all or part of our business, your personal data may be transferred to the acquiring entity. We will notify you via email and/or a prominent notice on our website before your data is transferred and becomes subject to a different privacy policy.</p>
+      </div>
+
+      <div class="legal-section" id="s8">
+        <h2>8. Data Retention</h2>
+        <p>We retain your personal information for as long as necessary to fulfil the purposes for which it was collected, subject to legal and regulatory requirements:</p>
+        <ul>
+          <li><strong>Order and transaction records</strong> — 7 years, as required by Indian GST and tax regulations</li>
+          <li><strong>Customer accounts</strong> — for the duration of your account, plus 2 years after closure</li>
+          <li><strong>Marketing consent records</strong> — until you withdraw consent, plus 1 year thereafter as evidence of consent</li>
+          <li><strong>Support and communication records</strong> — 3 years from last interaction</li>
+          <li><strong>Analytics data</strong> — 26 months in anonymised, aggregated form</li>
+          <li><strong>Fraud prevention records</strong> — up to 5 years from the date of the relevant incident</li>
+        </ul>
+        <p>When retention periods expire, data is securely deleted or anonymised in a manner that prevents re-identification.</p>
+      </div>
+
+      <div class="legal-section" id="s9">
+        <h2>9. Your Rights</h2>
+        <p>Under Indian law and, where applicable, GDPR, you have the following rights regarding your personal data:</p>
+        <ul>
+          <li><strong>Right to Access</strong> — You may request a copy of the personal data we hold about you at any time.</li>
+          <li><strong>Right to Correction</strong> — You may request that we correct inaccurate or incomplete information.</li>
+          <li><strong>Right to Deletion</strong> — You may request that we delete your personal data. Note that we may retain certain data where required by law (e.g., transaction records).</li>
+          <li><strong>Right to Data Portability</strong> — You may request a copy of your data in a structured, machine-readable format.</li>
+          <li><strong>Right to Withdraw Consent</strong> — Where processing is based on consent (marketing emails, non-essential cookies), you may withdraw at any time without affecting the lawfulness of prior processing.</li>
+          <li><strong>Right to Object</strong> — You may object to processing based on legitimate interests, including direct marketing.</li>
+          <li><strong>Right to Restrict Processing</strong> — In certain circumstances, you may request that we limit how we use your data.</li>
+        </ul>
+        <p>To exercise any of these rights, contact us at <a href="mailto:privacy@pureharvest.com" style="color:var(--forest);font-weight:500">privacy@pureharvest.com</a>. We will respond within <strong>30 days</strong> of receiving your request. We may need to verify your identity before processing the request.</p>
+        <p>If you are in the EU/EEA and believe we have not addressed your concern adequately, you have the right to lodge a complaint with your local data protection authority.</p>
+      </div>
+
+      <div class="legal-section" id="s10">
+        <h2>10. Children's Privacy</h2>
+        <p>Our website and services are not directed to individuals under the age of 18. We do not knowingly collect personal information from minors. If we become aware that we have collected personal data from a child under 18 without verifiable parental consent, we will delete that information promptly.</p>
+        <p>If you believe a minor has provided personal information to us, please contact us at <a href="mailto:privacy@pureharvest.com" style="color:var(--forest);font-weight:500">privacy@pureharvest.com</a> and we will take immediate action.</p>
+      </div>
+
+      <div class="legal-section" id="s11">
+        <h2>11. Security</h2>
+        <p>We implement reasonable and appropriate technical and organisational security measures to protect your personal data against unauthorised access, disclosure, alteration, or destruction. These include:</p>
+        <ul>
+          <li>HTTPS encryption for all data transmitted between your browser and our servers</li>
+          <li>Encrypted storage of passwords using industry-standard hashing algorithms</li>
+          <li>Restricted access to personal data — only authorised personnel may access it, and only where necessary for their role</li>
+          <li>Payment processing handled entirely by Razorpay — we never see or store your payment credentials</li>
+          <li>Regular review of our security practices and access controls</li>
+        </ul>
+        <p>However, no method of transmission over the internet or electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your personal data, we cannot guarantee absolute security. In the event of a data breach that affects your rights, we will notify you as required by applicable law.</p>
+      </div>
+
+      <div class="legal-section" id="s12">
+        <h2>12. International Data Transfers</h2>
+        <p>PureHarvest Organics is based in India. Your data is primarily stored and processed in India. Where we use technology service providers whose infrastructure is located outside India (for example, cloud hosting services), we ensure appropriate safeguards are in place including standard contractual clauses and data processing agreements that meet the requirements of applicable law.</p>
+        <p>If you are accessing our site from outside India, please be aware that your data will be transferred to and processed in India, where data protection laws may differ from those in your country.</p>
+      </div>
+
+      <div class="legal-section" id="s13">
+        <h2>13. Third-Party Links</h2>
+        <p>Our website may contain links to third-party websites, social media platforms, or external content. This Privacy Policy applies only to information collected on our website. We are not responsible for the privacy practices or content of any third-party sites. We encourage you to read the privacy policies of any external sites you visit.</p>
+      </div>
+
+      <div class="legal-section" id="s14">
+        <h2>14. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or for other operational reasons. When we make material changes, we will:</p>
+        <ul>
+          <li>Update the "Last updated" date at the top of this page</li>
+          <li>Send an email notification to registered customers where the changes are significant</li>
+          <li>Display a prominent notice on our website</li>
+        </ul>
+        <p>We encourage you to review this policy periodically. Your continued use of our website after changes are posted constitutes your acceptance of the revised policy.</p>
+      </div>
+
+      <div class="legal-section" id="s15">
+        <h2>15. Contact Us</h2>
+        <p>If you have questions, concerns, or requests regarding this Privacy Policy or the way we handle your data, please reach out:</p>
+        <div class="legal-contact-card">
+          <h4>PureHarvest Organics — Data Officer</h4>
+          <p>📧 <a href="mailto:privacy@pureharvest.com">privacy@pureharvest.com</a></p>
+          <p>📬 [Company Address], Araku Valley, Visakhapatnam, Andhra Pradesh — [PIN], India</p>
+          <p>🕐 We aim to respond to all privacy-related requests within <strong>30 business days</strong>.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="section-wrap footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-origin">Est. 2018 · Araku Valley, India</span>
+        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From the valley to the world.</p>
+        <div class="footer-socials">
+          <a href="#">Instagram</a>
+          <a href="#">WhatsApp</a>
+          <a href="#">Email</a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <a href="index.html#honey">Honey</a>
+          <a href="#">Dry Fruits</a>
+          <a href="#">Coffee</a>
+          <a href="#">Spices</a>
+          <a href="index.html#subscriptions">Subscriptions</a>
+        </div>
+        <div class="footer-col">
+          <h4>Discover</h4>
+          <a href="#">Our Story</a>
+          <a href="#">Journal</a>
+          <a href="#">Rituals</a>
+          <a href="#">Sustainability</a>
+        </div>
+        <div class="footer-col">
+          <h4>Business</h4>
+          <a href="#">Wholesale</a>
+          <a href="#">Exports</a>
+          <a href="#">Partner With Us</a>
+          <a href="#">Catalogue</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="shipping.html">Shipping</a>
+          <a href="refund.html">Returns</a>
+          <a href="#">FAQs</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="refund.html">Refund Policy</a>
+          <a href="shipping.html">Shipping Policy</a>
+          <a href="cookie.html">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-wordmark-wrap">
+    <p class="footer-wordmark">PureHarvest</p>
+  </div>
+  <div class="footer-bottom-bar">
+    <p>© 2026 PureHarvest Organics</p>
+    <p class="footer-credit">Designed &amp; developed by <span id="arcaneText">Arcane Labs</span></p>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="refund.html">Refund Policy</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="cookie.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
