@@ -1119,7 +1119,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @media (min-width: 500px) { .nl-form { flex-direction: row; } }
 
 .nl-input {
-  flex: 1; height: 64px;
+  flex: 1; height: 70px;
   border: 1px solid var(--border-md); border-radius: var(--r-pill);
   padding: 0 24px; font-size: 16px; font-family: var(--sans);
   background: var(--white); outline: none;
@@ -1127,6 +1127,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .nl-input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(26,48,40,0.08); }
 .nl-btn { white-space: nowrap; padding: 0 28px; height: 64px; border-radius: var(--r-pill); font-size: 15px; }
+/* MOBILE: Join the Circle input/button height — increase height value here to make taller */
+@media (max-width: 499px) {
+  .nl-input { flex: none; width: 100%; height: 76px; font-size: 16px; padding: 0 28px; } /* for mobile */
+  .nl-btn { height: 76px; width: 100%; font-size: 16px; }
+}
 .nl-note { font-size: 16px; color: var(--muted); }
 
 /* ==============================
