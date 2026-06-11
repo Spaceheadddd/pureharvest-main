@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forest Honey — PureHarvest Organics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ============================================================
+       PRODUCT PAGE — Forest Honey
+    ============================================================ */
+    .pd-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Breadcrumb ── */
+    .pd-crumb { padding: 28px 0 0; font-size: 12px; color: var(--muted); font-family: var(--sans); }
+    .pd-crumb a { color: var(--muted); transition: color var(--ease); }
+    .pd-crumb a:hover { color: var(--forest); }
+    .pd-crumb span { margin: 0 7px; opacity: 0.3; }
+
+    /* ── Hero layout ── */
+    .pd-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; padding: 36px 0 80px; align-items: start; }
+    @media (max-width: 768px) { .pd-hero { grid-template-columns: 1fr; gap: 28px; padding: 20px 0 60px; } }
+
+    /* ── Image column ── */
+    .pd-img-col { position: sticky; top: 96px; }
+    .pd-img-main { width: 100%; aspect-ratio: 4/5; border-radius: var(--r-lg); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .pd-img-badge { position: absolute; top: 16px; left: 16px; font-size: 10px; letter-spacing: 0.6px; color: rgba(255,255,255,0.9); background: rgba(0,0,0,0.28); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 5px 12px; border-radius: var(--r-pill); }
+    .pd-thumbs { display: flex; gap: 10px; margin-top: 12px; }
+    .pd-thumb { flex: 0 0 64px; height: 64px; border-radius: 10px; cursor: pointer; opacity: 0.5; border: 2px solid transparent; transition: opacity var(--ease), border-color var(--ease); }
+    .pd-thumb.active { opacity: 1; border-color: var(--forest); }
+    .pd-thumb:hover { opacity: 0.85; }
+
+    /* ── Info column ── */
+    .pd-rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+    .pd-stars-lg { color: var(--honey); font-size: 15px; letter-spacing: 1px; }
+    .pd-rnum { font-size: 14px; font-weight: 600; color: var(--dark); font-family: var(--sans); }
+    .pd-rcount-link { font-size: 12px; color: var(--forest); border-bottom: 1px solid rgba(26,48,40,0.3); padding-bottom: 1px; transition: opacity var(--ease); }
+    .pd-rcount-link:hover { opacity: 0.6; }
+
+    .pd-eye { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--honey); font-family: var(--sans); font-weight: 500; margin-bottom: 10px; }
+    .pd-name { font-family: var(--serif); font-size: clamp(38px, 5vw, 56px); font-weight: 400; color: var(--dark); line-height: 1.08; margin-bottom: 12px; }
+    .pd-tagline { font-size: 15px; color: var(--gray); line-height: 1.65; margin-bottom: 20px; }
+    .pd-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+    .pd-tag { font-size: 10px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: var(--forest); background: rgba(26,48,40,0.07); padding: 5px 13px; border-radius: var(--r-pill); font-family: var(--sans); }
+
+    .pd-rule { height: 1px; background: var(--border); margin: 20px 0; }
+
+    .pd-size-label { font-size: 11px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); font-family: var(--sans); margin-bottom: 10px; }
+    .pd-sizes { display: flex; gap: 10px; margin-bottom: 20px; }
+    .pd-sz { font-size: 14px; font-weight: 500; font-family: var(--sans); padding: 12px 28px; border-radius: var(--r-pill); border: 1.5px solid var(--border-md); color: var(--gray); background: transparent; cursor: pointer; transition: all var(--ease); }
+    .pd-sz:hover { border-color: var(--forest); color: var(--forest); }
+    .pd-sz.active { background: var(--forest); color: white; border-color: var(--forest); }
+
+    /* Qty stepper */
+    .pd-qty-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .pd-qty-label { font-size: 11px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); font-family: var(--sans); }
+    .pd-qty { display: flex; align-items: center; border: 1.5px solid var(--border-md); border-radius: var(--r-pill); overflow: hidden; }
+    .pd-qty-btn { width: 42px; height: 42px; font-size: 18px; color: var(--forest); background: transparent; display: flex; align-items: center; justify-content: center; transition: background var(--ease); font-family: var(--sans); }
+    .pd-qty-btn:hover { background: var(--warm); }
+    .pd-qty-num { min-width: 36px; text-align: center; font-size: 15px; font-weight: 500; color: var(--dark); font-family: var(--sans); }
+
+    .pd-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+    .pd-price { font-family: var(--sans); font-size: 40px; font-weight: 700; letter-spacing: -1px; color: var(--dark); }
+    .pd-price-note { font-size: 13px; color: var(--muted); font-family: var(--sans); }
+    .pd-ship { font-size: 12px; color: var(--muted); margin-bottom: 24px; margin-top: 4px; }
+
+    .pd-actions { display: flex; gap: 12px; margin-bottom: 20px; }
+    .pd-add { flex: 1; padding: 18px; font-size: 15px; font-weight: 500; font-family: var(--sans); color: var(--forest); border: 1.5px solid rgba(26,48,40,0.28); border-radius: var(--r-pill); transition: background var(--ease), color var(--ease), border-color var(--ease); }
+    .pd-add:hover { background: var(--forest); color: white; border-color: var(--forest); }
+    .pd-buy { flex: 1; padding: 18px; font-size: 15px; font-weight: 500; font-family: var(--sans); color: white; background: var(--forest); border-radius: var(--r-pill); transition: background var(--ease), transform var(--ease); }
+    .pd-buy:hover { background: var(--forest-2); transform: translateY(-1px); }
+
+    .pd-trust { display: flex; flex-wrap: wrap; gap: 12px; padding: 16px 18px; background: var(--off-white); border-radius: 14px; }
+    .pd-trust-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--gray); font-family: var(--sans); }
+    .pd-trust-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--forest); flex-shrink: 0; }
+
+    /* ── Sticky bar ── */
+    .pd-sticky { position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; gap: 20px; transform: translateY(100%); transition: transform 0.3s ease; box-shadow: 0 -8px 32px rgba(0,0,0,0.06); }
+    .pd-sticky.visible { transform: translateY(0); }
+    .pd-sticky-info { flex: 1; min-width: 0; }
+    .pd-sticky-name { font-size: 14px; font-weight: 500; color: var(--dark); font-family: var(--sans); }
+    .pd-sticky-price { font-size: 13px; color: var(--muted); font-family: var(--sans); }
+    .pd-sticky-btn { background: var(--forest); color: white; padding: 13px 24px; border-radius: var(--r-pill); font-size: 14px; font-weight: 500; font-family: var(--sans); white-space: nowrap; transition: background var(--ease); }
+    .pd-sticky-btn:hover { background: var(--forest-2); }
+    @media (max-width: 480px) { .pd-sticky { padding: 12px 16px; gap: 12px; } .pd-sticky-btn { padding: 12px 18px; font-size: 13px; } }
+
+    /* ── Section shared ── */
+    .pd-section-eye { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); font-family: var(--sans); font-weight: 500; margin-bottom: 12px; }
+    .pd-section-h2 { font-family: var(--serif); font-size: clamp(28px, 4vw, 42px); font-weight: 400; color: var(--dark); line-height: 1.15; margin-bottom: 14px; }
+    .pd-section-sub { font-size: 15px; color: var(--gray); line-height: 1.7; max-width: 560px; }
+
+    /* ── Taste Profile ── */
+    .pd-taste { padding: 88px 0; background: var(--warm); }
+    .pd-taste-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; margin-top: 52px; }
+    @media (max-width: 768px) { .pd-taste-layout { grid-template-columns: 1fr; gap: 40px; } }
+
+    .pd-notes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+    .pd-note { display: flex; align-items: center; gap: 7px; padding: 10px 18px; background: white; border-radius: var(--r-pill); font-size: 13px; font-weight: 500; color: var(--dark); border: 1px solid var(--border); font-family: var(--sans); }
+    .pd-note-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    .pd-bars { display: flex; flex-direction: column; gap: 20px; }
+    .pd-bar-label-row { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); font-family: var(--sans); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px; }
+    .pd-bar-title { font-size: 13px; font-weight: 500; color: var(--dark); margin-bottom: 6px; font-family: var(--sans); }
+    .pd-bar-track { height: 5px; background: var(--border); border-radius: 3px; overflow: visible; position: relative; }
+    .pd-bar-fill { height: 100%; background: linear-gradient(to right, var(--honey), #a06820); border-radius: 3px; position: relative; }
+    .pd-bar-fill::after { content: ''; position: absolute; right: -1px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; border-radius: 50%; background: var(--honey-dk); border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+
+    .pd-taste-right { display: flex; flex-direction: column; gap: 32px; }
+    .pd-colour-swatch { display: flex; align-items: center; gap: 20px; padding: 20px 24px; background: white; border-radius: 16px; border: 1px solid var(--border); }
+    .pd-swatch-circle { width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(ellipse at 40% 35%, #e8c050, #a06020, #5c3410); flex-shrink: 0; }
+    .pd-swatch-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); font-family: var(--sans); margin-bottom: 4px; }
+    .pd-swatch-val { font-size: 14px; font-weight: 500; color: var(--dark); font-family: var(--sans); }
+
+    .pd-crystallise { padding: 20px 24px; background: white; border-radius: 16px; border: 1px solid var(--border); }
+    .pd-crys-title { font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 6px; font-family: var(--sans); }
+    .pd-crys-body { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+    .pd-pairings { }
+    .pd-pair-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); font-family: var(--sans); margin-bottom: 12px; }
+    .pd-pair-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pd-pair-chip { font-size: 12px; color: var(--gray); background: white; padding: 7px 14px; border-radius: var(--r-pill); border: 1px solid var(--border); font-family: var(--sans); }
+
+    /* ── Why Different ── */
+    .pd-diff { padding: 88px 0; }
+    .pd-diff-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 52px; }
+    @media (max-width: 900px) { .pd-diff-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+    @media (max-width: 480px) { .pd-diff-grid { grid-template-columns: 1fr 1fr; gap: 14px; } }
+    .pd-diff-col { padding: 28px 22px; background: var(--off-white); border-radius: 18px; border: 1px solid var(--border); }
+    .pd-diff-icon { font-size: 28px; margin-bottom: 14px; }
+    .pd-diff-badge { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--forest); background: rgba(26,48,40,0.08); padding: 3px 9px; border-radius: var(--r-pill); display: inline-block; margin-bottom: 10px; font-family: var(--sans); }
+    .pd-diff-title { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 7px; font-family: var(--sans); line-height: 1.3; }
+    .pd-diff-desc { font-size: 12px; color: var(--gray); line-height: 1.55; }
+
+    /* ── Batch Transparency ── */
+    .pd-batch { padding: 88px 0; background: var(--off-white); }
+    .pd-batch-card { background: white; border-radius: 20px; border: 1px solid var(--border); overflow: hidden; display: grid; grid-template-columns: 200px 1fr; margin-top: 48px; }
+    @media (max-width: 640px) { .pd-batch-card { grid-template-columns: 1fr; } }
+    .pd-batch-sidebar { background: var(--forest); padding: 36px 28px; display: flex; flex-direction: column; justify-content: center; }
+    .pd-batch-sidebar-eye { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.45); font-family: var(--sans); margin-bottom: 10px; }
+    .pd-batch-num { font-family: var(--serif); font-size: 26px; color: white; line-height: 1.25; }
+    .pd-batch-season { font-size: 13px; color: var(--honey); margin-top: 8px; font-family: var(--sans); font-weight: 500; }
+    .pd-batch-fields { padding: 36px 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    @media (max-width: 768px) { .pd-batch-fields { grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 24px; } }
+    @media (max-width: 480px) { .pd-batch-fields { grid-template-columns: 1fr 1fr; gap: 16px; padding: 20px; } }
+    .pd-batch-field-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); font-family: var(--sans); margin-bottom: 5px; }
+    .pd-batch-field-val { font-size: 14px; font-weight: 500; color: var(--dark); font-family: var(--sans); }
+    .pd-batch-cert-row { display: flex; align-items: center; gap: 7px; }
+    .pd-batch-cert-dot { width: 8px; height: 8px; border-radius: 50%; background: #16a34a; flex-shrink: 0; }
+    .pd-batch-note { grid-column: 1 / -1; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); font-family: var(--sans); }
+
+    /* ── Ritual / How to Use ── */
+    .pd-ritual { padding: 88px 0; }
+    .pd-ritual-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 52px; }
+    @media (max-width: 768px) { .pd-ritual-grid { grid-template-columns: 1fr; gap: 14px; } }
+    .pd-ritual-card { border-radius: 20px; overflow: hidden; aspect-ratio: 4/5; position: relative; display: flex; align-items: flex-end; }
+    .pd-ritual-bg { position: absolute; inset: 0; }
+    .pd-ritual-bg-1 { background: radial-gradient(ellipse at 50% 30%, #e8c050, #a06020, #3c2010); }
+    .pd-ritual-bg-2 { background: radial-gradient(ellipse at 50% 30%, #f5f0e8, #c4a870, #6b4c20); }
+    .pd-ritual-bg-3 { background: radial-gradient(ellipse at 50% 30%, #4a7060, #1a3028, #0d1810); }
+    .pd-ritual-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.1) 55%, transparent 100%); }
+    .pd-ritual-text { position: relative; z-index: 2; padding: 28px; }
+    .pd-ritual-num { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: rgba(255,255,255,0.5); font-family: var(--sans); text-transform: uppercase; margin-bottom: 8px; }
+    .pd-ritual-title { font-size: 17px; font-weight: 600; color: white; margin-bottom: 7px; font-family: var(--sans); line-height: 1.3; }
+    .pd-ritual-desc { font-size: 13px; color: rgba(255,255,255,0.72); line-height: 1.55; }
+
+    /* ── Benefits ── */
+    .pd-benefits { padding: 88px 0; background: var(--warm); }
+    .pd-benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 52px; }
+    @media (max-width: 900px) { .pd-benefits-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .pd-benefits-grid { grid-template-columns: 1fr; } }
+    .pd-benefit { background: white; border-radius: 16px; padding: 26px 22px; border: 1px solid var(--border); }
+    .pd-benefit-icon { font-size: 26px; margin-bottom: 14px; }
+    .pd-benefit-title { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 7px; font-family: var(--sans); }
+    .pd-benefit-desc { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+    /* ── Product Story ── */
+    .pd-story { padding: 88px 0; border-top: 1px solid var(--border); }
+    .pd-story-pull { font-family: var(--serif); font-size: clamp(35px, 3.5vw, 40px); font-weight: 400; font-style: italic; color: var(--dark); text-align: center; max-width: 640px; margin: 0 auto 60px; line-height: 1.45; }
+    .pd-story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; }
+    @media (max-width: 768px) { .pd-story-grid { grid-template-columns: 1fr; gap: 28px; } }
+    .pd-story-col h3 { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--dark); margin-bottom: 14px; }
+    .pd-story-col p { font-size: 15px; color: var(--gray); line-height: 1.8; }
+    .pd-story-col p + p { margin-top: 14px; }
+
+    /* ── From the Source ── */
+    .pd-source { background: var(--forest); color: white; padding: 88px 0; }
+    .pd-source-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    @media (max-width: 768px) { .pd-source-inner { grid-template-columns: 1fr; gap: 44px; } }
+    .pd-source-eye { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-family: var(--sans); font-weight: 500; margin-bottom: 14px; }
+    .pd-source-h2 { font-family: var(--serif); font-size: clamp(28px, 4vw, 44px); font-weight: 400; line-height: 1.15; margin-bottom: 20px; }
+    .pd-source-h2 em { color: var(--honey); }
+    .pd-source-p { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 14px; }
+    .pd-source-stats { display: flex; gap: 44px; margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .pd-stat-n { font-family: var(--serif); font-size: 34px; font-weight: 400; color: var(--honey); }
+    .pd-stat-l { font-size: 11px; color: rgba(255,255,255,0.45); font-family: var(--sans); margin-top: 4px; letter-spacing: 0.3px; }
+    .pd-source-visual { aspect-ratio: 1; border-radius: var(--r-lg); overflow: hidden; }
+    .pd-source-img { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding-top: 24px;}
+
+    /* ── Customer Reviews ── */
+    .pd-reviews { padding: 88px 0; }
+    .pd-reviews-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .pd-rev-summary { display: grid; grid-template-columns: 120px 1fr auto; gap: 48px; align-items: center; padding: 36px 40px; background: var(--off-white); border-radius: 20px; margin: 48px 0; }
+    @media (max-width: 768px) { .pd-rev-summary { grid-template-columns: 1fr; gap: 24px; padding: 24px; } }
+    .pd-rev-big { font-family: var(--serif); font-size: 64px; font-weight: 400; color: var(--dark); line-height: 1; }
+    .pd-rev-stars { color: var(--honey); font-size: 18px; letter-spacing: 2px; margin-bottom: 6px; }
+    .pd-rev-total { font-size: 13px; color: var(--muted); font-family: var(--sans); }
+    .pd-rev-bars { display: flex; flex-direction: column; gap: 8px; }
+    .pd-rev-bar-row { display: flex; align-items: center; gap: 10px; }
+    .pd-rev-bar-lbl { font-size: 12px; color: var(--muted); min-width: 14px; text-align: right; font-family: var(--sans); }
+    .pd-rev-bar-track { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .pd-rev-bar-fill { height: 100%; background: var(--honey); border-radius: 3px; }
+    .pd-rev-write { padding: 13px 26px; border: 1.5px solid rgba(26,48,40,0.28); border-radius: var(--r-pill); font-size: 14px; font-weight: 500; color: var(--forest); font-family: var(--sans); transition: background var(--ease), color var(--ease); white-space: nowrap; }
+    .pd-rev-write:hover { background: var(--forest); color: white; border-color: var(--forest); }
+    .pd-rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    @media (max-width: 900px) { .pd-rev-grid { grid-template-columns: 1fr; } .pd-rev-clone { display: none !important; } }
+
+    /* ── Reviews marquee (desktop only) ── */
+    @media (min-width: 901px) {
+      .pd-rev-track-wrap { overflow: hidden; margin: 0 -24px; position: relative; }
+      .pd-rev-track-wrap::before,
+      .pd-rev-track-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 90px; z-index: 2; pointer-events: none; }
+      .pd-rev-track-wrap::before { left: 0; background: linear-gradient(to right, white, transparent); }
+      .pd-rev-track-wrap::after  { right: 0; background: linear-gradient(to left, white, transparent); }
+      .pd-rev-grid { display: flex !important; flex-wrap: nowrap !important; gap: 16px; padding: 6px 24px 12px; width: max-content; animation: pdRevMarquee 36s linear infinite; }
+      .pd-rev-grid:hover { animation-play-state: paused; }
+      .pd-rev-card { flex: 0 0 320px; width: 320px; }
+    }
+    @keyframes pdRevMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .pd-rev-card { background: var(--off-white); border-radius: 16px; padding: 24px; }
+    .pd-rev-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    .pd-rev-name { font-size: 14px; font-weight: 600; color: var(--dark); font-family: var(--sans); margin-bottom: 2px; }
+    .pd-rev-date { font-size: 11px; color: var(--muted); font-family: var(--sans); }
+    .pd-rev-card-stars { color: var(--honey); font-size: 13px; letter-spacing: 0.8px; margin-bottom: 8px; }
+    .pd-rev-verified { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #16a34a; background: rgba(22,163,74,0.1); padding: 3px 9px; border-radius: var(--r-pill); display: inline-block; margin-bottom: 10px; font-family: var(--sans); }
+    .pd-rev-title { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 7px; font-family: var(--sans); }
+    .pd-rev-body { font-size: 13px; color: var(--gray); line-height: 1.65; }
+
+    /* ── FAQ ── */
+    .pd-faq { padding: 88px 0; background: var(--off-white); }
+    .pd-faq-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    .pd-faq-list { margin-top: 48px; border-top: 1px solid var(--border); }
+    .pd-faq-item { border-bottom: 1px solid var(--border); }
+    .pd-faq-q { width: 100%; padding: 22px 0; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 500; color: var(--dark); font-family: var(--sans); text-align: left; gap: 16px; cursor: pointer; }
+    .pd-faq-icon { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border-md); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gray); flex-shrink: 0; transition: transform 0.3s ease, background 0.3s ease; }
+    .pd-faq-item.open .pd-faq-icon { transform: rotate(45deg); background: var(--forest); color: white; border-color: var(--forest); }
+    .pd-faq-a { max-height: 0; overflow: hidden; transition: max-height 0.38s ease; }
+    .pd-faq-a-inner { padding: 0 0 22px; font-size: 14px; color: var(--gray); line-height: 1.75; max-width: 600px; }
+    .pd-faq-item.open .pd-faq-a { max-height: 500px; }
+
+    /* ── Close CTA ── */
+    .pd-close { background: var(--forest-2); padding: 88px 0; }
+    .pd-close-inner { max-width: 640px; margin: 0 auto; padding: 0 24px; text-align: center; }
+    .pd-close-eye { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); font-family: var(--sans); margin-bottom: 12px; }
+    .pd-close-h2 { font-family: var(--serif); font-size: clamp(30px, 4vw, 46px); font-weight: 400; color: white; line-height: 1.15; margin-bottom: 12px; }
+    .pd-close-h2 em { color: var(--honey); font-style: italic; }
+    .pd-close-sub { font-size: 15px; color: rgba(255,255,255,0.55); margin-bottom: 40px; line-height: 1.6; }
+    .pd-close-sizes { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+    .pd-close-sz { padding: 11px 22px; border-radius: var(--r-pill); border: 1.5px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 500; font-family: var(--sans); cursor: pointer; transition: all var(--ease); }
+    .pd-close-sz.active { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.55); color: white; }
+    .pd-close-price-row { font-family: var(--sans); font-size: 36px; font-weight: 700; color: white; letter-spacing: -0.5px; margin-bottom: 28px; }
+    .pd-close-btn { display: inline-block; background: var(--honey); color: white; padding: 18px 48px; border-radius: var(--r-pill); font-size: 16px; font-weight: 600; font-family: var(--sans); transition: background var(--ease), transform var(--ease); margin-bottom: 14px; }
+    .pd-close-btn:hover { background: var(--honey-dk); transform: translateY(-1px); }
+    .pd-close-note { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .pd-close-note a { color: rgba(255,255,255,0.6); border-bottom: 1px solid rgba(255,255,255,0.2); }
+
+    /* ── Related ── */
+    .pd-related { padding: 88px 0 0; }
+    .pd-related-hdr { max-width: 1200px; margin: 0 auto; padding: 0 24px 36px; }
+    .pd-related-eye { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); font-family: var(--sans); font-weight: 500; margin-bottom: 10px; }
+    .pd-related-h2 { font-family: var(--serif); font-size: clamp(26px, 4vw, 36px); font-weight: 400; color: var(--dark); }
+  </style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar">
+  <div class="ann-track">
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>Post-Monsoon 2026 Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>Post-Monsoon 2026 Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-shell">
+    <div class="header-logo"><div class="logo-mark">🌿</div></div>
+    <div class="header-brand">
+      <a href="index.html" style="text-decoration:none">
+        <p class="brand-name">PUREHARVEST</p>
+        <span class="brand-tagline">RAW · WILD · PURE</span>
+      </a>
+    </div>
+    <div class="header-actions">
+      <button class="hdr-btn" aria-label="Search">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="hdr-btn cart-hdr-btn" aria-label="Cart">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-dot"></span>
+      </button>
+      <button class="hdr-btn menu-hdr-btn" id="menuToggle" aria-label="Open menu">
+        <div class="hlines"><span></span><span></span></div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-backdrop" id="searchBackdrop"></div>
+  <div class="search-panel">
+    <div class="search-inner">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search honey, coffee, spices..." autocomplete="off" />
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h3 class="cart-title">Your Ritual</h3>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🌿</div>
+        <p>Your basket is empty.</p>
+        <p style="font-size:13px;color:var(--muted)">Add something from the harvest.</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+      <button class="btn-primary btn-block" id="checkoutBtn">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RITUAL DRAWER -->
+<div id="ritualDrawer" class="ritual-drawer">
+  <div class="drawer-grip"></div>
+  <div class="drawer-head">
+    <div><p class="drawer-eyebrow">PUREHARVEST</p><h2 class="drawer-title">Explore Rituals</h2></div>
+    <button class="drawer-close" id="closeDrawer" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-orbs">
+    <div class="orb orb-active"><div class="orb-ring">🍯</div><span>Honey</span></div>
+    <div class="orb"><div class="orb-ring">🫒</div><span>Dry Fruits</span></div>
+    <div class="orb"><div class="orb-ring">☕</div><span>Coffee</span></div>
+    <div class="orb"><div class="orb-ring">🌶</div><span>Spices</span></div>
+  </div>
+  <nav class="drawer-nav">
+    <a href="index.html#story" class="d-link"><div class="d-link-l"><div class="d-icon">🌿</div><div><p class="d-link-name">Our Story</p><p class="d-link-sub">From Araku forests to your table</p></div></div><span class="d-arrow">→</span></a>
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">📖</div><div><p class="d-link-name">Journal</p><p class="d-link-sub">Stories, rituals &amp; slow living</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#subscriptions" class="d-link"><div class="d-link-l"><div class="d-icon">📦</div><div><p class="d-link-name">Subscriptions</p><p class="d-link-sub">Never run out of your ritual</p></div></div><span class="d-arrow">→</span></a>
+    <a href="contact.html" class="d-link"><div class="d-link-l"><div class="d-icon">✉️</div><div><p class="d-link-name">Contact</p><p class="d-link-sub">We'd love to hear from you</p></div></div><span class="d-arrow">→</span></a>
+  </nav>
+  <div class="drawer-foot-card">
+    <span class="dfc-icon">🌱</span>
+    <div><p class="dfc-title">Rooted in nature.</p><p class="dfc-sub">Crafted with intention.</p></div>
+  </div>
+</div>
+
+
+<main>
+
+  <!-- ── 01 Breadcrumb ── -->
+  <div class="pd-wrap">
+    <nav class="pd-crumb">
+      <a href="index.html">Home</a><span>›</span>
+      <a href="shop.html">Honey</a><span>›</span>
+      Forest Honey
+    </nav>
+  </div>
+
+  <!-- ── 02 HERO ── -->
+  <section id="pdHeroSection">
+    <div class="pd-wrap">
+      <div class="pd-hero">
+
+        <div class="pd-img-col">
+          <div class="pd-img-main p-forest" id="pdMainImg">
+            <span class="pd-img-badge">( forest )</span>
+          </div>
+          <div class="pd-thumbs">
+            <div class="pd-thumb p-forest active" data-img="p-forest" data-badge="( forest )"></div>
+            <div class="pd-thumb p-wildflower" data-img="p-wildflower" data-badge="( wildflower )"></div>
+            <div class="pd-thumb p-acacia" data-img="p-acacia" data-badge="( acacia )"></div>
+          </div>
+        </div>
+
+        <div class="pd-info-col" id="pdInfoCol" data-price-500="699" data-price-1kg="1299">
+
+          <div class="pd-rating-row">
+            <span class="pd-stars-lg">★★★★★</span>
+            <span class="pd-rnum">4.8</span>
+            <a href="#pdReviews" class="pd-rcount-link">312 reviews</a>
+          </div>
+
+          <p class="pd-eye">Raw · Forest Honey</p>
+          <h1 class="pd-name">Forest<br>Honey</h1>
+          <p class="pd-tagline">Deep &amp; Rich · Single Origin. Harvested once a year from the ancient forests of Araku Valley — untouched, unheated, and alive.</p>
+
+          <div class="pd-tags">
+            <span class="pd-tag">Raw</span>
+            <span class="pd-tag">Unfiltered</span>
+            <span class="pd-tag">Single Origin</span>
+            <span class="pd-tag">Never Heated</span>
+            <span class="pd-tag">No Additives</span>
+            <span class="pd-tag">FSSAI Certified</span>
+          </div>
+
+          <div class="pd-rule"></div>
+
+          <p class="pd-size-label">Select Size</p>
+          <div class="pd-sizes" id="pdSizes">
+            <button class="pd-sz active" data-size="500">500g</button>
+            <button class="pd-sz" data-size="1kg">1 kg</button>
+          </div>
+
+          <div class="pd-qty-row">
+            <span class="pd-qty-label">Qty</span>
+            <div class="pd-qty">
+              <button class="pd-qty-btn" id="pdQtyMinus">−</button>
+              <span class="pd-qty-num" id="pdQtyNum">1</span>
+              <button class="pd-qty-btn" id="pdQtyPlus">+</button>
+            </div>
+          </div>
+
+          <div class="pd-price-row">
+            <span class="pd-price" id="pdPrice">₹699</span>
+            <span class="pd-price-note">Incl. all taxes</span>
+          </div>
+          <p class="pd-ship">Free shipping on orders ₹999+ · Estimated 3–5 days</p>
+
+          <div class="pd-actions">
+            <button class="pd-add" id="pdAdd">Add to Cart</button>
+            <button class="pd-buy" id="pdBuy">Buy Now →</button>
+          </div>
+
+          <div class="pd-trust">
+            <div class="pd-trust-item"><span class="pd-trust-dot"></span>Wild Harvested · Araku Forests</div>
+            <div class="pd-trust-item"><span class="pd-trust-dot"></span>100% Raw &amp; Unfiltered</div>
+            <div class="pd-trust-item"><span class="pd-trust-dot"></span>FSSAI Certified · Lab Tested</div>
+            <div class="pd-trust-item"><span class="pd-trust-dot"></span>7-day returns · Secure Packaging</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 03 TASTE PROFILE ── -->
+  <section class="pd-taste">
+    <div class="pd-wrap">
+      <p class="pd-section-eye">Tasting Notes</p>
+      <h2 class="pd-section-h2">What to expect<br>in every spoon</h2>
+      <p class="pd-section-sub">Every batch carries the fingerprint of the Araku forest — wild, complex, and unlike anything from a grocery shelf.</p>
+
+      <div class="pd-taste-layout">
+
+        <div>
+          <div class="pd-notes">
+            <div class="pd-note"><span class="pd-note-dot" style="background:#a06020"></span>Dark Caramel</div>
+            <div class="pd-note"><span class="pd-note-dot" style="background:#3c2810"></span>Forest Wood</div>
+            <div class="pd-note"><span class="pd-note-dot" style="background:#c4903a"></span>Wild Floral</div>
+            <div class="pd-note"><span class="pd-note-dot" style="background:#7a5a30"></span>Earthy Finish</div>
+          </div>
+
+          <div class="pd-bars">
+            <div>
+              <p class="pd-bar-title">Texture</p>
+              <div class="pd-bar-label-row"><span>Light</span><span>Thick</span></div>
+              <div class="pd-bar-track"><div class="pd-bar-fill" style="width:78%"></div></div>
+            </div>
+            <div>
+              <p class="pd-bar-title">Intensity</p>
+              <div class="pd-bar-label-row"><span>Mild</span><span>Bold</span></div>
+              <div class="pd-bar-track"><div class="pd-bar-fill" style="width:72%"></div></div>
+            </div>
+            <div>
+              <p class="pd-bar-title">Sweetness</p>
+              <div class="pd-bar-label-row"><span>Subtle</span><span>Sweet</span></div>
+              <div class="pd-bar-track"><div class="pd-bar-fill" style="width:60%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pd-taste-right">
+          <div class="pd-colour-swatch">
+            <div class="pd-swatch-circle"></div>
+            <div>
+              <p class="pd-swatch-label">Colour</p>
+              <p class="pd-swatch-val">Deep Amber · Almost Mahogany</p>
+              <p style="font-size:12px;color:var(--muted);margin-top:3px">Darker honey = richer forest, denser nectar sources</p>
+            </div>
+          </div>
+
+          <div class="pd-crystallise">
+            <p class="pd-crys-title">About Crystallisation 🍯</p>
+            <p class="pd-crys-body">If your honey crystallises, that is a sign of purity — not a defect. Raw honey naturally crystallises over time because it has not been heated or processed. Simply warm the jar in a bowl of warm water to restore the liquid texture. Never microwave.</p>
+          </div>
+
+          <div class="pd-pairings">
+            <p class="pd-pair-label">Pairs beautifully with</p>
+            <div class="pd-pair-chips">
+              <span class="pd-pair-chip">Warm water + lemon</span>
+              <span class="pd-pair-chip">Sourdough toast</span>
+              <span class="pd-pair-chip">Aged cheese</span>
+              <span class="pd-pair-chip">Masala chai</span>
+              <span class="pd-pair-chip">Plain curd</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04 WHY DIFFERENT ── -->
+  <section class="pd-diff">
+    <div class="pd-wrap">
+      <p class="pd-section-eye">What Sets It Apart</p>
+      <h2 class="pd-section-h2">Not all honey is<br>the same</h2>
+      <p class="pd-section-sub">Most honey on store shelves is heated, blended from multiple countries, and filtered to a point where it's just flavoured sugar. Ours is the opposite.</p>
+      <div class="pd-diff-grid">
+        <div class="pd-diff-col">
+          <div class="pd-diff-icon">❄️</div>
+          <span class="pd-diff-badge">Never Heated</span>
+          <p class="pd-diff-title">Cold-Filtered Only</p>
+          <p class="pd-diff-desc">Heating kills natural enzymes and destroys beneficial compounds. We filter through cloth at ambient temperature — nothing more.</p>
+        </div>
+        <div class="pd-diff-col">
+          <div class="pd-diff-icon">🌲</div>
+          <span class="pd-diff-badge">Wild Hive</span>
+          <p class="pd-diff-title">Forest, Not Farm</p>
+          <p class="pd-diff-desc">Wild bees forage across thousands of acres of untouched forest. No commercial hive could replicate the diversity of nectar they gather.</p>
+        </div>
+        <div class="pd-diff-col">
+          <div class="pd-diff-icon">📍</div>
+          <span class="pd-diff-badge">Single Origin</span>
+          <p class="pd-diff-title">One Valley, One Batch</p>
+          <p class="pd-diff-desc">Every jar is traceable to a single harvest season from Araku Valley. No blending with honeys from other regions or countries.</p>
+        </div>
+        <div class="pd-diff-col">
+          <div class="pd-diff-icon">🫶</div>
+          <span class="pd-diff-badge">Tribe-Harvested</span>
+          <p class="pd-diff-title">Generations of Knowledge</p>
+          <p class="pd-diff-desc">Tribal families use rope-and-smoke techniques passed down through generations. The harvest respects both the bees and the forest.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 05 BATCH TRANSPARENCY ── -->
+  <section class="pd-batch">
+    <div class="pd-wrap">
+      <p class="pd-section-eye">Batch Transparency</p>
+      <h2 class="pd-section-h2">Know exactly where<br>your honey comes from</h2>
+      <p class="pd-section-sub">We track every batch from hive to jar. You should know what season it was harvested, and where.</p>
+
+      <div class="pd-batch-card">
+        <div class="pd-batch-sidebar">
+          <p class="pd-batch-sidebar-eye">Current Batch</p>
+          <p class="pd-batch-num">AV&#8209;2026&#8209;01</p>
+          <p class="pd-batch-season">Post-Monsoon 2026</p>
+        </div>
+        <div class="pd-batch-fields">
+          <div>
+            <p class="pd-batch-field-label">Origin</p>
+            <p class="pd-batch-field-val">Araku Valley, Eastern Ghats</p>
+          </div>
+          <div>
+            <p class="pd-batch-field-label">Season</p>
+            <p class="pd-batch-field-val">Post-Monsoon 2026</p>
+          </div>
+          <div>
+            <p class="pd-batch-field-label">Harvest Date</p>
+            <p class="pd-batch-field-val">October 2026</p>
+          </div>
+          <div>
+            <p class="pd-batch-field-label">Altitude</p>
+            <p class="pd-batch-field-val">900 – 1,100 metres</p>
+          </div>
+          <div>
+            <p class="pd-batch-field-label">FSSAI Status</p>
+            <div class="pd-batch-cert-row">
+              <span class="pd-batch-cert-dot"></span>
+              <p class="pd-batch-field-val">Certified</p>
+            </div>
+          </div>
+          <div>
+            <p class="pd-batch-field-label">Lab Tested</p>
+            <div class="pd-batch-cert-row">
+              <span class="pd-batch-cert-dot"></span>
+              <p class="pd-batch-field-val">Purity Verified</p>
+            </div>
+          </div>
+          <p class="pd-batch-note">Batch details are updated with each new harvest. Detailed lab reports will be published when available.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 06 RITUAL / HOW TO USE ── -->
+  <section class="pd-ritual">
+    <div class="pd-wrap">
+      <p class="pd-section-eye">Ways to Use It</p>
+      <h2 class="pd-section-h2">Build your<br>daily ritual</h2>
+      <p class="pd-section-sub">Forest Honey is more than a sweetener. Here are three ways to bring it into your daily life.</p>
+      <div class="pd-ritual-grid">
+        <div class="pd-ritual-card">
+          <div class="pd-ritual-bg pd-ritual-bg-1"></div>
+          <div class="pd-ritual-overlay"></div>
+          <div class="pd-ritual-text">
+            <p class="pd-ritual-num">01 · Morning</p>
+            <p class="pd-ritual-title">Warm Water Ritual</p>
+            <p class="pd-ritual-desc">A teaspoon in warm water with a squeeze of lemon first thing in the morning. Gentle on an empty stomach, grounding before the day begins.</p>
+          </div>
+        </div>
+        <div class="pd-ritual-card">
+          <div class="pd-ritual-bg pd-ritual-bg-2"></div>
+          <div class="pd-ritual-overlay"></div>
+          <div class="pd-ritual-text">
+            <p class="pd-ritual-num">02 · At the Table</p>
+            <p class="pd-ritual-title">On Toast or in Chai</p>
+            <p class="pd-ritual-desc">Drizzle generously over sourdough, stir into masala chai instead of sugar, or swirl through plain curd. The dark caramel notes deepen with warmth.</p>
+          </div>
+        </div>
+        <div class="pd-ritual-card">
+          <div class="pd-ritual-bg pd-ritual-bg-3"></div>
+          <div class="pd-ritual-overlay"></div>
+          <div class="pd-ritual-text">
+            <p class="pd-ritual-num">03 · Wellness</p>
+            <p class="pd-ritual-title">Soothing &amp; Nourishing</p>
+            <p class="pd-ritual-desc">Mixed with warm turmeric and ginger for a traditional immunity drink. Applied directly to dry skin or lips as an overnight treatment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 07 BENEFITS ── -->
+  <section class="pd-benefits">
+    <div class="pd-wrap">
+      <p class="pd-section-eye">Why You'll Love It</p>
+      <h2 class="pd-section-h2">Your body knows<br>the difference</h2>
+      <p class="pd-section-sub">Raw, unheated honey retains what commercial processing removes. Here is what stays intact in every jar.</p>
+      <div class="pd-benefits-grid">
+        <div class="pd-benefit">
+          <div class="pd-benefit-icon">🛡️</div>
+          <p class="pd-benefit-title">Enzyme-Rich</p>
+          <p class="pd-benefit-desc">Never heated, so natural enzymes like diastase and invertase remain fully active — something no heated honey can offer.</p>
+        </div>
+        <div class="pd-benefit">
+          <div class="pd-benefit-icon">🌿</div>
+          <p class="pd-benefit-title">Prebiotic Support</p>
+          <p class="pd-benefit-desc">Wild honey contains oligosaccharides that nourish beneficial gut bacteria — a gentle, daily contribution to digestive balance.</p>
+        </div>
+        <div class="pd-benefit">
+          <div class="pd-benefit-icon">⚡</div>
+          <p class="pd-benefit-title">Natural Energy</p>
+          <p class="pd-benefit-desc">Complex natural sugars from diverse forest nectar sources provide sustained energy without the spike-and-crash of refined alternatives.</p>
+        </div>
+        <div class="pd-benefit">
+          <div class="pd-benefit-icon">✨</div>
+          <p class="pd-benefit-title">Skin Nourishment</p>
+          <p class="pd-benefit-desc">Rich in antioxidants and natural humectants. Consumed daily or applied topically — raw honey has been used for skin health for centuries.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 08 PRODUCT STORY ── -->
+  <section class="pd-story">
+    <div class="pd-wrap">
+      <p class="pd-story-pull">"Some honeys are made.<br><em>Ours is remembered.</em>"</p>
+      <div class="pd-story-grid">
+        <div class="pd-story-col">
+          <h3>What makes it different</h3>
+          <p>Forest Honey is harvested once a year from the wild bee colonies of the Araku Valley. The bees forage across thousands of acres of pristine, untouched forest — feeding on ancient trees, wildflowers, and medicinal herbs that no commercial farm can replicate.</p>
+          <p>The result is a honey that tastes of the forest itself — dark, complex, with notes of caramel and earth that linger long after the first taste.</p>
+        </div>
+        <div class="pd-story-col">
+          <h3>How it reaches you</h3>
+          <p>Tribal harvesters use traditional rope and smoke techniques passed down through generations. Honey is collected at dawn, cold-filtered through cotton cloth, and packed within 24 hours. No heating. No blending. No additives — ever.</p>
+          <p>Each batch is lab-tested for purity before leaving the valley. You can find the batch details for your jar in the card above.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 09 FROM THE SOURCE ── -->
+  <section class="pd-source">
+    <div class="pd-source-inner">
+      <div>
+        <p class="pd-source-eye">From the Source</p>
+        <h2 class="pd-source-h2">Born in the Sacred<br>Hills of <em>Araku Valley</em></h2>
+        
+        <p class="pd-source-p">Nestled in the Eastern Ghats of Andhra Pradesh, Araku Valley sits between 900 and 1,100 metres above sea level. The air is cool, the forests are dense, and the biodiversity is extraordinary.</p>
+        <p class="pd-source-p">We work directly with tribal farming communities — building relationships, not supply chains. Every family receives fair compensation, and a portion of every sale supports forest conservation.</p>
+        
+        <div class="pd-source-stats">
+          <div><p class="pd-stat-n">100+</p><p class="pd-stat-l">Forest families</p></div>
+          <div><p class="pd-stat-n">900m+</p><p class="pd-stat-l">Altitude harvested</p></div>
+          <div><p class="pd-stat-n">1×</p><p class="pd-stat-l">Harvest per year</p></div>
+        </div>
+      </div>
+
+      <div class="pd-source-visual">
+        <div class="pd-source-img p-forest"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 10 CUSTOMER REVIEWS ── -->
+  <section class="pd-reviews" id="pdReviews">
+    <div class="pd-reviews-inner">
+      <p class="pd-section-eye">Customer Reviews</p>
+      <h2 class="pd-section-h2">What ritual seekers say</h2>
+
+      <div class="pd-rev-summary">
+        <div style="text-align:center">
+          <p class="pd-rev-big">4.8</p>
+          <p class="pd-rev-stars">★★★★★</p>
+          <p class="pd-rev-total">312 reviews</p>
+        </div>
+        <div class="pd-rev-bars">
+          <div class="pd-rev-bar-row"><span class="pd-rev-bar-lbl">5★</span><div class="pd-rev-bar-track"><div class="pd-rev-bar-fill" style="width:88%"></div></div></div>
+          <div class="pd-rev-bar-row"><span class="pd-rev-bar-lbl">4★</span><div class="pd-rev-bar-track"><div class="pd-rev-bar-fill" style="width:8%"></div></div></div>
+          <div class="pd-rev-bar-row"><span class="pd-rev-bar-lbl">3★</span><div class="pd-rev-bar-track"><div class="pd-rev-bar-fill" style="width:2%"></div></div></div>
+          <div class="pd-rev-bar-row"><span class="pd-rev-bar-lbl">2★</span><div class="pd-rev-bar-track"><div class="pd-rev-bar-fill" style="width:1%"></div></div></div>
+          <div class="pd-rev-bar-row"><span class="pd-rev-bar-lbl">1★</span><div class="pd-rev-bar-track"><div class="pd-rev-bar-fill" style="width:1%"></div></div></div>
+        </div>
+        <a href="contact.html" class="pd-rev-write">Write a Review</a>
+      </div>
+
+      <div class="pd-rev-track-wrap">
+      <div class="pd-rev-grid">
+        <div class="pd-rev-card">
+          <div class="pd-rev-head">
+            <div><p class="pd-rev-name">Priya M.</p><p class="pd-rev-date">November 2024</p></div>
+          </div>
+          <p class="pd-rev-card-stars">★★★★★</p>
+          <span class="pd-rev-verified">Verified Purchase</span>
+          <p class="pd-rev-title">This is not honey — it's an experience</p>
+          <p class="pd-rev-body">I've been using this every morning in warm water for two months. The flavour is unlike anything from a supermarket. Dark, rich, complex. You can taste that it's from a real forest.</p>
+        </div>
+        <div class="pd-rev-card">
+          <div class="pd-rev-head">
+            <div><p class="pd-rev-name">Arjun K.</p><p class="pd-rev-date">October 2024</p></div>
+          </div>
+          <p class="pd-rev-card-stars">★★★★★</p>
+          <span class="pd-rev-verified">Verified Purchase</span>
+          <p class="pd-rev-title">First raw honey I've ever had — instantly converted</p>
+          <p class="pd-rev-body">Was sceptical at first about the price. After the first jar, I understood. The batch card is a nice touch — makes you feel like you know exactly what you're getting.</p>
+        </div>
+        <div class="pd-rev-card">
+          <div class="pd-rev-head">
+            <div><p class="pd-rev-name">Sneha R.</p><p class="pd-rev-date">October 2024</p></div>
+          </div>
+          <p class="pd-rev-card-stars">★★★★★</p>
+          <span class="pd-rev-verified">Verified Purchase</span>
+          <p class="pd-rev-title">It crystallised — I was worried, then I read the FAQ</p>
+          <p class="pd-rev-body">Mine crystallised after three weeks and I panicked. Then I read about it being a purity sign. Warmed it up and it was perfect. Wish they'd include a note inside the jar.</p>
+        </div>
+        <div class="pd-rev-card">
+          <div class="pd-rev-head">
+            <div><p class="pd-rev-name">Naidu P.</p><p class="pd-rev-date">October 2024</p></div>
+          </div>
+          <p class="pd-rev-card-stars">★★★★★</p>
+          <span class="pd-rev-verified">Verified Purchase</span>
+          <p class="pd-rev-title">Amazing — Never tasted honey like this before</p>
+          <p class="pd-rev-body">I've tried many honeys, but this one is on another level. The depth of flavor is incredible — you can really taste the forest. It's worth every penny.</p>
+        </div>
+        <!-- clones for seamless marquee loop (hidden on mobile) -->
+        <div class="pd-rev-card pd-rev-clone" aria-hidden="true">
+          <div class="pd-rev-head"><div><p class="pd-rev-name">Priya M.</p><p class="pd-rev-date">November 2024</p></div></div>
+          <p class="pd-rev-card-stars">★★★★★</p><span class="pd-rev-verified">Verified Purchase</span>
+          <p class="pd-rev-title">This is not honey — it's an experience</p>
+          <p class="pd-rev-body">I've been using this every morning in warm water for two months. The flavour is unlike anything from a supermarket. Dark, rich, complex. You can taste that it's from a real forest.</p>
+        </div>
+        <div class="pd-rev-card pd-rev-clone" aria-hidden="true">
+          <div class="pd-rev-head"><div><p class="pd-rev-name">Arjun K.</p><p class="pd-rev-date">October 2024</p></div></div>
+          <p class="pd-rev-card-stars">★★★★★</p><span class="pd-rev-verified">Verified Purchase</span>
+          <p class="pd-rev-title">First raw honey I've ever had — instantly converted</p>
+          <p class="pd-rev-body">Was sceptical at first about the price. After the first jar, I understood. The batch card is a nice touch — makes you feel like you know exactly what you're getting.</p>
+        </div>
+        <div class="pd-rev-card pd-rev-clone" aria-hidden="true">
+          <div class="pd-rev-head"><div><p class="pd-rev-name">Sneha R.</p><p class="pd-rev-date">October 2024</p></div></div>
+          <p class="pd-rev-card-stars">★★★★★</p><span class="pd-rev-verified">Verified Purchase</span>
+          <p class="pd-rev-title">It crystallised — I was worried, then I read the FAQ</p>
+          <p class="pd-rev-body">Mine crystallised after three weeks and I panicked. Then I read about it being a purity sign. Warmed it up and it was perfect. Wish they'd include a note inside the jar.</p>
+        </div>
+        <div class="pd-rev-card pd-rev-clone" aria-hidden="true">
+          <div class="pd-rev-head"><div><p class="pd-rev-name">Naidu P.</p><p class="pd-rev-date">October 2024</p></div></div>
+          <p class="pd-rev-card-stars">★★★★★</p><span class="pd-rev-verified">Verified Purchase</span>
+          <p class="pd-rev-title">Amazing — Never tasted honey like this before</p>
+          <p class="pd-rev-body">I've tried many honeys, but this one is on another level. The depth of flavor is incredible — you can really taste the forest. It's worth every penny.</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 11 FAQ ── -->
+  <section class="pd-faq">
+    <div class="pd-faq-inner">
+      <p class="pd-section-eye">Questions &amp; Answers</p>
+      <h2 class="pd-section-h2">You might still<br>be wondering…</h2>
+      <div class="pd-faq-list" id="pdFaqList">
+
+        <div class="pd-faq-item open">
+          <button class="pd-faq-q">Why is my honey crystallised? <span class="pd-faq-icon">+</span></button>
+          <div class="pd-faq-a"><p class="pd-faq-a-inner">Crystallisation is a natural and positive sign of raw, unprocessed honey. It happens because raw honey retains its natural glucose content, which solidifies over time. Commercial honey is heated specifically to prevent this — a process that destroys enzymes and nutrients. To restore the liquid texture, place the jar in a bowl of warm (not boiling) water for 10–15 minutes. Never microwave.</p></div>
+        </div>
+
+        <div class="pd-faq-item">
+          <button class="pd-faq-q">How is this different from store-bought honey? <span class="pd-faq-icon">+</span></button>
+          <div class="pd-faq-a"><p class="pd-faq-a-inner">Most honey sold in supermarkets is ultra-filtered and heated above 70°C, which destroys natural enzymes, pollen, and beneficial compounds. Many are also blended from honeys sourced across multiple countries. Our Forest Honey is never heated, never blended, and traceable to a single harvest season in Araku Valley.</p></div>
+        </div>
+
+        <div class="pd-faq-item">
+          <button class="pd-faq-q">Is it safe for children? <span class="pd-faq-icon">+</span></button>
+          <div class="pd-faq-a"><p class="pd-faq-a-inner">Raw honey should not be given to children under 12 months due to the risk of infant botulism — this applies to all raw honey, not just ours. For children over one year and adults, raw honey is safe to consume. If you have specific health concerns, consult a paediatrician or doctor.</p></div>
+        </div>
+
+        <div class="pd-faq-item">
+          <button class="pd-faq-q">What is the shelf life? <span class="pd-faq-icon">+</span></button>
+          <div class="pd-faq-a"><p class="pd-faq-a-inner">Honey has an indefinitely long shelf life when stored correctly. Keep the jar sealed, away from direct sunlight, and at room temperature. Avoid introducing water or food particles with a wet spoon, as this can cause fermentation. Our jars have a best-before date printed on the base, but properly stored raw honey can last for years.</p></div>
+        </div>
+
+        <div class="pd-faq-item">
+          <button class="pd-faq-q">What does "single origin" mean? <span class="pd-faq-icon">+</span></button>
+          <div class="pd-faq-a"><p class="pd-faq-a-inner">Single origin means the honey comes from one specific geographic region — Araku Valley, Eastern Ghats — in a single harvest season. It is not blended with honey from other regions, farms, or countries. This is what gives each batch its distinct flavour profile and makes batch traceability possible.</p></div>
+        </div>
+
+        <div class="pd-faq-item">
+          <button class="pd-faq-q">Can I consume this if I have diabetes? <span class="pd-faq-icon">+</span></button>
+          <div class="pd-faq-a"><p class="pd-faq-a-inner">Honey contains natural sugars and will affect blood glucose levels. If you have diabetes or are managing blood sugar, please consult your doctor before incorporating raw honey into your diet. We cannot provide medical advice, and this product is a food item, not a medicine.</p></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 12 CLOSE CTA ── -->
+  <section class="pd-close">
+    <div class="pd-close-inner">
+      <p class="pd-close-eye">Ready to Start Your Ritual?</p>
+      <h2 class="pd-close-h2">Araku Forest<br><em>Honey</em></h2>
+      <p class="pd-close-sub">Post-Monsoon 2026 Harvest · Batch AV-2026-01 · Limited Stock</p>
+      <div class="pd-close-sizes" id="pdCloseSizes">
+        <button class="pd-close-sz active" data-size="500" data-price="699">500g — ₹699</button>
+        <button class="pd-close-sz" data-size="1kg" data-price="1299">1 kg — ₹1,299</button>
+      </div>
+      <p class="pd-close-price-row" id="pdClosePrice">₹699</p>
+      <button class="pd-close-btn" id="pdCloseAdd">Add to Cart →</button>
+      <p class="pd-close-note">or <a href="index.html#subscriptions">subscribe &amp; save 15%</a> · <a href="refund.html">7-day returns</a></p>
+    </div>
+  </section>
+
+  <!-- ── 13 RELATED HARVEST ── -->
+  <section class="pd-related">
+    <div class="pd-related-hdr">
+      <p class="pd-related-eye">From the Harvest</p>
+      <h2 class="pd-related-h2">Complete Your Ritual</h2>
+    </div>
+    <div class="product-grid" id="productCarousel">
+      <div class="p-card" data-price-500="649" data-price-1kg="1199">
+        <div class="p-card-top"><span class="p-cat">( wildflower )</span><button class="p-arrow">↗</button></div>
+        <div class="p-img-wrap"><div class="p-img p-wildflower"></div></div>
+        <div class="p-info"><p class="p-name">Wildflower Honey</p><p class="p-sub">Light &amp; Floral · Multi-Bloom</p><div class="p-sizes"><button class="p-sz p-sz-active" data-size="500">500g</button><button class="p-sz" data-size="1kg">1 kg</button></div><div class="p-bottom"><span class="p-price">₹649</span><div class="p-actions"><button class="p-add" data-product="Wildflower Honey" data-price="649">Add</button><button class="p-buy" data-product="Wildflower Honey" data-price="649">Buy Now</button></div></div></div>
+      </div>
+      <div class="p-card" data-price-500="749" data-price-1kg="1399">
+        <div class="p-card-top"><span class="p-cat">( acacia )</span><button class="p-arrow">↗</button></div>
+        <div class="p-img-wrap"><div class="p-img p-acacia"></div></div>
+        <div class="p-info"><p class="p-name">Acacia Honey</p><p class="p-sub">Mild &amp; Delicate · Golden Clear</p><div class="p-sizes"><button class="p-sz p-sz-active" data-size="500">500g</button><button class="p-sz" data-size="1kg">1 kg</button></div><div class="p-bottom"><span class="p-price">₹749</span><div class="p-actions"><button class="p-add" data-product="Acacia Honey" data-price="749">Add</button><button class="p-buy" data-product="Acacia Honey" data-price="749">Buy Now</button></div></div></div>
+      </div>
+      <div class="p-card" data-price-500="599" data-price-1kg="1099">
+        <div class="p-card-top"><span class="p-cat">( arabica )</span><button class="p-arrow">↗</button></div>
+        <div class="p-img-wrap"><div class="p-img p-cof-1"></div></div>
+        <div class="p-info"><p class="p-name">Araku Arabica</p><p class="p-sub">Single Origin · Light Roast</p><div class="p-sizes"><button class="p-sz p-sz-active" data-size="500">500g</button><button class="p-sz" data-size="1kg">1 kg</button></div><div class="p-bottom"><span class="p-price">₹599</span><div class="p-actions"><button class="p-add" data-product="Araku Arabica" data-price="599">Add</button><button class="p-buy" data-product="Araku Arabica" data-price="599">Buy Now</button></div></div></div>
+      </div>
+      <div class="p-card" data-price-500="349" data-price-1kg="649">
+        <div class="p-card-top"><span class="p-cat">( turmeric )</span><button class="p-arrow">↗</button></div>
+        <div class="p-img-wrap"><div class="p-img p-sp-1"></div></div>
+        <div class="p-info"><p class="p-name">Wild Turmeric</p><p class="p-sub">High Curcumin · Forest Grown</p><div class="p-sizes"><button class="p-sz p-sz-active" data-size="500">500g</button><button class="p-sz" data-size="1kg">1 kg</button></div><div class="p-bottom"><span class="p-price">₹349</span><div class="p-actions"><button class="p-add" data-product="Wild Turmeric" data-price="349">Add</button><button class="p-buy" data-product="Wild Turmeric" data-price="349">Buy Now</button></div></div></div>
+      </div>
+    </div>
+    <div class="pd-wrap" style="padding-bottom:88px">
+      <div class="carousel-progress-wrap">
+        <div class="carousel-progress"><div class="carousel-fill" id="carouselFill"></div></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── STICKY BUY BAR ── -->
+<div class="pd-sticky" id="pdSticky">
+  <div class="pd-sticky-info">
+    <p class="pd-sticky-name">Forest Honey · <span id="pdStickySize">500g</span></p>
+    <p class="pd-sticky-price" id="pdStickyPrice">₹699</p>
+  </div>
+  <button class="pd-sticky-btn" id="pdStickyAdd">Add to Cart</button>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="section-wrap footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-origin">Est. 2026 · Araku Valley, India</span>
+        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From the valley to the world.</p>
+        <div class="footer-socials"><a href="#">Instagram</a><a href="#">WhatsApp</a><a href="#">Email</a></div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Shop</h4><a href="shop.html">Honey</a><a href="shop.html">Dry Fruits</a><a href="shop.html">Coffee</a><a href="shop.html">Spices</a><a href="index.html#subscriptions">Subscriptions</a></div>
+        <div class="footer-col"><h4>Discover</h4><a href="#">Our Story</a><a href="#">Journal</a><a href="#">Rituals</a><a href="#">Sustainability</a></div>
+        <div class="footer-col"><h4>Business</h4><a href="#">Wholesale</a><a href="#">Exports</a><a href="#">Partner With Us</a><a href="#">Catalogue</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="shipping.html">Shipping</a><a href="refund.html">Returns</a><a href="#">FAQs</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a><a href="refund.html">Refund Policy</a><a href="shipping.html">Shipping Policy</a><a href="cookie.html">Cookie Policy</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-wordmark-wrap"><p class="footer-wordmark">PureHarvest</p></div>
+  <div class="footer-bottom-bar">
+    <p>© 2026 PureHarvest Organics</p>
+    <p class="footer-credit">Designed &amp; developed by <span id="arcaneText">Arcane Labs</span></p>
+    <div class="footer-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refund.html">Refund Policy</a><a href="shipping.html">Shipping</a><a href="cookie.html">Cookies</a></div>
+  </div>
+</footer>
+
+
+<script src="script.js"></script>
+<script>
+(function () {
+  /* ── Prices ── */
+  const price500 = 699;
+  const price1kg = 1299;
+  let activePrice = price500;
+  let activeSize  = '500g';
+  let qty = 1;
+  let imgClass = 'p-forest';
+
+  const priceEl   = document.getElementById('pdPrice');
+  const pdSzBtns  = document.querySelectorAll('.pd-sz');
+  const pdAdd     = document.getElementById('pdAdd');
+  const pdBuy     = document.getElementById('pdBuy');
+  const pdQtyMinus = document.getElementById('pdQtyMinus');
+  const pdQtyPlus  = document.getElementById('pdQtyPlus');
+  const pdQtyNum   = document.getElementById('pdQtyNum');
+  const pdSticky   = document.getElementById('pdSticky');
+  const pdStickyAdd = document.getElementById('pdStickyAdd');
+  const pdStickyPrice = document.getElementById('pdStickyPrice');
+  const pdStickySize  = document.getElementById('pdStickySize');
+  const pdHeroSection = document.getElementById('pdHeroSection');
+
+  /* Size toggle */
+  pdSzBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      pdSzBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activePrice = btn.dataset.size === '1kg' ? price1kg : price500;
+      activeSize  = btn.dataset.size === '1kg' ? '1 kg' : '500g';
+      if (priceEl) priceEl.textContent = '₹' + activePrice.toLocaleString('en-IN');
+      if (pdStickyPrice) pdStickyPrice.textContent = '₹' + activePrice.toLocaleString('en-IN');
+      if (pdStickySize)  pdStickySize.textContent  = activeSize;
+    });
+  });
+
+  /* Qty stepper */
+  if (pdQtyMinus) pdQtyMinus.addEventListener('click', () => { if (qty > 1) { qty--; pdQtyNum.textContent = qty; } });
+  if (pdQtyPlus)  pdQtyPlus.addEventListener('click',  () => { if (qty < 10) { qty++; pdQtyNum.textContent = qty; } });
+
+  /* Add to Cart */
+  function doAdd(triggerEl) {
+    if (typeof addToCartItem === 'function') {
+      for (let i = 0; i < qty; i++) addToCartItem('Forest Honey', activePrice, imgClass, triggerEl);
+    }
+    const orig = triggerEl.textContent;
+    triggerEl.textContent = '✓ Added';
+    triggerEl.style.background = '#16a34a';
+    triggerEl.style.color = 'white';
+    triggerEl.style.borderColor = '#16a34a';
+    setTimeout(() => {
+      if (typeof openCartSidebar === 'function') openCartSidebar();
+    }, 400);
+    setTimeout(() => { triggerEl.textContent = orig; triggerEl.style.background = ''; triggerEl.style.color = ''; triggerEl.style.borderColor = ''; }, 1600);
+  }
+  if (pdAdd)      pdAdd.addEventListener('click',      () => doAdd(pdAdd));
+  if (pdStickyAdd) pdStickyAdd.addEventListener('click', () => doAdd(pdStickyAdd));
+
+  /* Buy Now */
+  if (pdBuy) {
+    pdBuy.addEventListener('click', () => {
+      if (typeof addToCartItem === 'function') {
+        for (let i = 0; i < qty; i++) addToCartItem('Forest Honey', activePrice, imgClass, pdBuy);
+        if (typeof openCartSidebar === 'function') openCartSidebar();
+      }
+    });
+  }
+
+  /* Thumbnail switcher */
+  document.querySelectorAll('.pd-thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      document.querySelectorAll('.pd-thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+      const mainImg = document.getElementById('pdMainImg');
+      if (mainImg) {
+        mainImg.className = 'pd-img-main ' + (thumb.dataset.img || 'p-forest');
+        const badge = mainImg.querySelector('.pd-img-badge');
+        if (badge) badge.textContent = thumb.dataset.badge || '';
+        imgClass = thumb.dataset.img || 'p-forest';
+      }
+    });
+  });
+
+  /* Sticky bar — show after hero scrolls out of view */
+  const heroObs = new IntersectionObserver(([entry]) => {
+    if (pdSticky) pdSticky.classList.toggle('visible', !entry.isIntersecting);
+  }, { threshold: 0 });
+  if (pdHeroSection) heroObs.observe(pdHeroSection);
+
+  /* Close section size toggle + price */
+  const closeSzBtns = document.querySelectorAll('.pd-close-sz');
+  const closePriceEl = document.getElementById('pdClosePrice');
+  const pdCloseAdd  = document.getElementById('pdCloseAdd');
+  let closePrice = price500;
+  closeSzBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      closeSzBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      closePrice = parseInt(btn.dataset.price);
+      if (closePriceEl) closePriceEl.textContent = '₹' + closePrice.toLocaleString('en-IN');
+    });
+  });
+  if (pdCloseAdd) {
+    pdCloseAdd.addEventListener('click', () => {
+      if (typeof addToCartItem === 'function') addToCartItem('Forest Honey', closePrice, imgClass, pdCloseAdd);
+      const orig = pdCloseAdd.textContent;
+      pdCloseAdd.textContent = '✓ Added to Cart';
+      setTimeout(() => { if (typeof openCartSidebar === 'function') openCartSidebar(); }, 400);
+      setTimeout(() => { pdCloseAdd.textContent = orig; }, 1600);
+    });
+  }
+
+  /* FAQ accordion */
+  document.querySelectorAll('.pd-faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.pd-faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.pd-faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

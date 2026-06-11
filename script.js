@@ -301,9 +301,10 @@ const addToCart = document.getElementById('addToCart');
 
 if (addToCart) {
   addToCart.addEventListener('click', () => {
+    const price = parseInt((productPrice?.textContent || '').replace(/[₹,]/g, '')) || 699;
+    addToCartItem('Araku Forest Honey', price, 'feat-img', addToCart);
     addToCart.textContent = '✓ Added to Ritual';
     addToCart.style.background = '#16a34a';
-
     setTimeout(() => {
       addToCart.textContent = 'Add to Ritual →';
       addToCart.style.background = '';
@@ -682,16 +683,64 @@ cfTabs.forEach(tab => {
     pCards.forEach(card => {
       card.classList.toggle('p-hidden', card.dataset.category !== cat);
     });
+
+    // Snap back to start when switching categories
+    if (productCarousel) productCarousel.scrollTo({ left: 0, behavior: 'smooth' });
+    updateCarouselProgress();
   });
 });
 
-// "View All" link — shows every product and clears active tab state
-if (viewAllLink) {
-  viewAllLink.addEventListener('click', (e) => {
+// "View All" — navigates to the full shop page
+
+/* ── Carousel: progress bar + drag-to-scroll ──────────────────
+   Progress fill reflects how far the user has scrolled.
+   Mouse drag works like a real carousel on desktop.
+─────────────────────────────────────────────────────────────── */
+const productCarousel = document.getElementById('productCarousel');
+const carouselFill    = document.getElementById('carouselFill');
+
+function updateCarouselProgress() {
+  if (!productCarousel || !carouselFill) return;
+  const max = productCarousel.scrollWidth - productCarousel.clientWidth;
+  // If everything fits, fill 100%; otherwise reflect scroll position
+  const pct = max > 0 ? (productCarousel.scrollLeft / max) * 100 : 100;
+  carouselFill.style.width = pct + '%';
+}
+
+if (productCarousel) {
+  // Update fill on scroll
+  productCarousel.addEventListener('scroll', updateCarouselProgress, { passive: true });
+  // Update fill on window resize (viewport change affects visible area)
+  window.addEventListener('resize', updateCarouselProgress);
+  // Set initial fill
+  updateCarouselProgress();
+
+  // Drag-to-scroll on desktop
+  let isDragging = false, dragStartX = 0, scrollAtDragStart = 0;
+
+  productCarousel.addEventListener('mousedown', e => {
+    isDragging = true;
+    dragStartX = e.pageX - productCarousel.offsetLeft;
+    scrollAtDragStart = productCarousel.scrollLeft;
+    productCarousel.classList.add('dragging');
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    productCarousel.classList.remove('dragging');
+  });
+
+  productCarousel.addEventListener('mousemove', e => {
+    if (!isDragging) return;
     e.preventDefault();
-    cfTabs.forEach(t => t.classList.remove('cf-active'));
-    pCards.forEach(card => card.classList.remove('p-hidden'));
-    if (harvestLabel) harvestLabel.textContent = '( all harvest )';
+    const x = e.pageX - productCarousel.offsetLeft;
+    productCarousel.scrollLeft = scrollAtDragStart - (x - dragStartX);
+  });
+
+  productCarousel.addEventListener('mouseleave', () => {
+    isDragging = false;
+    productCarousel.classList.remove('dragging');
   });
 }
 
@@ -734,7 +783,7 @@ statNums.forEach(el => statObserver.observe(el));
 ======================================== */
 
 document.querySelectorAll('.p-card[data-price-500]').forEach(card => {
-  // dataset converts data-foo-bar → fooBar, but data-price-500 has a digit so stays as 'price-500'
+  if (card.querySelector('.p-sizes')) return; // already present (hardcoded in HTML)
   const p500 = card.dataset['price-500'];
   const p1kg = card.dataset['price-1kg'];
   const pInfo   = card.querySelector('.p-info');
@@ -960,3 +1009,36 @@ document.addEventListener('keydown', e => {
 
   el.addEventListener('mouseenter', run);
 })();
+
+
+/* Card click → product page (desktop + mobile) */
+document.querySelectorAll('.p-card').forEach(card => {
+  card.addEventListener('click', e => {
+    if (e.target.closest('.p-add, .p-buy, .p-sz, .p-arrow')) return;
+    window.location.href = 'product-honey.html';
+  });
+});
+
+
+/* ========================================
+   PRODUCT CARD — TRUST RATING INJECTION
+   Injects star rating + review count below subtitle on every card.
+======================================== */
+document.querySelectorAll('.p-card').forEach(card => {
+  if (card.querySelector('.p-rating')) return;
+  const pSub = card.querySelector('.p-sub');
+  if (!pSub) return;
+  const div = document.createElement('div');
+  div.className = 'p-rating';
+  div.innerHTML = `<span class="p-stars">★★★★★</span><span class="p-rcount">4.8 &nbsp;·&nbsp; 200+ reviews</span>`;
+  pSub.after(div);
+});
+
+
+/* ========================================
+   COPY PROTECTION
+   Disables text selection, copy, cut, and right-click across all pages.
+======================================== */
+document.addEventListener('copy', e => e.preventDefault());
+document.addEventListener('cut', e => e.preventDefault());
+document.addEventListener('contextmenu', e => e.preventDefault());

@@ -339,70 +339,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   position: relative;
 }
 
-/* GESTURE INDICATOR */
-
-.drawer-grip::after {
-
-  content: "";
-  position: absolute;
-  width: 26px;
-  height: 26px;
-  border-right: 2px solid rgba(0,0,0,0.18);
-  border-bottom: 2px solid rgba(0,0,0,0.18);
-  transform:
-  rotate(45deg);
-
-  left: 50%;
-  top: 18px;
-
-  margin-left: -13px;
-
-  animation:
-  dragTutorial 1.8s infinite;
-
-}
-
-/* ANIMATION */
-
-@keyframes dragTutorial {
-
-  0% {
-
-    opacity: 0;
-
-    transform:
-
-    translateY(-6px)
-
-    rotate(45deg);
-
-  }
-
-  40% {
-
-    opacity: 1;
-
-  }
-
-  100% {
-
-    opacity: 0;
-
-    transform:
-
-    translateY(12px)
-
-    rotate(45deg);
-
-  }
-
-}
-
-.hide-hint::after {
-
-  display: none;
-
-}
 .drawer-head {
   display: flex;
   position: relative;
@@ -664,11 +600,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ==============================
    HONEY COLLECTION
 ============================== */
-.collection { padding: 80px 20px; background: var(--white); }
+/* Horizontal padding removed — carousel handles its own alignment */
+.collection { padding: 80px 0 48px; background: var(--white); }
 
 .collection-hdr {
   display: flex; justify-content: space-between; align-items: flex-end;
   margin-bottom: 40px;
+  padding: 0 20px;
 }
 .cat-label { font-size: 13px; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 8px; }
 
@@ -676,6 +614,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .cat-filter {
   display: flex; gap: 8px; flex-wrap: wrap;
   margin-bottom: 28px;
+  padding: 0 20px;
 }
 .cf-tab {
   padding: 9px 20px;
@@ -692,47 +631,103 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border-color: var(--forest);
 }
 
-/* PRODUCT GRID */
+/* ── PRODUCT CAROUSEL ──────────────────────────────────────────
+   Horizontal scroll track — drag or swipe to move.
+   Full-bleed (outside section-wrap) so cards peek at the edge.
+   Left padding calculated to align first card with page content.
+─────────────────────────────────────────────────────────────── */
 .product-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  display: flex;
+  gap: 25px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Symmetric padding so first card centers in the viewport */
+  padding-top: 8px;
+  padding-bottom: 28px;
+  padding-left: 10vw;
+  padding-right: 10vw;
+  cursor: grab;
 }
-@media (min-width: 768px) {
-  .product-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
-}
+.product-grid::-webkit-scrollbar { display: none; }
+.product-grid.dragging { cursor: grabbing; scroll-snap-type: none; }
 
-/* PRODUCT CARD — The Act style */
+/* ── PRODUCT CARD — Carousel card, 3 visible + 4th peeking on desktop ─── */
 .p-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+  flex: 0 0 80vw;
+  scroll-snap-align: center;
+  background: var(--off-white);
+  border: none;
   border-radius: var(--r-lg);
   overflow: hidden;
-  transition: border-color var(--ease), transform var(--ease), box-shadow var(--ease);
+  position: relative; /* anchors the badge overlay */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+@media (min-width: 768px) {
+  /* 460px wide, centered-snap — premium spotlight feel on desktop */
+  .p-card { flex: 0 0 460px; }
+  .product-grid {
+    padding-left: max(48px, calc((100vw - 460px) / 2));
+    padding-right: max(48px, calc((100vw - 460px) / 2));
+  }
 }
 .p-card:hover {
-  border-color: transparent;
-  transform: translateY(-6px);
-  box-shadow: 0 24px 64px rgba(0,0,0,0.13), 0 4px 16px rgba(0,0,0,0.06);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 52px rgba(0,0,0,0.13), 0 4px 16px rgba(0,0,0,0.06);
 }
-.p-card-top {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 14px 14px 0;
-}
-.p-cat { font-size: 11px; color: var(--muted); letter-spacing: 0.3px; }
-.p-arrow {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--warm); font-size: 12px;
-  display: flex; align-items: center; justify-content: center;
-  transition: background var(--ease), color var(--ease), transform var(--ease);
-}
-.p-arrow:hover { background: var(--dark); color: white; transform: scale(1.08); }
 
-.p-img-wrap { padding: 14px 14px 10px; }
-.p-img {
-  width: 100%; aspect-ratio: 1;
-  border-radius: var(--r-md);
+/* Badge + arrow as header row above image (not overlaid) */
+.p-card-top {
+  position: static;
+  padding: 14px 16px 10px;
+  display: flex; justify-content: space-between; align-items: center;
+  pointer-events: none;
+}
+.p-cat {
+  font-size: 10px;
+  color: var(--forest);
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  font-family: var(--sans);
+}
+.p-arrow {
+  pointer-events: all;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(26,48,40,0.08);
+  font-size: 11px; color: var(--forest);
   display: flex; align-items: center; justify-content: center;
+  transition: background var(--ease), transform var(--ease);
+}
+.p-arrow:hover { background: rgba(26,48,40,0.16); transform: scale(1.08); }
+
+/* Image — inset with own border-radius, portrait aspect ratio */
+.p-img-wrap { padding: 15px; }
+.p-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 6 / 6; /* to control card height */
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Carousel progress bar ─────────────────────────────────────
+   Thin line below the carousel — filled segment shows how far
+   the user has scrolled. Updated by JS on scroll + filter change.
+─────────────────────────────────────────────────────────────── */
+.carousel-progress-wrap { padding: 20px 20px 0; }
+.carousel-progress {
+  height: 2px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.carousel-fill {
+  height: 100%;
+  width: 25%; /* JS will override this */
+  background: var(--forest);
+  border-radius: 2px;
+  transition: width 0.12s ease;
 }
 /* Honey variant colour fields */
 .p-forest    { background: radial-gradient(ellipse at 38% 28%, #e8c050, #a06020, #5c3410); }
@@ -740,9 +735,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .p-acacia    { background: radial-gradient(ellipse at 38% 28%, #fef3c0, #f5d870, #c4903a); }
 .p-multiflora{ background: radial-gradient(ellipse at 38% 28%, #f0c038, #c4883a, #7a4e18); }
 
-.p-info { padding: 0 16px 20px; }
+.p-info { padding: 12px 16px 20px; }
 .p-name { font-size: 16px; font-weight: 500; color: var(--dark); margin-bottom: 4px; }
-.p-sub  { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+.p-sub  { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+
+/* Trust rating row */
+.p-rating { display: flex; align-items: center; gap: 5px; margin-bottom: 10px; }
+.p-stars  { color: var(--honey); font-size: 11px; letter-spacing: 1px; }
+.p-rcount { font-size: 11px; color: var(--muted); font-family: var(--sans); }
 
 /* Size selector on product cards */
 .p-sizes { display: flex; gap: 6px; margin-bottom: 12px; }
@@ -759,7 +759,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 .p-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.p-price { font-family: var(--serif); font-size: 20px; font-weight: 500; color: var(--dark); flex-shrink: 0; transition: opacity 0.2s ease, transform 0.2s ease; }
+.p-price { font-family: var(--sans); font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: var(--dark); flex-shrink: 0; transition: opacity 0.2s ease, transform 0.2s ease; }
 .p-actions { display: flex; gap: 6px; }
 .p-add {
   font-size: 12px; color: var(--forest); font-weight: 500;
@@ -1109,7 +1109,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .eyebrow {font-size: 13px; }
 .nl-h2 {
   font-family: var(--serif);
-  font-size: clamp(86px, 6.5vw, 87px);
+  font-size: clamp(56px, 6.5vw, 70px);
   line-height: 1; color: var(--dark); font-weight: 400; margin-bottom: 16px;
 }
 .nl-h2 em { font-style: italic; color: var(--honey); }
@@ -1759,51 +1759,19 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 
-/* SMALL DOWN ARROW HINT */
-
-.drawer-grip::after {
-
-  content: "⌄";
-
-  position: absolute;
-
-  left: 50%;
-  top: 10px;
-
-  transform: translateX(-50%);
-
-  font-size: 18px;
-
-  color: rgba(0,0,0,0.25);
-
-  animation: dragHint 2s infinite;
-
+/* ==============================
+   COPY PROTECTION
+   Prevents text selection sitewide.
+   Inputs/textareas remain selectable.
+============================== */
+*, *::before, *::after {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+input, textarea, [contenteditable] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
 }
 
-
-/* FLOATING ANIMATION */
-
-@keyframes dragHint {
-
-  0% {
-    transform:
-    translateX(-50%)
-    translateY(0px);
-    opacity: 0.3;
-  }
-
-  50% {
-    transform:
-    translateX(-50%)
-    translateY(6px);
-    opacity: 1;
-  }
-
-  100% {
-    transform:
-    translateX(-50%)
-    translateY(0px);
-    opacity: 0.3;
-  }
-
-}
