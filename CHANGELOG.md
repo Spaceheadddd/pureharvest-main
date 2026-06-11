@@ -5,6 +5,13 @@ Newest entries are at the top.
 
 ---
 
+## [Unreleased] — 2026-06-11
+
+### Changed
+- **All HTML pages** (index, contact, cookie, privacy, product-honey, refund, shipping, shop, terms): ritual drawer orbs converted from `<div class="orb">` to `<a href="product-honey.html" class="orb">` — all 4 orbs (Honey, Dry Fruits, Coffee, Spices) now navigate to the product page. Global `a { text-decoration: none; color: inherit; }` ensures no visual change.
+
+---
+
 ## [c89346d] — 2026-06-11
 
 ### Added
