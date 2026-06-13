@@ -8,6 +8,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <!-- Microsoft Clarity — session recordings and heatmaps -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x6j5tml7vd");
+  </script>
+  <!-- Google Analytics (GA4) — traffic, conversions and events -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-11TJLZM6SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-11TJLZM6SY');
+  </script>
 </head>
 <body>
 
@@ -18,13 +34,17 @@
   <div class="ann-track">
     <span>Free shipping across India on orders ₹999+</span>
     <span class="ann-sep">◦</span>
-    <span>2024 Seasonal Harvest — Now Live</span>
+    <span>🌱 Earn Roots on every order — tracked from purchase 1</span>
+    <span class="ann-sep">◦</span>
+    <span>Post-Monsoon 2026 Harvest — Now Live</span>
     <span class="ann-sep">◦</span>
     <span>FSSAI Certified · Lab Tested · 100% Raw</span>
     <span class="ann-sep">◦</span>
     <span>Free shipping across India on orders ₹999+</span>
     <span class="ann-sep">◦</span>
-    <span>2024 Seasonal Harvest — Now Live</span>
+    <span>🌱 Earn Roots on every order — tracked from purchase 1</span>
+    <span class="ann-sep">◦</span>
+    <span>Post-Monsoon 2026 Harvest — Now Live</span>
     <span class="ann-sep">◦</span>
     <span>FSSAI Certified · Lab Tested · 100% Raw</span>
     <span class="ann-sep">◦</span>
@@ -247,12 +267,12 @@
   </div>
 
   <nav class="drawer-nav">
-    <a href="#" class="d-link">
+    <a href="roots.html" class="d-link">
       <div class="d-link-l">
-        <div class="d-icon">📖</div>
+        <div class="d-icon">🌱</div>
         <div>
-          <p class="d-link-name">Journal</p>
-          <p class="d-link-sub">Stories, rituals &amp; slow living</p>
+          <p class="d-link-name">Roots Loyalty</p>
+          <p class="d-link-sub">Earn with every harvest — from order 1</p>
         </div>
       </div>
       <span class="d-arrow">→</span>
@@ -279,10 +299,10 @@
     </a>
     <a href="#" class="d-link">
       <div class="d-link-l">
-        <div class="d-icon">🏪</div>
+        <div class="d-icon">📖</div>
         <div>
-          <p class="d-link-name">Wholesale</p>
-          <p class="d-link-sub">Partner with PureHarvest</p>
+          <p class="d-link-name">Journal</p>
+          <p class="d-link-sub">Stories, rituals &amp; slow living</p>
         </div>
       </div>
       <span class="d-arrow">→</span>
@@ -298,32 +318,15 @@
       <span class="d-arrow">→</span>
     </a>
     <a href="#" class="d-link">
-
-  <div class="d-link-l">
-
-    <div class="d-icon">
-      👤
-    </div>
-
-    <div>
-
-      <div class="d-link-name">
-        My Account
+      <div class="d-link-l">
+        <div class="d-icon">👤</div>
+        <div>
+          <p class="d-link-name">My Account</p>
+          <p class="d-link-sub">Orders, rewards &amp; profile</p>
+        </div>
       </div>
-
-      <div class="d-link-sub">
-        Orders, rewards & profile
-      </div>
-
-    </div>
-
-  </div>
-
-  <span class="d-arrow">
-    →
-  </span>
-
-</a>
+      <span class="d-arrow">→</span>
+    </a>
   </nav>
 
   <div class="drawer-foot-card">
@@ -952,7 +955,89 @@
 
 
 <!-- ============================
-     9. JOURNAL
+     9. ROOTS LOYALTY
+     Dark forest section — appears between social proof and journal.
+     Communicates the earn/redeem mechanic + tier ladder.
+     Links to roots.html for full programme details.
+============================ -->
+<section class="roots-home" id="roots">
+  <div class="section-wrap">
+    <div class="roots-home-inner">
+
+      <div data-reveal="up">
+        <p class="eyebrow" style="color:rgba(255,255,255,0.45)">Roots Loyalty</p>
+        <h2 class="roots-home-h2">Earn with every<br><em>harvest.</em></h2>
+        <p class="roots-home-p">Every purchase plants a Root — tracked from your very first order. Redeem them for discounts, unlock deeper tiers, and grow with us. Your loyalty builds a forest.</p>
+
+        <!-- Earn → Redeem → Tiers stats strip -->
+        <div class="roots-earn-strip">
+          <div class="roots-earn-stat">
+            <span class="res-num">1</span>
+            <span class="res-label">Root per ₹100</span>
+          </div>
+          <span class="roots-earn-sep">→</span>
+          <div class="roots-earn-stat">
+            <span class="res-num">₹10</span>
+            <span class="res-label">value per Root</span>
+          </div>
+          <span class="roots-earn-sep">→</span>
+          <div class="roots-earn-stat">
+            <span class="res-num">4</span>
+            <span class="res-label">tiers to grow</span>
+          </div>
+        </div>
+
+        <a href="roots.html" class="btn-primary">Explore Roots →</a>
+      </div>
+
+      <!-- Tier ladder cards -->
+      <div class="roots-home-tiers" data-reveal="fade">
+
+        <div class="rht-card">
+          <span class="rht-icon">🌱</span>
+          <div>
+            <p class="rht-name">Seedling</p>
+            <p class="rht-sub">1× earn · Welcome Roots · Birthday bonus</p>
+          </div>
+          <span class="rht-badge">₹0+</span>
+        </div>
+
+        <div class="rht-card">
+          <span class="rht-icon">🌿</span>
+          <div>
+            <p class="rht-name">Sapling</p>
+            <p class="rht-sub">1.25× earn · Free shipping always</p>
+          </div>
+          <span class="rht-badge">₹5k+</span>
+        </div>
+
+        <div class="rht-card rht-card-featured">
+          <span class="rht-icon">🌳</span>
+          <div>
+            <p class="rht-name">Roots</p>
+            <p class="rht-sub">1.5× earn · Quarterly harvest gift</p>
+          </div>
+          <span class="rht-badge">₹15k+</span>
+        </div>
+
+        <div class="rht-card">
+          <span class="rht-icon">🌲</span>
+          <div>
+            <p class="rht-name">Ancient</p>
+            <p class="rht-sub">2× earn · Forest visit · Grove naming</p>
+          </div>
+          <span class="rht-badge">₹30k+</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================
+     10. JOURNAL
 ============================ -->
 <section class="journal">
   <div class="section-wrap">
@@ -1173,6 +1258,7 @@
           <h4>Discover</h4>
           <a href="#">Our Story</a>
           <a href="#">Journal</a>
+          <a href="roots.html">Roots Loyalty</a>
           <a href="#">Rituals</a>
           <a href="#">Sustainability</a>
         </div>
@@ -1224,5 +1310,6 @@
 </footer>
 
 <script src="script.js"></script>
+  <script src="checkout.js"></script>
 </body>
 </html>

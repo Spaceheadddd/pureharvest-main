@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roots Loyalty — PureHarvest Organics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ============================================================
+       ROOTS PAGE — Loyalty Programme
+       All styles scoped to .rp-* prefix to avoid conflicts.
+    ============================================================ */
+
+    /* ── Hero ── */
+    .rp-hero {
+      background: var(--forest-2);
+      color: white;
+      padding: 120px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rp-hero-eye {
+      font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--honey); font-family: var(--sans); font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .rp-hero-h1 {
+      font-family: var(--serif);
+      font-size: clamp(52px, 8vw, 86px);
+      font-weight: 400; line-height: 1.0;
+      color: white; margin-bottom: 24px;
+    }
+    .rp-hero-h1 em { color: var(--honey); font-style: italic; }
+    .rp-hero-sub {
+      font-size: clamp(15px, 2vw, 17px);
+      color: rgba(255,255,255,0.55);
+      max-width: 520px; margin: 0 auto 48px;
+      line-height: 1.75;
+    }
+    .rp-hero-cta {
+      display: inline-block;
+      background: var(--honey); color: white;
+      padding: 17px 44px; border-radius: var(--r-pill);
+      font-size: 15px; font-weight: 500; font-family: var(--sans);
+      transition: background var(--ease), transform var(--ease);
+    }
+    .rp-hero-cta:hover { background: var(--honey-dk); transform: translateY(-2px); }
+
+    /* ── Shared section ── */
+    .rp-section { padding: 96px 0; }
+    .rp-section-alt { background: var(--off-white); }
+    .rp-section-dark { background: var(--forest); color: white; padding: 96px 0; }
+    .rp-eye {
+      font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); font-family: var(--sans); font-weight: 500; margin-bottom: 12px;
+    }
+    .rp-section-dark .rp-eye { color: rgba(255,255,255,0.4); }
+    .rp-h2 {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 400; line-height: 1.1;
+      color: var(--dark); margin-bottom: 16px;
+    }
+    .rp-section-dark .rp-h2 { color: white; }
+    .rp-h2 em { color: var(--honey); font-style: italic; }
+    .rp-sub {
+      font-size: 15px; color: var(--gray); line-height: 1.75;
+      max-width: 580px; margin-bottom: 56px;
+    }
+    .rp-section-dark .rp-sub { color: rgba(255,255,255,0.55); }
+
+    /* ── How it works — 3 steps ── */
+    .rp-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 16px;
+    }
+    @media (max-width: 768px) { .rp-steps { grid-template-columns: 1fr; gap: 20px; } }
+    .rp-step {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+    }
+    .rp-step-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--honey);
+      font-family: var(--sans); margin-bottom: 16px;
+    }
+    .rp-step-icon { font-size: 32px; margin-bottom: 14px; }
+    .rp-step-title {
+      font-size: 18px; font-weight: 500; color: var(--dark);
+      font-family: var(--sans); margin-bottom: 10px; line-height: 1.3;
+    }
+    .rp-step-desc { font-size: 14px; color: var(--gray); line-height: 1.7; }
+    .rp-step-stat {
+      display: inline-block; margin-top: 18px;
+      background: rgba(26,48,40,0.07);
+      border-radius: var(--r-pill);
+      padding: 6px 16px;
+      font-size: 13px; font-weight: 500; color: var(--forest);
+      font-family: var(--sans);
+    }
+
+    /* ── Tiers ── */
+    .rp-tiers { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
+    .rp-tier {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 20px;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 22px 24px;
+      transition: background 0.2s;
+    }
+    .rp-tier:hover { background: rgba(255,255,255,0.09); }
+    .rp-tier-featured {
+      background: rgba(196,144,58,0.1);
+      border-color: rgba(196,144,58,0.3);
+    }
+    @media (max-width: 640px) {
+      .rp-tier { grid-template-columns: 44px 1fr; gap: 14px; }
+      .rp-tier-right { grid-column: 2; }
+    }
+    .rp-tier-icon { font-size: 28px; text-align: center; }
+    .rp-tier-name {
+      font-size: 16px; font-weight: 500; color: white;
+      font-family: var(--sans); margin-bottom: 4px;
+    }
+    .rp-tier-sub { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+    .rp-tier-perks {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+    }
+    .rp-perk {
+      font-size: 11px; font-weight: 500;
+      color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.07);
+      padding: 3px 10px; border-radius: var(--r-pill);
+      font-family: var(--sans);
+    }
+    .rp-tier-right { text-align: right; }
+    .rp-tier-mult {
+      font-family: var(--serif); font-size: 28px; color: var(--honey);
+      line-height: 1; display: block;
+    }
+    .rp-tier-mult-label { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+    .rp-tier-spend {
+      font-size: 12px; color: rgba(255,255,255,0.35);
+      margin-top: 6px; white-space: nowrap;
+    }
+
+    /* ── Earn & Redeem table ── */
+    .rp-table-wrap { overflow-x: auto; margin-top: 16px; }
+    .rp-table {
+      width: 100%; border-collapse: collapse;
+      font-family: var(--sans); font-size: 14px;
+    }
+    .rp-table th {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--muted); font-weight: 500;
+      padding: 12px 16px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .rp-table td {
+      padding: 14px 16px; color: var(--dark);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .rp-table tr:last-child td { border-bottom: none; }
+    .rp-table tr:hover td { background: var(--off-white); }
+    .rp-table .rp-t-val {
+      font-weight: 500; color: var(--forest);
+    }
+
+    /* ── Impact section ── */
+    .rp-impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 768px) { .rp-impact-grid { grid-template-columns: 1fr; gap: 36px; } }
+    .rp-impact-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .rp-impact-stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px 18px;
+    }
+    .rp-impact-num {
+      font-family: var(--serif); font-size: 32px; color: var(--honey);
+      line-height: 1; margin-bottom: 6px;
+    }
+    .rp-impact-label { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .rp-impact-visual {
+      aspect-ratio: 4/3;
+      background: radial-gradient(ellipse at 40% 40%, rgba(196,144,58,0.18), transparent 65%),
+                  linear-gradient(135deg, #1a3028, #0d2018);
+      border-radius: 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 80px;
+    }
+
+    /* ── FAQ ── */
+    .rp-faq-list { margin-top: 48px; border-top: 1px solid var(--border); max-width: 760px; }
+    .rp-faq-item { border-bottom: 1px solid var(--border); }
+    .rp-faq-q {
+      width: 100%; padding: 22px 0;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 15px; font-weight: 500; color: var(--dark);
+      font-family: var(--sans); text-align: left; gap: 16px; cursor: pointer;
+    }
+    .rp-faq-icon {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 1px solid var(--border-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: var(--gray); flex-shrink: 0;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .rp-faq-item.open .rp-faq-icon { transform: rotate(45deg); background: var(--forest); color: white; border-color: var(--forest); }
+    .rp-faq-a { max-height: 0; overflow: hidden; transition: max-height 0.38s ease; }
+    .rp-faq-a-inner { padding: 0 0 22px; font-size: 14px; color: var(--gray); line-height: 1.75; max-width: 640px; }
+    .rp-faq-item.open .rp-faq-a { max-height: 400px; }
+
+    /* ── Bottom CTA ── */
+    .rp-bottom-cta {
+      background: var(--honey-lt);
+      border-top: 1px solid rgba(196,144,58,0.15);
+      padding: 88px 0;
+      text-align: center;
+    }
+    .rp-bottom-h2 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 400; color: var(--dark); margin-bottom: 14px;
+    }
+    .rp-bottom-h2 em { color: var(--honey); }
+    .rp-bottom-sub { font-size: 15px; color: var(--gray); margin-bottom: 40px; }
+  </style>
+  <!-- Microsoft Clarity — session recordings and heatmaps -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x6j5tml7vd");
+  </script>
+  <!-- Google Analytics (GA4) — traffic, conversions and events -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-11TJLZM6SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-11TJLZM6SY');
+  </script>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar">
+  <div class="ann-track">
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>🌱 Earn Roots on every order — tracked from purchase 1</span>
+    <span class="ann-sep">◦</span>
+    <span>Post-Monsoon 2026 Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>🌱 Earn Roots on every order — tracked from purchase 1</span>
+    <span class="ann-sep">◦</span>
+    <span>Post-Monsoon 2026 Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-shell">
+    <div class="header-logo"><div class="logo-mark">🌿</div></div>
+    <div class="header-brand">
+      <a href="index.html">
+        <p class="brand-name">PUREHARVEST</p>
+        <span class="brand-tagline">RAW · WILD · PURE</span>
+      </a>
+    </div>
+    <div class="header-actions">
+      <button class="hdr-btn" aria-label="Search">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="hdr-btn cart-hdr-btn" aria-label="Cart">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-dot"></span>
+      </button>
+      <button class="hdr-btn menu-hdr-btn" id="menuToggle" aria-label="Open menu">
+        <div class="hlines"><span></span><span></span></div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-backdrop" id="searchBackdrop"></div>
+  <div class="search-panel">
+    <div class="search-inner">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search honey, coffee, spices..." autocomplete="off" />
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h3 class="cart-title">Your Ritual</h3>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🌿</div>
+        <p>Your basket is empty.</p>
+        <p style="font-size:13px;color:var(--muted)">Add something from the harvest.</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+      <button class="btn-primary btn-block" id="checkoutBtn">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RITUAL DRAWER -->
+<div id="ritualDrawer" class="ritual-drawer">
+  <div class="drawer-grip"></div>
+  <div class="drawer-head">
+    <div><p class="drawer-eyebrow">PUREHARVEST</p><h2 class="drawer-title">Explore Rituals</h2></div>
+    <button class="drawer-close" id="closeDrawer" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-orbs">
+    <a href="product-honey.html" class="orb orb-active"><div class="orb-ring">🍯</div><span>Honey</span></a>
+    <a href="product-honey.html" class="orb"><div class="orb-ring">🫒</div><span>Dry Fruits</span></a>
+    <a href="product-honey.html" class="orb"><div class="orb-ring">☕</div><span>Coffee</span></a>
+    <a href="product-honey.html" class="orb"><div class="orb-ring">🌶</div><span>Spices</span></a>
+  </div>
+  <nav class="drawer-nav">
+    <a href="roots.html" class="d-link">
+      <div class="d-link-l"><div class="d-icon">🌱</div><div><p class="d-link-name">Roots Loyalty</p><p class="d-link-sub">Earn with every harvest — from order 1</p></div></div>
+      <span class="d-arrow">→</span>
+    </a>
+    <a href="index.html#story" class="d-link">
+      <div class="d-link-l"><div class="d-icon">🌿</div><div><p class="d-link-name">Our Story</p><p class="d-link-sub">From Araku forests to your table</p></div></div>
+      <span class="d-arrow">→</span>
+    </a>
+    <a href="index.html#subscriptions" class="d-link">
+      <div class="d-link-l"><div class="d-icon">📦</div><div><p class="d-link-name">Subscriptions</p><p class="d-link-sub">Never run out of your ritual</p></div></div>
+      <span class="d-arrow">→</span>
+    </a>
+    <a href="#" class="d-link">
+      <div class="d-link-l"><div class="d-icon">📖</div><div><p class="d-link-name">Journal</p><p class="d-link-sub">Stories, rituals &amp; slow living</p></div></div>
+      <span class="d-arrow">→</span>
+    </a>
+    <a href="#" class="d-link">
+      <div class="d-link-l"><div class="d-icon">👤</div><div><p class="d-link-name">My Account</p><p class="d-link-sub">Orders, rewards &amp; profile</p></div></div>
+      <span class="d-arrow">→</span>
+    </a>
+  </nav>
+  <div class="drawer-foot-card">
+    <span class="dfc-icon">🌱</span>
+    <div><p class="dfc-title">Rooted in nature.</p><p class="dfc-sub">Crafted with intention.</p></div>
+  </div>
+</div>
+
+
+<main>
+
+  <!-- ── 01 HERO ── -->
+  <section class="rp-hero">
+    <div class="section-wrap">
+      <p class="rp-hero-eye">PureHarvest Roots</p>
+      <h1 class="rp-hero-h1">Loyalty that<br><em>grows with you.</em></h1>
+      <p class="rp-hero-sub">Every order plants a Root. Redeem them for discounts, unlock richer tiers, and watch your relationship with the forest deepen — tracked automatically from your very first purchase.</p>
+      <a href="shop.html" class="rp-hero-cta">Start Earning →</a>
+    </div>
+  </section>
+
+
+  <!-- ── 02 HOW IT WORKS ── -->
+  <section class="rp-section">
+    <div class="section-wrap">
+      <p class="rp-eye">How It Works</p>
+      <h2 class="rp-h2">Simple to earn,<br><em>rewarding to hold.</em></h2>
+      <p class="rp-sub">Three things happen automatically on every order — no sign-ups, no loyalty cards, no codes to chase.</p>
+
+      <div class="rp-steps">
+
+        <!-- Step 1: Earn -->
+        <div class="rp-step">
+          <p class="rp-step-num">01</p>
+          <div class="rp-step-icon">🛒</div>
+          <p class="rp-step-title">Buy from the harvest</p>
+          <p class="rp-step-desc">Every product, every order. Your Roots are calculated on the full order value and tracked to your phone number from the very first purchase.</p>
+          <span class="rp-step-stat">1 Root per ₹100 spent</span>
+        </div>
+
+        <!-- Step 2: Grow -->
+        <div class="rp-step">
+          <p class="rp-step-num">02</p>
+          <div class="rp-step-icon">🌱</div>
+          <p class="rp-step-title">Watch your balance grow</p>
+          <p class="rp-step-desc">Every purchase moves you up a tier — from Seedling to Ancient. Higher tiers earn Roots faster. Your balance never resets as long as you buy at least once a year.</p>
+          <span class="rp-step-stat">4 tiers · up to 2× earn</span>
+        </div>
+
+        <!-- Step 3: Redeem -->
+        <div class="rp-step">
+          <p class="rp-step-num">03</p>
+          <div class="rp-step-icon">✨</div>
+          <p class="rp-step-title">Redeem at checkout</p>
+          <p class="rp-step-desc">Apply Roots at checkout for instant discounts. The more you hold, the bigger the reward — with bonus value at higher redemption amounts.</p>
+          <span class="rp-step-stat">1 Root = ₹10 off</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 03 TIERS ── -->
+  <section class="rp-section-dark">
+    <div class="section-wrap">
+      <p class="rp-eye">Tier Structure</p>
+      <h2 class="rp-h2">Grow through<br><em>four tiers.</em></h2>
+      <p class="rp-sub">Tiers are based on your lifetime spend — they never reset, never expire. The longer you stay, the richer your rewards.</p>
+
+      <div class="rp-tiers">
+
+        <div class="rp-tier">
+          <div class="rp-tier-icon">🌱</div>
+          <div>
+            <p class="rp-tier-name">Seedling</p>
+            <p class="rp-tier-sub">Where every forest begins</p>
+            <div class="rp-tier-perks">
+              <span class="rp-perk">Welcome Roots on first order</span>
+              <span class="rp-perk">Birthday bonus</span>
+              <span class="rp-perk">Early harvest access</span>
+            </div>
+          </div>
+          <div class="rp-tier-right">
+            <span class="rp-tier-mult">1×</span>
+            <p class="rp-tier-mult-label">earn rate</p>
+            <p class="rp-tier-spend">₹0 – ₹4,999 lifetime</p>
+          </div>
+        </div>
+
+        <div class="rp-tier">
+          <div class="rp-tier-icon">🌿</div>
+          <div>
+            <p class="rp-tier-name">Sapling</p>
+            <p class="rp-tier-sub">Taking root, growing fast</p>
+            <div class="rp-tier-perks">
+              <span class="rp-perk">Free shipping always</span>
+              <span class="rp-perk">Early harvest drops</span>
+              <span class="rp-perk">Priority support</span>
+            </div>
+          </div>
+          <div class="rp-tier-right">
+            <span class="rp-tier-mult">1.25×</span>
+            <p class="rp-tier-mult-label">earn rate</p>
+            <p class="rp-tier-spend">₹5,000 – ₹14,999</p>
+          </div>
+        </div>
+
+        <div class="rp-tier rp-tier-featured">
+          <div class="rp-tier-icon">🌳</div>
+          <div>
+            <p class="rp-tier-name">Roots</p>
+            <p class="rp-tier-sub">Deep roots, richer rewards</p>
+            <div class="rp-tier-perks">
+              <span class="rp-perk">Quarterly harvest gift</span>
+              <span class="rp-perk">Limited batch access</span>
+              <span class="rp-perk">Priority support</span>
+            </div>
+          </div>
+          <div class="rp-tier-right">
+            <span class="rp-tier-mult">1.5×</span>
+            <p class="rp-tier-mult-label">earn rate</p>
+            <p class="rp-tier-spend">₹15,000 – ₹29,999</p>
+          </div>
+        </div>
+
+        <div class="rp-tier">
+          <div class="rp-tier-icon">🌲</div>
+          <div>
+            <p class="rp-tier-name">Ancient</p>
+            <p class="rp-tier-sub">The oldest trees hold the most wisdom</p>
+            <div class="rp-tier-perks">
+              <span class="rp-perk">Free products periodically</span>
+              <span class="rp-perk">Batch naming rights</span>
+              <span class="rp-perk">Annual forest visit invite</span>
+              <span class="rp-perk">Dedicated contact</span>
+            </div>
+          </div>
+          <div class="rp-tier-right">
+            <span class="rp-tier-mult">2×</span>
+            <p class="rp-tier-mult-label">earn rate</p>
+            <p class="rp-tier-spend">₹30,000+ lifetime</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 04 EARN & REDEEM TABLE ── -->
+  <section class="rp-section rp-section-alt">
+    <div class="section-wrap">
+      <p class="rp-eye">Earn &amp; Redeem</p>
+      <h2 class="rp-h2">What you earn,<br><em>what you get.</em></h2>
+      <p class="rp-sub">Roots accumulate with every purchase. Redeem them at checkout — with bonus value when you hold more.</p>
+
+      <div class="rp-table-wrap">
+        <table class="rp-table">
+          <thead>
+            <tr>
+              <th>Roots redeemed</th>
+              <th>Redemption value</th>
+              <th>Bonus</th>
+              <th>Best for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>10 Roots</strong></td>
+              <td class="rp-t-val">₹100 off</td>
+              <td>—</td>
+              <td>Minimum redemption</td>
+            </tr>
+            <tr>
+              <td><strong>25 Roots</strong></td>
+              <td class="rp-t-val">₹275 off</td>
+              <td>+10%</td>
+              <td>Regular household orders</td>
+            </tr>
+            <tr>
+              <td><strong>50 Roots</strong></td>
+              <td class="rp-t-val">₹600 off</td>
+              <td>+20%</td>
+              <td>Best value — sweet spot</td>
+            </tr>
+            <tr>
+              <td><strong>100 Roots</strong></td>
+              <td class="rp-t-val">₹1,100 off</td>
+              <td>+10%</td>
+              <td>Large household purchases</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Rules callout -->
+      <div style="margin-top: 24px; padding: 20px 24px; background: white; border: 1px solid var(--border); border-radius: 16px; display: flex; flex-wrap: wrap; gap: 20px;">
+        <div style="flex: 1; min-width: 200px;">
+          <p style="font-size: 12px; font-weight: 600; color: var(--forest); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Minimum balance</p>
+          <p style="font-size: 13px; color: var(--gray);">You always keep at least 3 Roots after redeeming — you're never starting from zero.</p>
+        </div>
+        <div style="flex: 1; min-width: 200px;">
+          <p style="font-size: 12px; font-weight: 600; color: var(--forest); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Per-order cap</p>
+          <p style="font-size: 13px; color: var(--gray);">Maximum redemption is 15% of any single order value — protects your balance on small top-up orders.</p>
+        </div>
+        <div style="flex: 1; min-width: 200px;">
+          <p style="font-size: 12px; font-weight: 600; color: var(--forest); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Roots + Coupons</p>
+          <p style="font-size: 13px; color: var(--gray);">Both can be applied together — combined discount capped at 25% of the order value.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 05 FOREST IMPACT ── -->
+  <section class="rp-section-dark">
+    <div class="section-wrap">
+      <div class="rp-impact-grid">
+
+        <div>
+          <p class="rp-eye">Environmental Impact</p>
+          <h2 class="rp-h2">Every purchase<br><em>gives back.</em></h2>
+          <p class="rp-sub">1% of every order goes directly to the Araku Valley Reforestation Fund — not at some future milestone, but on every single transaction from day one.</p>
+
+          <div class="rp-impact-stats">
+            <div class="rp-impact-stat">
+              <p class="rp-impact-num">1%</p>
+              <p class="rp-impact-label">of every order to reforestation</p>
+            </div>
+            <div class="rp-impact-stat">
+              <p class="rp-impact-num">₹100</p>
+              <p class="rp-impact-label">plants one tree in Araku</p>
+            </div>
+            <div class="rp-impact-stat">
+              <p class="rp-impact-num">Ancient</p>
+              <p class="rp-impact-label">members get a named grove</p>
+            </div>
+            <div class="rp-impact-stat">
+              <p class="rp-impact-num">Day 1</p>
+              <p class="rp-impact-label">it starts on your first order</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rp-impact-visual" aria-hidden="true">
+          🌿
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 06 FAQ ── -->
+  <section class="rp-section">
+    <div class="section-wrap">
+      <p class="rp-eye">Questions</p>
+      <h2 class="rp-h2">Roots, <em>explained.</em></h2>
+
+      <div class="rp-faq-list" id="rpFaqList">
+
+        <div class="rp-faq-item open">
+          <button class="rp-faq-q">When do I start earning Roots? <span class="rp-faq-icon">+</span></button>
+          <div class="rp-faq-a"><p class="rp-faq-a-inner">From your very first purchase. Your Roots balance is tracked to your phone number automatically — no account creation required at launch. Every order is logged and your tier updates as your lifetime spend grows.</p></div>
+        </div>
+
+        <div class="rp-faq-item">
+          <button class="rp-faq-q">How do I know my Roots balance? <span class="rp-faq-icon">+</span></button>
+          <div class="rp-faq-a"><p class="rp-faq-a-inner">After each order, you'll receive a WhatsApp confirmation showing your Roots earned and current balance. A customer account portal is coming — until then, reach out to us via WhatsApp or email at any time and we'll check your balance for you.</p></div>
+        </div>
+
+        <div class="rp-faq-item">
+          <button class="rp-faq-q">Do Roots expire? <span class="rp-faq-icon">+</span></button>
+          <div class="rp-faq-a"><p class="rp-faq-a-inner">Roots are valid for 12 months from your last purchase. If you buy at least once a year, your balance stays intact. Nudge reminders are sent at 3, 6, and 9 months of inactivity so you never lose Roots by accident.</p></div>
+        </div>
+
+        <div class="rp-faq-item">
+          <button class="rp-faq-q">Can I use Roots on every product? <span class="rp-faq-icon">+</span></button>
+          <div class="rp-faq-a"><p class="rp-faq-a-inner">Yes — Roots can be applied to any product in the PureHarvest range. The only restriction is the 15% per-order cap and the 3-Root minimum balance rule, both of which protect your account over time.</p></div>
+        </div>
+
+        <div class="rp-faq-item">
+          <button class="rp-faq-q">Can I use a coupon code and Roots together? <span class="rp-faq-icon">+</span></button>
+          <div class="rp-faq-a"><p class="rp-faq-a-inner">Yes, both can be applied in the same checkout. The combined discount is capped at 25% of the order value — this ensures we can keep the programme running and continue rewarding you on every future purchase.</p></div>
+        </div>
+
+        <div class="rp-faq-item">
+          <button class="rp-faq-q">What is a Harvest Card? <span class="rp-faq-icon">+</span></button>
+          <div class="rp-faq-a"><p class="rp-faq-a-inner">A Harvest Card is PureHarvest's gifting instrument — a stored-value card you can buy for someone you love. The recipient uses it at checkout like cash. The person who buys a Harvest Card earns Roots on the purchase. Harvest Cards are launching with our account system later this year.</p></div>
+        </div>
+
+        <div class="rp-faq-item">
+          <button class="rp-faq-q">Can I use Roots to pay for shipping? <span class="rp-faq-icon">+</span></button>
+          <div class="rp-faq-a"><p class="rp-faq-a-inner">Roots apply to product value only, not shipping. The good news: free shipping is included on all orders above ₹999, and from Sapling tier onwards you get free shipping on every order regardless of value.</p></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 07 BOTTOM CTA ── -->
+  <section class="rp-bottom-cta">
+    <div class="section-wrap">
+      <h2 class="rp-bottom-h2">Your first Root is<br><em>one order away.</em></h2>
+      <p class="rp-bottom-sub">Shop the harvest and start earning — automatically, from purchase one.</p>
+      <a href="shop.html" class="btn-primary" style="margin-right: 12px;">Shop Now →</a>
+      <a href="product-honey.html" class="btn-ghost">Start with Honey →</a>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="section-wrap footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-origin">Est. 2026 · Araku Valley, India</span>
+        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From the valley to the world.</p>
+        <div class="footer-socials"><a href="#">Instagram</a><a href="#">WhatsApp</a><a href="#">Email</a></div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Shop</h4><a href="shop.html">Honey</a><a href="shop.html">Dry Fruits</a><a href="shop.html">Coffee</a><a href="shop.html">Spices</a><a href="index.html#subscriptions">Subscriptions</a></div>
+        <div class="footer-col"><h4>Discover</h4><a href="#">Our Story</a><a href="#">Journal</a><a href="roots.html">Roots Loyalty</a><a href="#">Rituals</a><a href="#">Sustainability</a></div>
+        <div class="footer-col"><h4>Business</h4><a href="#">Wholesale</a><a href="#">Exports</a><a href="#">Partner With Us</a><a href="#">Catalogue</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="shipping.html">Shipping</a><a href="refund.html">Returns</a><a href="#">FAQs</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a><a href="refund.html">Refund Policy</a><a href="shipping.html">Shipping Policy</a><a href="cookie.html">Cookie Policy</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-wordmark-wrap"><p class="footer-wordmark">PureHarvest</p></div>
+  <div class="footer-bottom-bar">
+    <p>© 2026 PureHarvest Organics</p>
+    <p class="footer-credit">Designed &amp; developed by <span id="arcaneText">Arcane Labs</span></p>
+    <div class="footer-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refund.html">Refund Policy</a><a href="shipping.html">Shipping</a><a href="cookie.html">Cookies</a></div>
+  </div>
+</footer>
+
+
+<script src="script.js"></script>
+<script src="checkout.js"></script>
+<script>
+/* ── FAQ accordion for Roots page ── */
+document.querySelectorAll('.rp-faq-q').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var item   = btn.closest('.rp-faq-item');
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.rp-faq-item').forEach(function (i) { i.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>

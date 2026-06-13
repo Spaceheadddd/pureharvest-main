@@ -5,6 +5,26 @@ Newest entries are at the top.
 
 ---
 
+## [Unreleased] — 2026-06-14
+
+### Added
+- **`checkout.js`** — Immersive 3-moment checkout overlay (Order Review → Delivery → Payment → Confirmation). Self-contained IIFE injected into `document.body`. Features: item grouping/deduplication, pincode validation via India Post API (`api.postalpincode.in`), Razorpay integration with dev-mode fallback, order ID generation (`PH-YYYY-XXXXX`), cart clear + badge update on confirm, full-screen on mobile (`100dvh`, `border-radius: 0`), sheet slide-up on desktop.
+- **`ROOTS-PROGRAM.md`** — Full internal strategy document for the PureHarvest Roots loyalty programme. Covers: earn/redeem mechanics, tier structure (Seedling → Sapling → Roots → Ancient), margin analysis by category (Honey 50-70%, Coffee 30%, Spices 50%, Dry Fruits 40%), 4 detailed customer scenarios with P&L, minimum balance rule (always keep 3 Roots), redemption bonus tiers, shipping policy (no Roots on shipping), full product redemption math, loss scenario analysis (1:1 parity danger), Grove Ambassador overlay, Harvest Card + coupon design, nudge email cadence.
+
+### Changed
+- **`style.css`**
+  - Mobile newsletter input height fix: `flex: none; width: 100%; height: 76px` — overrides `flex: 1` which was setting `flex-basis: 0%` in the column flex layout and overriding explicit height
+  - Checkout overlay styles (`.co-*` namespace): dark forest green panel, honey accent, shake animation for validation errors, mobile full-screen, desktop bottom-sheet
+- **`script.js`**
+  - `#checkoutBtn` wired to `openCheckout(cartItems)` after closing sidebar (200ms delay)
+  - `.p-buy` (Buy Now) handlers updated to call `openCheckout` directly, bypassing cart
+- **`product-honey.html`**
+  - `#pdBuy` wired to `openCheckout` with size/qty array
+  - `<script src="checkout.js">` injected
+- **All 9 HTML files** — `<script src="checkout.js">` injected after `<script src="script.js">`
+
+---
+
 ## [Unreleased] — 2026-06-11
 
 ### Changed

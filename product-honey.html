@@ -272,6 +272,22 @@
     .pd-related-eye { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); font-family: var(--sans); font-weight: 500; margin-bottom: 10px; }
     .pd-related-h2 { font-family: var(--serif); font-size: clamp(26px, 4vw, 36px); font-weight: 400; color: var(--dark); }
   </style>
+  <!-- Microsoft Clarity — session recordings and heatmaps -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x6j5tml7vd");
+  </script>
+  <!-- Google Analytics (GA4) — traffic, conversions and events -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-11TJLZM6SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-11TJLZM6SY');
+  </script>
 </head>
 <body>
 
@@ -370,6 +386,8 @@
     <a href="product-honey.html" class="orb"><div class="orb-ring">🌶</div><span>Spices</span></a>
   </div>
   <nav class="drawer-nav">
+    <!-- Roots Loyalty — first link so it's always visible above the fold -->
+    <a href="roots.html" class="d-link"><div class="d-link-l"><div class="d-icon">🌱</div><div><p class="d-link-name">Roots Loyalty</p><p class="d-link-sub">Earn with every harvest — from order 1</p></div></div><span class="d-arrow">→</span></a>
     <a href="index.html#story" class="d-link"><div class="d-link-l"><div class="d-icon">🌿</div><div><p class="d-link-name">Our Story</p><p class="d-link-sub">From Araku forests to your table</p></div></div><span class="d-arrow">→</span></a>
     <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">📖</div><div><p class="d-link-name">Journal</p><p class="d-link-sub">Stories, rituals &amp; slow living</p></div></div><span class="d-arrow">→</span></a>
     <a href="index.html#subscriptions" class="d-link"><div class="d-link-l"><div class="d-icon">📦</div><div><p class="d-link-name">Subscriptions</p><p class="d-link-sub">Never run out of your ritual</p></div></div><span class="d-arrow">→</span></a>
@@ -451,6 +469,12 @@
             <span class="pd-price" id="pdPrice">₹699</span>
             <span class="pd-price-note">Incl. all taxes</span>
           </div>
+
+          <!-- Roots earning preview — updates with size and qty changes -->
+          <p class="pd-roots-earn" id="pdRootsEarn">
+            🌱 Earn <span id="pdRootsNum">6</span> Roots on this order
+          </p>
+
           <p class="pd-ship">Free shipping on orders ₹999+ · Estimated 3–5 days</p>
 
           <div class="pd-actions">
@@ -923,6 +947,8 @@
   <div class="pd-sticky-info">
     <p class="pd-sticky-name">Forest Honey · <span id="pdStickySize">500g</span></p>
     <p class="pd-sticky-price" id="pdStickyPrice">₹699</p>
+    <!-- Roots earning reminder in sticky bar -->
+    <p class="pd-sticky-roots" id="pdStickyRoots">🌱 Earn 6 Roots</p>
   </div>
   <button class="pd-sticky-btn" id="pdStickyAdd">Add to Cart</button>
 </div>
@@ -956,6 +982,7 @@
 
 
 <script src="script.js"></script>
+  <script src="checkout.js"></script>
 <script>
 (function () {
   /* ── Prices ── */
@@ -966,35 +993,45 @@
   let qty = 1;
   let imgClass = 'p-forest';
 
-  const priceEl   = document.getElementById('pdPrice');
-  const pdSzBtns  = document.querySelectorAll('.pd-sz');
-  const pdAdd     = document.getElementById('pdAdd');
-  const pdBuy     = document.getElementById('pdBuy');
-  const pdQtyMinus = document.getElementById('pdQtyMinus');
-  const pdQtyPlus  = document.getElementById('pdQtyPlus');
-  const pdQtyNum   = document.getElementById('pdQtyNum');
-  const pdSticky   = document.getElementById('pdSticky');
-  const pdStickyAdd = document.getElementById('pdStickyAdd');
+  const priceEl       = document.getElementById('pdPrice');
+  const pdSzBtns      = document.querySelectorAll('.pd-sz');
+  const pdAdd         = document.getElementById('pdAdd');
+  const pdBuy         = document.getElementById('pdBuy');
+  const pdQtyMinus    = document.getElementById('pdQtyMinus');
+  const pdQtyPlus     = document.getElementById('pdQtyPlus');
+  const pdQtyNum      = document.getElementById('pdQtyNum');
+  const pdSticky      = document.getElementById('pdSticky');
+  const pdStickyAdd   = document.getElementById('pdStickyAdd');
   const pdStickyPrice = document.getElementById('pdStickyPrice');
   const pdStickySize  = document.getElementById('pdStickySize');
+  const pdStickyRoots = document.getElementById('pdStickyRoots');
+  const pdRootsNum    = document.getElementById('pdRootsNum');
   const pdHeroSection = document.getElementById('pdHeroSection');
 
-  /* Size toggle */
+  /* ── Roots helper: 1 Root per ₹100 spent ── */
+  function updateRoots() {
+    const roots = Math.floor((activePrice * qty) / 100);
+    if (pdRootsNum)    pdRootsNum.textContent    = roots;
+    if (pdStickyRoots) pdStickyRoots.textContent = '🌱 Earn ' + roots + ' Roots';
+  }
+
+  /* Size toggle — update price, sticky bar, and Roots count */
   pdSzBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       pdSzBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       activePrice = btn.dataset.size === '1kg' ? price1kg : price500;
       activeSize  = btn.dataset.size === '1kg' ? '1 kg' : '500g';
-      if (priceEl) priceEl.textContent = '₹' + activePrice.toLocaleString('en-IN');
+      if (priceEl)       priceEl.textContent       = '₹' + activePrice.toLocaleString('en-IN');
       if (pdStickyPrice) pdStickyPrice.textContent = '₹' + activePrice.toLocaleString('en-IN');
       if (pdStickySize)  pdStickySize.textContent  = activeSize;
+      updateRoots();
     });
   });
 
-  /* Qty stepper */
-  if (pdQtyMinus) pdQtyMinus.addEventListener('click', () => { if (qty > 1) { qty--; pdQtyNum.textContent = qty; } });
-  if (pdQtyPlus)  pdQtyPlus.addEventListener('click',  () => { if (qty < 10) { qty++; pdQtyNum.textContent = qty; } });
+  /* Qty stepper — update Roots count on every change */
+  if (pdQtyMinus) pdQtyMinus.addEventListener('click', () => { if (qty > 1)  { qty--; pdQtyNum.textContent = qty; updateRoots(); } });
+  if (pdQtyPlus)  pdQtyPlus.addEventListener('click',  () => { if (qty < 10) { qty++; pdQtyNum.textContent = qty; updateRoots(); } });
 
   /* Add to Cart */
   function doAdd(triggerEl) {
@@ -1014,12 +1051,13 @@
   if (pdAdd)      pdAdd.addEventListener('click',      () => doAdd(pdAdd));
   if (pdStickyAdd) pdStickyAdd.addEventListener('click', () => doAdd(pdStickyAdd));
 
-  /* Buy Now */
+  /* Buy Now — skips cart, opens checkout directly */
   if (pdBuy) {
     pdBuy.addEventListener('click', () => {
-      if (typeof addToCartItem === 'function') {
-        for (let i = 0; i < qty; i++) addToCartItem('Forest Honey', activePrice, imgClass, pdBuy);
-        if (typeof openCartSidebar === 'function') openCartSidebar();
+      if (typeof openCheckout === 'function') {
+        const items = [];
+        for (let i = 0; i < qty; i++) items.push({ name: 'Forest Honey', price: activePrice, size: activeSize, imgClass });
+        openCheckout(items);
       }
     });
   }

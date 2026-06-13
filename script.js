@@ -607,6 +607,16 @@ if (cartBtn)      cartBtn.addEventListener('click', openCartSidebar);
 if (cartClose)    cartClose.addEventListener('click', closeCartSidebar);
 if (cartBackdrop) cartBackdrop.addEventListener('click', closeCartSidebar);
 
+const checkoutBtn = document.getElementById('checkoutBtn');
+if (checkoutBtn) {
+  checkoutBtn.addEventListener('click', () => {
+    if (typeof openCheckout === 'function' && cartItems.length) {
+      closeCartSidebar();
+      setTimeout(() => openCheckout(cartItems), 200);
+    }
+  });
+}
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeCartSidebar(); closeSearch(); }
 });
@@ -644,14 +654,18 @@ document.querySelectorAll('.p-add').forEach(btn => {
 
 document.querySelectorAll('.p-buy').forEach(btn => {
   btn.addEventListener('click', () => {
-    const name  = btn.dataset.product || 'Item';
-    const price = btn.dataset.price   || 0;
-    const card  = btn.closest('.p-card');
-    const imgEl = card ? card.querySelector('.p-img') : null;
+    const name     = btn.dataset.product || 'Item';
+    const price    = btn.dataset.price   || 0;
+    const card     = btn.closest('.p-card');
+    const imgEl    = card ? card.querySelector('.p-img') : null;
     const imgClass = imgEl ? [...imgEl.classList].find(c => c !== 'p-img') : '';
 
-    addToCartItem(name, price, imgClass, btn);
-    openCartSidebar();
+    if (typeof openCheckout === 'function') {
+      openCheckout([{ name, price, imgClass }]);
+    } else {
+      addToCartItem(name, price, imgClass, btn);
+      openCartSidebar();
+    }
   });
 });
 
