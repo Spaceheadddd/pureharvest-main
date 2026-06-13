@@ -18,10 +18,9 @@
     .rp-hero {
       background: var(--forest-2);
       color: white;
-      padding: 120px 0 100px;
+      padding: 120px 20px 100px; /* 20px horizontal so content clears screen edge on mobile */
       text-align: center;
       position: relative;
-      overflow: hidden;
     }
 
     .rp-hero-eye {
@@ -52,9 +51,9 @@
     .rp-hero-cta:hover { background: var(--honey-dk); transform: translateY(-2px); }
 
     /* ── Shared section ── */
-    .rp-section { padding: 96px 0; }
+    .rp-section { padding: 96px 20px; }       /* horizontal padding keeps content off screen edge */
     .rp-section-alt { background: var(--off-white); }
-    .rp-section-dark { background: var(--forest); color: white; padding: 96px 0; }
+    .rp-section-dark { background: var(--forest); color: white; padding: 96px 20px; }
     .rp-eye {
       font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
       color: var(--muted); font-family: var(--sans); font-weight: 500; margin-bottom: 12px;
@@ -239,7 +238,7 @@
     .rp-bottom-cta {
       background: var(--honey-lt);
       border-top: 1px solid rgba(196,144,58,0.15);
-      padding: 88px 0;
+      padding: 88px 20px; /* horizontal padding for mobile */
       text-align: center;
     }
     .rp-bottom-h2 {
