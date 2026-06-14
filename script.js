@@ -593,14 +593,27 @@ const cartBtn      = document.querySelector('.cart-hdr-btn');
 function openCartSidebar() {
   if (!cartSidebar) return;
   cartSidebar.classList.add('active');
-  document.body.style.overflow = 'hidden';
+  /* iOS scroll lock: position:fixed prevents momentum scroll leaking through
+     on Safari — same pattern used in checkout. Saves scrollY so close restores it. */
+  var _sy = window.scrollY;
+  document.body.style.overflow  = 'hidden';
+  document.body.style.position  = 'fixed';
+  document.body.style.top       = '-' + _sy + 'px';
+  document.body.style.width     = '100%';
+  document.body.dataset.cartSy  = _sy;
   renderCartItems();
 }
 
 function closeCartSidebar() {
   if (!cartSidebar) return;
   cartSidebar.classList.remove('active');
+  /* Restore exact scroll position after unlocking body */
+  var sy = parseInt(document.body.dataset.cartSy || '0', 10);
   document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.top      = '';
+  document.body.style.width    = '';
+  window.scrollTo(0, sy);
 }
 
 if (cartBtn)      cartBtn.addEventListener('click', openCartSidebar);

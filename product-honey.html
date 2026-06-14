@@ -266,12 +266,24 @@
     .pd-close-note { font-size: 12px; color: rgba(255,255,255,0.4); }
     .pd-close-note a { color: rgba(255,255,255,0.6); border-bottom: 1px solid rgba(255,255,255,0.2); }
 
+    /* Dynamic usage copy — sits between size buttons and qty */
+    .pd-usage { font-size: 12px; color: var(--muted); font-family: var(--sans); margin: -4px 0 18px; }
+
+    /* pd-close section enhancements */
+    .pd-close-rating { font-size: 13px; color: var(--honey); font-family: var(--sans); margin-bottom: 14px; letter-spacing: 0.3px; }
+    .pd-close-usage  { font-size: 12px; color: rgba(255,255,255,0.38); font-family: var(--sans); margin: -10px 0 20px; }
+    .pd-close-subscribe { display: block; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.6); font-family: var(--sans); margin: 10px 0 20px; text-decoration: none; transition: color 0.2s; }
+    .pd-close-subscribe:hover { color: white; }
+    .pd-close-trust { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; font-size: 11px; color: rgba(255,255,255,0.32); font-family: var(--sans); letter-spacing: 0.2px; }
+    .pd-close-trust-sep { color: rgba(255,255,255,0.15); }
+
     /* ── Related ── */
     .pd-related { padding: 88px 0 0; }
     .pd-related-hdr { max-width: 1200px; margin: 0 auto; padding: 0 24px 36px; }
     .pd-related-eye { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); font-family: var(--sans); font-weight: 500; margin-bottom: 10px; }
     .pd-related-h2 { font-family: var(--serif); font-size: clamp(26px, 4vw, 36px); font-weight: 400; color: var(--dark); }
   </style>
+  
   <!-- Microsoft Clarity — session recordings and heatmaps -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -280,7 +292,8 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "x6j5tml7vd");
   </script>
-  <!-- Google Analytics (GA4) — traffic, conversions and events -->
+
+<!-- Google Analytics (GA4) — traffic, conversions and events -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-11TJLZM6SY"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -457,6 +470,9 @@
             <button class="pd-sz active" data-size="500">500g</button>
             <button class="pd-sz" data-size="1kg">1 kg</button>
           </div>
+
+          <!-- Dynamic usage copy — updates when size changes via JS -->
+          <p class="pd-usage" id="pdUsage">500g · lasts ~4–5 weeks for daily use</p>
 
           <div class="pd-qty-row">
             <span class="pd-qty-label">Qty</span>
@@ -894,6 +910,8 @@
   <!-- ── 12 CLOSE CTA ── -->
   <section class="pd-close">
     <div class="pd-close-inner">
+      <!-- Social proof at point of decision — mirrors the top of the page -->
+      <p class="pd-close-rating">★★★★★ &nbsp; 312 ritual seekers</p>
       <p class="pd-close-eye">Ready to Start Your Ritual?</p>
       <h2 class="pd-close-h2">Araku Forest<br><em>Honey</em></h2>
       <p class="pd-close-sub">Post-Monsoon 2026 Harvest · Batch AV-2026-01 · Limited Stock</p>
@@ -901,9 +919,20 @@
         <button class="pd-close-sz active" data-size="500" data-price="699">500g — ₹699</button>
         <button class="pd-close-sz" data-size="1kg" data-price="1299">1 kg — ₹1,299</button>
       </div>
+      <!-- Dynamic usage — updated by JS when size changes -->
+      <p class="pd-close-usage" id="pdCloseUsage">500g · lasts ~4–5 weeks for daily use</p>
       <p class="pd-close-price-row" id="pdClosePrice">₹699</p>
       <button class="pd-close-btn" id="pdCloseAdd">Add to Cart →</button>
-      <p class="pd-close-note">or <a href="index.html#subscriptions">subscribe &amp; save 15%</a> · <a href="refund.html">7-day returns</a></p>
+      <!-- Subscribe as a visible secondary CTA, not buried in a note -->
+      <a href="index.html#subscriptions" class="pd-close-subscribe">or subscribe &amp; save 15% →</a>
+      <!-- Trust strip replacing the old single-line note -->
+      <div class="pd-close-trust">
+        <span>🚚 Free shipping ₹999+</span>
+        <span class="pd-close-trust-sep">·</span>
+        <span>↩ 7-day returns</span>
+        <span class="pd-close-trust-sep">·</span>
+        <span>✓ FSSAI Certified</span>
+      </div>
     </div>
   </section>
 
@@ -1009,6 +1038,14 @@
   const pdStickyRoots = document.getElementById('pdStickyRoots');
   const pdRootsNum    = document.getElementById('pdRootsNum');
   const pdHeroSection = document.getElementById('pdHeroSection');
+  const pdUsageEl     = document.getElementById('pdUsage');
+  const pdCloseUsageEl = document.getElementById('pdCloseUsage');
+
+  /* Usage copy per size — helps users understand value before buying */
+  const usageCopy = {
+    '500':  '500g · lasts ~4–5 weeks for daily use',
+    '1kg':  '1 kg · lasts ~8–10 weeks for daily use'
+  };
 
   /* ── Roots helper: 1 Root per ₹100 spent ── */
   function updateRoots() {
@@ -1017,7 +1054,7 @@
     if (pdStickyRoots) pdStickyRoots.textContent = '🌱 Earn ' + roots + ' Roots';
   }
 
-  /* Size toggle — update price, sticky bar, and Roots count */
+  /* Size toggle — update price, sticky bar, Roots count, and usage copy */
   pdSzBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       pdSzBtns.forEach(b => b.classList.remove('active'));
@@ -1027,6 +1064,9 @@
       if (priceEl)       priceEl.textContent       = '₹' + activePrice.toLocaleString('en-IN');
       if (pdStickyPrice) pdStickyPrice.textContent = '₹' + activePrice.toLocaleString('en-IN');
       if (pdStickySize)  pdStickySize.textContent  = activeSize;
+      /* Update usage copy in both hero and close section */
+      if (pdUsageEl)      pdUsageEl.textContent      = usageCopy[btn.dataset.size] || '';
+      if (pdCloseUsageEl) pdCloseUsageEl.textContent = usageCopy[btn.dataset.size] || '';
       updateRoots();
     });
   });
@@ -1095,7 +1135,10 @@
       closeSzBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       closePrice = parseInt(btn.dataset.price);
-      if (closePriceEl) closePriceEl.textContent = '₹' + closePrice.toLocaleString('en-IN');
+      if (closePriceEl)    closePriceEl.textContent    = '₹' + closePrice.toLocaleString('en-IN');
+      /* Keep usage copy in sync when size toggled from the close section */
+      if (pdCloseUsageEl)  pdCloseUsageEl.textContent  = usageCopy[btn.dataset.size] || '';
+      if (pdUsageEl)       pdUsageEl.textContent        = usageCopy[btn.dataset.size] || '';
     });
   });
   if (pdCloseAdd) {

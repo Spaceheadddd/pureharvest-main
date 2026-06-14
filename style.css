@@ -1394,6 +1394,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   box-shadow: -8px 0 48px rgba(0,0,0,0.12);
 }
 .cart-sidebar.active .cart-panel { transform: translateX(0); }
+
+/* Force full-width on small phones — max-width:400px would otherwise leave
+   a visible gap on devices narrower than 400px (iPhone SE, older Androids) */
+@media (max-width: 480px) {
+  .cart-panel { max-width: 100%; }
+}
 .cart-head {
   display: flex; align-items: center; justify-content: space-between;
   padding: 24px 24px 20px;
