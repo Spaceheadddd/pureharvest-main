@@ -2179,6 +2179,22 @@ input, textarea, [contenteditable] {
   align-items: flex-start; /* pin both columns to top — button anchors below pitch, not floating mid-column */
 }
 
+/* Button override — scoped to roots section only so .btn-primary elsewhere is unchanged.
+   No padding/background/radius: aligns flush with the copy above it.
+   Muted white text at rest; full white on hover — text-link feel, not a pill. */
+.roots-home .btn-primary {
+  background: transparent;
+  color: rgba(255,255,255,0.45);
+  padding: 0;
+  border-radius: 0;
+  transition: color 0.2s ease;
+}
+.roots-home .btn-primary:hover {
+  background: transparent;
+  color: rgba(255,255,255,1);
+  transform: none;
+}
+
 /* Below 900px: single column */
 @media (max-width: 900px) {
   .roots-home-inner { grid-template-columns: 1fr; gap: 40px; }
