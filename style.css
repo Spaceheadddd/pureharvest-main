@@ -2176,7 +2176,7 @@ input, textarea, [contenteditable] {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 72px;
-  align-items: center;
+  align-items: flex-start; /* pin both columns to top — button anchors below pitch, not floating mid-column */
 }
 
 /* Below 900px: single column */
