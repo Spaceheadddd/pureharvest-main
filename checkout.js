@@ -234,7 +234,16 @@
     gotoStep(1);
 
     overlay.classList.add('active');
-    document.body.style.overflow = 'hidden'; /* lock background page scroll */
+
+    /* iOS scroll lock: body.style.overflow='hidden' alone doesn't stop momentum
+       scroll on Safari. Save the current scroll position, then pin the body with
+       position:fixed so the page can't move behind the checkout panel. */
+    var _scrollY = window.scrollY;
+    document.body.style.overflow   = 'hidden';
+    document.body.style.position   = 'fixed';
+    document.body.style.top        = '-' + _scrollY + 'px';
+    document.body.style.width      = '100%';
+    document.body.dataset.scrollY  = _scrollY; /* store so closeCheckout can restore */
   };
 
 
@@ -244,7 +253,15 @@
   ────────────────────────────────────── */
   function closeCheckout() {
     overlay.classList.remove('active');
+
+    /* Restore scroll position: undo the position:fixed lock set in openCheckout.
+       Read the stored Y value before clearing styles, then jump back to it. */
+    var sy = parseInt(document.body.dataset.scrollY || '0', 10);
     document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top      = '';
+    document.body.style.width    = '';
+    window.scrollTo(0, sy);
   }
 
   /* Close via ✕ button */

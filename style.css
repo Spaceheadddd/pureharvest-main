@@ -1737,7 +1737,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .ritual-drawer {
 
-  touch-action: none;
+  /* pan-y: allows native vertical scroll inside the drawer on iOS/Android
+     while still firing touch events to JS for the drag-to-dismiss gesture.
+     'none' was blocking all scroll — this fixes drawer content not scrolling on mobile. */
+  touch-action: pan-y;
   will-change: transform;
 
 }
