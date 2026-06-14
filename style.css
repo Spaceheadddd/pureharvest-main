@@ -2164,9 +2164,12 @@ input, textarea, [contenteditable] {
 }
 
 /* ── Homepage Roots section ── */
+/* padding: 100px 20px matches every other section on the page (story, b2b,
+   subscriptions, journal all use padding: 80px 20px on the section itself).
+   The 20px horizontal applies at all screen widths — no media query needed. */
 .roots-home {
   background: var(--forest);
-  padding: 100px 0;
+  padding: 100px 20px;
   color: white;
 }
 .roots-home-inner {
@@ -2176,18 +2179,18 @@ input, textarea, [contenteditable] {
   align-items: center;
 }
 
-/* Below 900px: single column. Below 600px: add horizontal padding
-   (section-wrap has no side padding, so this prevents edge-to-edge content on phones) */
+/* Below 900px: single column */
 @media (max-width: 900px) {
   .roots-home-inner { grid-template-columns: 1fr; gap: 40px; }
 }
+/* Below 600px: reduce vertical padding and tighten inner spacing */
 @media (max-width: 600px) {
-  .roots-home          { padding: 64px 0; }          /* reduce top/bottom on mobile */
-  .roots-home-inner    { padding: 0 20px; gap: 36px; } /* horizontal breathing room */
-  .roots-home-p        { max-width: 100%; }           /* remove max-width cap — full column */
-  .roots-earn-strip    { gap: 12px; justify-content: flex-start; } /* tighter, don't wrap oddly */
-  .roots-home-tiers    { gap: 10px; }
-  .rht-sub             { font-size: 11px; }           /* prevent badge overflow on narrow cards */
+  .roots-home       { padding: 64px 20px; }           /* shorter top/bottom on mobile */
+  .roots-home-inner { gap: 36px; }
+  .roots-home-p     { max-width: 100%; }              /* drop 480px cap in single-column */
+  .roots-earn-strip { gap: 12px; }                    /* tighter on small screens */
+  .roots-home-tiers { gap: 10px; }
+  .rht-sub          { font-size: 11px; }              /* prevent text overflowing narrow cards */
 }
 
 .roots-home-h2 {
