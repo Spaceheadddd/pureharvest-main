@@ -68,7 +68,7 @@
     '  </div>',
     '  <div class="co-row">',
     '    <span class="co-label-sm">Shipping</span>',
-    '    <span class="co-total-val co-free">Free</span>',
+    '    <span class="co-total-val" id="coShipping">—</span>',
     '  </div>',
     /* Roots earning preview — always shown, updates live */
     '  <div class="co-roots-earn">',
@@ -96,6 +96,13 @@
     '      <label class="co-label">Full Name</label>',
     '      <input type="text" class="co-input" id="coName" placeholder="Your name" autocomplete="name" />',
     '      <p class="co-field-hint" id="coNameHint"></p>',
+    '    </div>',
+
+    /* Email — needed for order confirmations and WhatsApp fallback */
+    '    <div class="co-field">',
+    '      <label class="co-label">Email</label>',
+    '      <input type="email" class="co-input" id="coEmail" placeholder="you@example.com" autocomplete="email" inputmode="email" />',
+    '      <p class="co-field-hint" id="coEmailHint"></p>',
     '    </div>',
 
     /* Phone + Pincode — side by side; pincode drives city/state auto-fill */
@@ -159,6 +166,10 @@
     '  <div class="co-pay-summary" id="coPaySummary"></div>',
     '  <div class="co-pay-addr" id="coPayAddr"></div>',
     '  <div class="co-divider"></div>',
+    '  <div class="co-row">',
+    '    <span class="co-label-sm">Shipping</span>',
+    '    <span class="co-total-val" id="coM3Shipping">—</span>',
+    '  </div>',
     '  <div class="co-row co-pay-total-row">',
     '    <span class="co-label-sm">Total</span>',
     '    <span class="co-pay-total" id="coPayTotal">₹0</span>',
@@ -259,7 +270,7 @@
     if (codeMsg)   { codeMsg.textContent = ''; codeMsg.className = 'co-code-msg'; }
 
     /* Clear M2 fields from any previous checkout session */
-    [nameInput, phoneInput, pinInput, areaInput, flatInput, cityInput, stateInput].forEach(function (el) {
+    [nameInput, emailInput, phoneInput, pinInput, areaInput, flatInput, cityInput, stateInput].forEach(function (el) {
       if (el) el.value = '';
     });
     var buildingInput = document.getElementById('coBuilding');
@@ -367,8 +378,13 @@
     }, 0);
   }
 
+  /* Shipping: free on orders ₹999+, else ₹99 flat */
+  function calcShipping() {
+    return rawTotal() >= 999 ? 0 : 99;
+  }
+
   function calcTotal() {
-    return Math.max(0, rawTotal() - _discount.amount);
+    return Math.max(0, rawTotal() + calcShipping() - _discount.amount);
   }
 
   function calcRoots(total) {
@@ -412,10 +428,21 @@
 
     document.getElementById('coItemsList').innerHTML = html;
 
-    /* Update subtotal and Roots preview */
-    var total = rawTotal();
+    /* Update subtotal, shipping row, and Roots preview */
+    var total    = rawTotal();
+    var shipping = calcShipping();
+    var shipEl   = document.getElementById('coShipping');
     document.getElementById('coSubtotal').textContent   = '₹' + total.toLocaleString('en-IN');
     document.getElementById('coRootsNumM1').textContent = calcRoots(total);
+    if (shipEl) {
+      if (shipping === 0) {
+        shipEl.textContent  = 'Free';
+        shipEl.className    = 'co-total-val co-free';
+      } else {
+        shipEl.textContent  = '₹' + shipping;
+        shipEl.className    = 'co-total-val co-shipping-fee';
+      }
+    }
   }
 
   /* M1 Continue button — no validation needed here */
@@ -430,6 +457,8 @@
   ────────────────────────────────────── */
   var nameInput    = document.getElementById('coName');
   var nameHintEl   = document.getElementById('coNameHint');
+  var emailInput   = document.getElementById('coEmail');
+  var emailHintEl  = document.getElementById('coEmailHint');
   var phoneInput   = document.getElementById('coPhone');
   var phoneHintEl  = document.getElementById('coPhoneHint');
   var pinInput     = document.getElementById('coPincode');
@@ -591,10 +620,18 @@
     }
   });
 
+  /* Returns true if a digit repeats 8+ times — catches fakes like 6000000006 */
+  function hasRepeatDigit(ph) {
+    for (var d = 0; d <= 9; d++) {
+      if ((ph.split(String(d)).length - 1) >= 8) return true;
+    }
+    return false;
+  }
+
   /* Phone — validate format on blur */
   phoneInput.addEventListener('blur', function () {
     var ph = phoneInput.value.trim();
-    if (ph && !/^[6-9]\d{9}$/.test(ph)) {
+    if (ph && (!/^[6-9]\d{9}$/.test(ph) || hasRepeatDigit(ph))) {
       phoneInput.classList.add('co-err');
       phoneHintEl.textContent = 'Enter a valid 10-digit Indian mobile number.';
       phoneHintEl.style.color = '#f87171';
@@ -639,6 +676,7 @@
   ────────────────────────────────────── */
   document.getElementById('coM2Cta').addEventListener('click', function () {
     var name    = nameInput.value.trim();
+    var email   = emailInput.value.trim();
     var phone   = phoneInput.value.trim();
     var pincode = pinInput.value.trim();
     var area    = areaInput.value.trim();
@@ -656,8 +694,17 @@
       valid = false;
     }
 
-    /* Phone — Indian mobile: 10 digits starting 6–9 */
-    var phoneOk = /^[6-9]\d{9}$/.test(phone);
+    /* Email — required for order confirmation */
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    emailInput.classList.toggle('co-err', !emailOk);
+    if (!emailOk) {
+      emailHintEl.textContent = 'Enter a valid email address.';
+      emailHintEl.style.color = '#f87171';
+      valid = false;
+    }
+
+    /* Phone — Indian mobile: starts 6–9, 10 digits, no repeated digit 8+ times */
+    var phoneOk = /^[6-9]\d{9}$/.test(phone) && !hasRepeatDigit(phone);
     phoneInput.classList.toggle('co-err', !phoneOk);
     if (!phoneOk) {
       phoneHintEl.textContent = 'Enter a valid 10-digit Indian mobile number.';
@@ -709,6 +756,7 @@
     /* Save structured delivery data — used in M3 display and order confirmation */
     _delivery = {
       name:     name,
+      email:    email,
       phone:    phone,
       pincode:  pincode,
       area:     area,
@@ -812,11 +860,23 @@
 
   /* Update M3 total and pay button amount — called on render and after coupon apply */
   function updateM3Totals() {
-    var total = calcTotal(); /* post-discount */
-    var roots = calcRoots(rawTotal()); /* Roots based on pre-discount spend */
+    var total    = calcTotal(); /* post-discount, includes shipping */
+    var shipping = calcShipping();
+    var roots    = calcRoots(rawTotal()); /* Roots on pre-discount product spend only */
 
-    document.getElementById('coPayAmt').textContent    = '₹' + total.toLocaleString('en-IN');
-    document.getElementById('coPayTotal').textContent  = '₹' + total.toLocaleString('en-IN');
+    var m3Ship = document.getElementById('coM3Shipping');
+    if (m3Ship) {
+      if (shipping === 0) {
+        m3Ship.textContent = 'Free';
+        m3Ship.className   = 'co-total-val co-free';
+      } else {
+        m3Ship.textContent = '₹' + shipping;
+        m3Ship.className   = 'co-total-val co-shipping-fee';
+      }
+    }
+
+    document.getElementById('coPayAmt').textContent     = '₹' + total.toLocaleString('en-IN');
+    document.getElementById('coPayTotal').textContent   = '₹' + total.toLocaleString('en-IN');
     document.getElementById('coRootsNumM3').textContent = roots;
   }
 

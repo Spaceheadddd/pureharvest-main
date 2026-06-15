@@ -1072,6 +1072,47 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 
 
 /* ========================================
+   COOKIE CONSENT BANNER
+   Shows on first visit; dismissed state stored in localStorage.
+   Accepting sets ph_cookies = {analytics:true, marketing:true}.
+   "Manage" links to cookie.html for granular preferences.
+======================================== */
+(function () {
+  if (localStorage.getItem('ph_cookies')) return; /* already decided */
+
+  /* Build banner */
+  var banner = document.createElement('div');
+  banner.id        = 'cookieBanner';
+  banner.className = 'cookie-banner';
+  banner.innerHTML =
+    '<div class="cookie-inner">' +
+      '<p class="cookie-text">We use cookies to personalise your experience and analyse traffic. ' +
+        '<a href="cookie.html">Cookie Policy</a>' +
+      '</p>' +
+      '<div class="cookie-btns">' +
+        '<a href="cookie.html" class="cookie-manage">Manage preferences</a>' +
+        '<button class="cookie-accept" id="cookieAccept">Accept All</button>' +
+      '</div>' +
+    '</div>';
+
+  /* Show after a short delay so it doesn't flash on landing */
+  setTimeout(function () {
+    document.body.appendChild(banner);
+    requestAnimationFrame(function () { banner.classList.add('cookie-banner--visible'); });
+  }, 800);
+
+  /* Accept — save preference and slide out */
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.id === 'cookieAccept') {
+      localStorage.setItem('ph_cookies', JSON.stringify({ analytics: true, marketing: true }));
+      banner.classList.remove('cookie-banner--visible');
+      setTimeout(function () { banner.remove(); }, 400);
+    }
+  });
+})();
+
+
+/* ========================================
    SESSION — shared across all pages
    Reads ph_session from localStorage so the ritual drawer
    can reflect sign-in state on every page without a backend.
