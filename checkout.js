@@ -85,41 +85,69 @@
     '  <button class="co-cta" id="coM1Cta">Continue →</button>',
     '</div>',
 
-    /* M2 — Delivery */
+    /* M2 — Delivery (structured address fields, pincode-driven auto-fill) */
     '<div class="co-moment" id="coM2">',
     '  <p class="co-eyebrow">Delivery</p>',
     '  <h2 class="co-h2">Where shall we<br><em>send it?</em></h2>',
     '  <div class="co-fields">',
+
     /* Full name */
     '    <div class="co-field">',
     '      <label class="co-label">Full Name</label>',
     '      <input type="text" class="co-input" id="coName" placeholder="Your name" autocomplete="name" />',
     '      <p class="co-field-hint" id="coNameHint"></p>',
     '    </div>',
-    /* Phone — enforces Indian mobile format: starts 6-9, 10 digits */
-    '    <div class="co-field">',
-    '      <label class="co-label">Phone</label>',
-    '      <div class="co-phone-row">',
-    '        <span class="co-prefix">+91</span>',
-    '        <input type="tel" class="co-input co-input-flex" id="coPhone" placeholder="9876543210" maxlength="10" inputmode="numeric" autocomplete="tel" />',
+
+    /* Phone + Pincode — side by side; pincode drives city/state auto-fill */
+    '    <div class="co-phone-pin-row">',
+    '      <div class="co-field co-field--phone">',
+    '        <label class="co-label">Phone</label>',
+    '        <div class="co-phone-row">',
+    '          <span class="co-prefix">+91</span>',
+    '          <input type="tel" class="co-input co-input-flex" id="coPhone" placeholder="9876543210" maxlength="10" inputmode="numeric" autocomplete="tel" />',
+    '        </div>',
+    '        <p class="co-field-hint" id="coPhoneHint"></p>',
     '      </div>',
-    '      <p class="co-field-hint" id="coPhoneHint"></p>',
-    '    </div>',
-    /* Pincode — live lookup via India Post API, must resolve before Continue */
-    '    <div class="co-field">',
-    '      <label class="co-label">Pincode</label>',
-    '      <div class="co-pin-row">',
-    '        <input type="text" class="co-input co-input-pin" id="coPincode" placeholder="400001" maxlength="6" inputmode="numeric" />',
+    '      <div class="co-field co-field--pin">',
+    '        <label class="co-label">Pincode</label>',
+    '        <input type="text" class="co-input" id="coPincode" placeholder="530015" maxlength="6" inputmode="numeric" />',
     '        <span class="co-pin-loc" id="coPinLoc"></span>',
+    '        <p class="co-field-hint" id="coPinHint"></p>',
     '      </div>',
-    '      <p class="co-field-hint" id="coPinHint"></p>',
     '    </div>',
-    /* Address */
+
+    /* Flat and Building — side by side, comes before locality for natural address flow */
+    '    <div class="co-field-row">',
+    '      <div class="co-field">',
+    '        <label class="co-label">Flat / House no.</label>',
+    '        <input type="text" class="co-input" id="coFlat" placeholder="Apt 4B" autocomplete="address-line1" />',
+    '        <p class="co-field-hint" id="coFlatHint"></p>',
+    '      </div>',
+    '      <div class="co-field">',
+    '        <label class="co-label">Building</label>',
+    '        <input type="text" class="co-input" id="coBuilding" placeholder="Palm Heights" autocomplete="address-line2" />',
+    '      </div>',
+    '    </div>',
+
+    /* Area / Locality — free text, user fills manually */
     '    <div class="co-field">',
-    '      <label class="co-label">Address</label>',
-    '      <textarea class="co-input co-textarea" id="coAddress" placeholder="House / Flat no., Street, Area" rows="2"></textarea>',
-    '      <p class="co-field-hint" id="coAddrHint"></p>',
+    '      <label class="co-label">Area / Locality</label>',
+    '      <input type="text" class="co-input" id="coArea" placeholder="e.g. Koramangala, Bandra West" autocomplete="address-level3" />',
+    '      <p class="co-field-hint" id="coAreaHint"></p>',
     '    </div>',
+
+    /* City + State — read-only, auto-filled from pincode lookup; always side by side */
+    '    <div class="co-field-row co-field-row--inline">',
+    '      <div class="co-field">',
+    '        <label class="co-label">City</label>',
+    '        <input type="text" class="co-input co-input-auto" id="coCity" placeholder="Auto-filled" readonly />',
+    '      </div>',
+    '      <div class="co-field">',
+    '        <label class="co-label">State</label>',
+    '        <input type="text" class="co-input co-input-auto" id="coState" placeholder="Auto-filled" readonly />',
+    '      </div>',
+    '    </div>',
+
     '  </div>',
     '  <button class="co-cta" id="coM2Cta">Continue to Payment →</button>',
     '</div>',
@@ -230,10 +258,22 @@
     if (codeInput) { codeInput.value = ''; }
     if (codeMsg)   { codeMsg.textContent = ''; codeMsg.className = 'co-code-msg'; }
 
+    /* Clear M2 fields from any previous checkout session */
+    [nameInput, phoneInput, pinInput, areaInput, flatInput, cityInput, stateInput].forEach(function (el) {
+      if (el) el.value = '';
+    });
+    var buildingInput = document.getElementById('coBuilding');
+    if (buildingInput) buildingInput.value = '';
+    if (pinLocEl)  { pinLocEl.textContent = ''; }
+
+
     renderM1();
     gotoStep(1);
 
     overlay.classList.add('active');
+
+    /* Silently pre-detect state from IP (best-effort, runs in background) */
+    setTimeout(prefillFromIP, 400);
 
     /* iOS scroll lock: body.style.overflow='hidden' alone doesn't stop momentum
        scroll on Safari. Save the current scroll position, then pin the body with
@@ -386,58 +426,133 @@
 
   /* ──────────────────────────────────────
      M2: DELIVERY — FIELD REFERENCES
+     All inputs grabbed once and reused by handlers below.
   ────────────────────────────────────── */
-  var pinInput   = document.getElementById('coPincode');
-  var pinLocEl   = document.getElementById('coPinLoc');
-  var pinHintEl  = document.getElementById('coPinHint');
-  var phoneInput = document.getElementById('coPhone');
-  var phoneHintEl = document.getElementById('coPhoneHint');
+  var nameInput    = document.getElementById('coName');
+  var nameHintEl   = document.getElementById('coNameHint');
+  var phoneInput   = document.getElementById('coPhone');
+  var phoneHintEl  = document.getElementById('coPhoneHint');
+  var pinInput     = document.getElementById('coPincode');
+  var pinLocEl     = document.getElementById('coPinLoc');
+  var pinHintEl    = document.getElementById('coPinHint');
+  var areaInput    = document.getElementById('coArea');
+  var areaHintEl   = document.getElementById('coAreaHint');
+  var flatInput    = document.getElementById('coFlat');
+  var flatHintEl   = document.getElementById('coFlatHint');
+  var cityInput    = document.getElementById('coCity');
+  var stateInput   = document.getElementById('coState');
+
+
+  /* Cache: pincode → { district, state } — avoids repeat API calls per session */
+  var _pinCache = {};
+
+  /* Clear .co-err highlight whenever user edits any field */
+  overlay.querySelectorAll('.co-input').forEach(function (inp) {
+    inp.addEventListener('input', function () { inp.classList.remove('co-err'); });
+  });
 
 
   /* ──────────────────────────────────────
-     PINCODE LIVE LOOKUP
-     Calls India Post API on each 6-digit entry.
-     Sets _pinVerified = true only on success.
-     If API is down, allows fallback (doesn't block user).
+     SILENT IP PRE-DETECTION
+     Called once when checkout opens.
+     Uses ipapi.co (free, 1000/day) to infer the user's state.
+     VPN check: if IP says non-India but device timezone = Asia/Kolkata
+     → assume the user is in India (VPN active), still pre-fill.
+     Result goes into State field if empty and pincode lookup hasn't filled it yet.
+  ────────────────────────────────────── */
+  function prefillFromIP() {
+    /* Skip if state is already filled from a previous pincode lookup */
+    if (stateInput.value) return;
+
+    fetch('https://ipapi.co/json/')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        /* Timezone-based VPN bypass: device timezone wins over IP country */
+        var tz      = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        var inIndia = (tz === 'Asia/Kolkata' || tz === 'Asia/Calcutta');
+        var ipIndia = (d.country_code === 'IN');
+
+        if (!inIndia && !ipIndia) return; /* Genuinely outside India — don't pre-fill */
+
+        /* Only pre-fill state if still empty — don't overwrite user entry */
+        if (!stateInput.value && d.region) {
+          stateInput.value = d.region;
+        }
+        /* Pre-fill city too if empty */
+        if (!cityInput.value && d.city) {
+          cityInput.value = d.city;
+        }
+      })
+      .catch(function () { /* fail silently — pre-fill is best-effort */ });
+  }
+
+
+  /* ──────────────────────────────────────
+     PINCODE LIVE LOOKUP (CACHED)
+     Fires immediately on 6th digit (no blur needed).
+     Checks _pinCache first — instant fill if already looked up this session.
+     On API success: fills City + State inputs and shows district badge.
+     On failure: clears auto-fills, shows error, doesn't block continue.
   ────────────────────────────────────── */
   pinInput.addEventListener('input', function () {
     /* Strip non-digits, cap at 6 */
     var pin = pinInput.value.replace(/\D/g, '').slice(0, 6);
     pinInput.value = pin;
 
-    /* Reset verification state on any change */
+    /* Clear previous result on every change */
     pinLocEl.textContent  = '';
     pinHintEl.textContent = '';
-    _pinVerified = false;
+    _pinVerified          = false;
 
-    /* Only look up when all 6 digits are entered */
     if (pin.length !== 6) return;
 
-    pinLocEl.textContent = '...';
+    /* Cache hit — instant fill, no network */
+    if (_pinCache[pin]) {
+      var cached = _pinCache[pin];
+      pinLocEl.textContent = cached.district + ', ' + cached.state;
+      pinLocEl.style.color = 'var(--honey)';
+      cityInput.value      = cached.district;
+      stateInput.value     = cached.state;
+      _pinVerified         = true;
+      return;
+    }
+
+    /* Show spinner immediately so user sees feedback on 6th keystroke */
+    pinLocEl.textContent = 'checking…';
     pinLocEl.style.color = 'rgba(255,255,255,0.35)';
 
-    /* Async API call — India Post Pincode API (free, no auth required) */
+    /* India Post Pincode API — free, no auth */
     fetch('https://api.postalpincode.in/pincode/' + pin)
       .then(function (r) { return r.json(); })
       .then(function (data) {
         if (data[0].Status === 'Success') {
-          var po = data[0].PostOffice[0];
-          pinLocEl.textContent = po.District + ', ' + po.State;
+          var po       = data[0].PostOffice[0];
+          var district = po.District;
+          var state    = po.State;
+
+          /* Store in cache so repeat lookups are instant */
+          _pinCache[pin] = { district: district, state: state };
+
+          pinLocEl.textContent = district + ', ' + state;
           pinLocEl.style.color = 'var(--honey)';
-          _pinVerified = true;
+          cityInput.value      = district;
+          stateInput.value     = state;
+          _pinVerified         = true;
         } else {
           pinLocEl.textContent  = '';
           pinHintEl.textContent = 'Pincode not found — please check and re-enter.';
           pinHintEl.style.color = '#f87171';
-          _pinVerified = false;
+          cityInput.value       = '';
+          stateInput.value      = '';
+          _pinVerified          = false;
         }
       })
       .catch(function () {
-        /* Network or API error — allow checkout to proceed so users aren't blocked */
+        /* API down — don't block checkout, just note it */
         pinLocEl.textContent  = '';
         pinHintEl.textContent = 'Could not verify pincode — you may still proceed.';
         pinHintEl.style.color = 'rgba(255,255,255,0.4)';
-        _pinVerified = true; /* fallback: don't block on API downtime */
+        _pinVerified          = true; /* fallback: don't block on API downtime */
       });
   });
 
@@ -447,24 +562,19 @@
      Strip non-digits as user types, cap at 10.
   ────────────────────────────────────── */
   phoneInput.addEventListener('input', function () {
-    phoneInput.value = phoneInput.value.replace(/\D/g, '').slice(0, 10);
+    phoneInput.value       = phoneInput.value.replace(/\D/g, '').slice(0, 10);
     phoneHintEl.textContent = '';
   });
 
-  /* Clear error highlight when any input is edited */
-  overlay.querySelectorAll('.co-input').forEach(function (inp) {
-    inp.addEventListener('input', function () { inp.classList.remove('co-err'); });
-  });
+
+
+
 
   /* ──────────────────────────────────────
      INLINE BLUR VALIDATION
-     Show field-level errors as soon as the user leaves a field,
-     not only when the CTA is clicked. Gives immediate feedback.
+     Show field-level errors as the user leaves each field,
+     not only when Continue is clicked — gives immediate feedback.
   ────────────────────────────────────── */
-  var nameInput   = document.getElementById('coName');
-  var nameHintEl  = document.getElementById('coNameHint');
-  var addrInput   = document.getElementById('coAddress');
-  var addrHintEl  = document.getElementById('coAddrHint');
 
   /* Name — must not be empty on blur */
   nameInput.addEventListener('blur', function () {
@@ -481,7 +591,7 @@
     }
   });
 
-  /* Phone — show format error on blur if digits entered but invalid */
+  /* Phone — validate format on blur */
   phoneInput.addEventListener('blur', function () {
     var ph = phoneInput.value.trim();
     if (ph && !/^[6-9]\d{9}$/.test(ph)) {
@@ -491,55 +601,73 @@
     }
   });
 
-  /* Address — must not be empty on blur */
-  addrInput.addEventListener('blur', function () {
-    if (!addrInput.value.trim()) {
-      addrInput.classList.add('co-err');
-      addrHintEl.textContent = 'Please enter your delivery address.';
-      addrHintEl.style.color = '#f87171';
+  /* Area — must not be empty on blur */
+  areaInput.addEventListener('blur', function () {
+    if (!areaInput.value.trim()) {
+      areaInput.classList.add('co-err');
+      areaHintEl.textContent = 'Please enter your area or locality.';
+      areaHintEl.style.color = '#f87171';
     }
   });
-  addrInput.addEventListener('input', function () {
-    if (addrInput.value.trim()) {
-      addrInput.classList.remove('co-err');
-      addrHintEl.textContent = '';
+  areaInput.addEventListener('input', function () {
+    if (areaInput.value.trim()) {
+      areaInput.classList.remove('co-err');
+      areaHintEl.textContent = '';
+    }
+  });
+
+  /* Flat — must not be empty on blur */
+  flatInput.addEventListener('blur', function () {
+    if (!flatInput.value.trim()) {
+      flatInput.classList.add('co-err');
+      flatHintEl.textContent = 'Enter your flat or house number.';
+      flatHintEl.style.color = '#f87171';
+    }
+  });
+  flatInput.addEventListener('input', function () {
+    if (flatInput.value.trim()) {
+      flatInput.classList.remove('co-err');
+      flatHintEl.textContent = '';
     }
   });
 
 
   /* ──────────────────────────────────────
      M2: DELIVERY VALIDATION + CONTINUE
-     All four fields must pass before moving to M3.
-     Phone: must be Indian mobile number (starts 6-9, 10 digits)
-     Pincode: must be 6 digits and verified by API
+     Validates: name, phone (Indian format), pincode (6-digit + verified),
+     area, and flat/house no. City + State are auto-filled so not re-validated.
   ────────────────────────────────────── */
   document.getElementById('coM2Cta').addEventListener('click', function () {
-    var name    = document.getElementById('coName').value.trim();
-    var phone   = document.getElementById('coPhone').value.trim();
-    var pincode = document.getElementById('coPincode').value.trim();
-    var address = document.getElementById('coAddress').value.trim();
+    var name    = nameInput.value.trim();
+    var phone   = phoneInput.value.trim();
+    var pincode = pinInput.value.trim();
+    var area    = areaInput.value.trim();
+    var flat    = flatInput.value.trim();
+    var city    = cityInput.value.trim();
+    var state   = stateInput.value.trim();
 
     var valid = true;
 
-    /* Validate: Name must not be empty */
-    var nameEl = document.getElementById('coName');
-    nameEl.classList.toggle('co-err', !name);
-    if (!name) valid = false;
+    /* Name */
+    nameInput.classList.toggle('co-err', !name);
+    if (!name) {
+      nameHintEl.textContent = 'Please enter your full name.';
+      nameHintEl.style.color = '#f87171';
+      valid = false;
+    }
 
-    /* Validate: Phone — Indian mobile format: 10 digits starting with 6, 7, 8, or 9 */
-    var phoneEl    = document.getElementById('coPhone');
-    var phoneOk    = /^[6-9]\d{9}$/.test(phone);
-    phoneEl.classList.toggle('co-err', !phoneOk);
+    /* Phone — Indian mobile: 10 digits starting 6–9 */
+    var phoneOk = /^[6-9]\d{9}$/.test(phone);
+    phoneInput.classList.toggle('co-err', !phoneOk);
     if (!phoneOk) {
       phoneHintEl.textContent = 'Enter a valid 10-digit Indian mobile number.';
       phoneHintEl.style.color = '#f87171';
       valid = false;
     }
 
-    /* Validate: Pincode — must be 6 digits AND verified by the India Post API */
-    var pinEl  = document.getElementById('coPincode');
-    var pinOk  = pincode.length === 6 && _pinVerified;
-    pinEl.classList.toggle('co-err', !pinOk);
+    /* Pincode — 6 digits and verified (or API fell back) */
+    var pinOk = pincode.length === 6 && _pinVerified;
+    pinInput.classList.toggle('co-err', !pinOk);
     if (!pinOk) {
       pinHintEl.textContent = pincode.length !== 6
         ? 'Enter your 6-digit pincode.'
@@ -548,21 +676,47 @@
       valid = false;
     }
 
-    /* Validate: Address must not be empty */
-    var addrEl = document.getElementById('coAddress');
-    addrEl.classList.toggle('co-err', !address);
-    if (!address) valid = false;
+    /* Area / locality */
+    areaInput.classList.toggle('co-err', !area);
+    if (!area) {
+      areaHintEl.textContent = 'Please enter your area or locality.';
+      areaHintEl.style.color = '#f87171';
+      valid = false;
+    }
 
-    /* Show all errors at once, don't stop at first failure */
+    /* Flat / house number */
+    flatInput.classList.toggle('co-err', !flat);
+    if (!flat) {
+      flatHintEl.textContent = 'Enter your flat or house number.';
+      flatHintEl.style.color = '#f87171';
+      valid = false;
+    }
+
+    /* City and state: must be auto-filled — prompt if pincode wasn't verified */
+    if (!city || !state) {
+      pinHintEl.textContent = 'Enter and verify your pincode to auto-fill city and state.';
+      pinHintEl.style.color = '#f87171';
+      pinInput.classList.add('co-err');
+      valid = false;
+    }
+
     if (!valid) return;
 
-    /* Save delivery details — used in M3 summary and confirmation */
+    /* Build full address string for display in M3 and confirmation */
+    var building  = document.getElementById('coBuilding').value.trim();
+    var addrParts = [flat, building, area, city, state, pincode].filter(Boolean);
+
+    /* Save structured delivery data — used in M3 display and order confirmation */
     _delivery = {
       name:     name,
       phone:    phone,
       pincode:  pincode,
-      address:  address,
-      location: pinLocEl.textContent
+      area:     area,
+      flat:     flat,
+      building: building,
+      city:     city,
+      state:    state,
+      address:  addrParts.join(', ') /* full address string for display */
     };
 
     renderM3();
@@ -649,10 +803,11 @@
     });
     document.getElementById('coPaySummary').textContent = uniqueNames.join(' · ');
 
-    /* Delivery preview — name, pincode, city/state if available */
+    /* Delivery preview — structured address: name · flat, area, city pincode */
+    var addrLine = [_delivery.flat, _delivery.area, _delivery.city].filter(Boolean).join(', ')
+                 + (_delivery.pincode ? ' ' + _delivery.pincode : '');
     document.getElementById('coPayAddr').textContent =
-      'Delivering to ' + _delivery.name + ' · ' + _delivery.pincode +
-      (_delivery.location ? ', ' + _delivery.location : '');
+      'Delivering to ' + _delivery.name + ' · ' + addrLine;
   }
 
   /* Update M3 total and pay button amount — called on render and after coupon apply */

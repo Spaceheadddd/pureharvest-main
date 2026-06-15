@@ -1069,3 +1069,39 @@ document.querySelectorAll('.p-card').forEach(card => {
 document.addEventListener('copy', e => e.preventDefault());
 document.addEventListener('cut', e => e.preventDefault());
 document.addEventListener('contextmenu', e => e.preventDefault());
+
+
+/* ========================================
+   SESSION — shared across all pages
+   Reads ph_session from localStorage so the ritual drawer
+   can reflect sign-in state on every page without a backend.
+   Swap phGetSession internals for supabase.auth.getSession()
+   when the Supabase session is ready.
+======================================== */
+function phGetSession() {
+  try { return JSON.parse(localStorage.getItem('ph_session') || 'null'); }
+  catch(e) { return null; }
+}
+
+/* Update the "My Account" ritual drawer link based on session state.
+   Signed out → "Sign In / Access orders & rewards"
+   Signed in  → user's name + Roots balance */
+function phUpdateDrawer() {
+  /* First nav link in the drawer is always the account / sign-in entry */
+  var link = document.querySelector('.drawer-nav .d-link:first-child');
+  if (!link) return;
+
+  var nameEl = link.querySelector('.d-link-name');
+  var subEl  = link.querySelector('.d-link-sub');
+  var user   = phGetSession();
+
+  if (user) {
+    if (nameEl) nameEl.textContent = user.name || 'My Account';
+    if (subEl)  subEl.textContent  = (user.roots || 0) + ' Roots · View account';
+  } else {
+    if (nameEl) nameEl.textContent = 'Sign In';
+    if (subEl)  subEl.textContent  = 'Access orders & rewards';
+  }
+}
+
+phUpdateDrawer();

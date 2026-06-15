@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Account — PureHarvest Organics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity — session recordings and heatmaps -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x6j5tml7vd");
+  </script>
+
+  <!-- Google Analytics (GA4) — traffic, conversions and events -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-11TJLZM6SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-11TJLZM6SY');
+  </script>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar">
+  <div class="ann-track">
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+    <span>Free shipping across India on orders ₹999+</span>
+    <span class="ann-sep">◦</span>
+    <span>2024 Seasonal Harvest — Now Live</span>
+    <span class="ann-sep">◦</span>
+    <span>FSSAI Certified · Lab Tested · 100% Raw</span>
+    <span class="ann-sep">◦</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-shell">
+    <div class="header-logo"><div class="logo-mark">🌿</div></div>
+    <div class="header-brand">
+      <a href="index.html"><p class="brand-name">PUREHARVEST</p></a>
+      <span class="brand-tagline">RAW · WILD · PURE</span>
+    </div>
+    <div class="header-actions">
+      <button class="hdr-btn" aria-label="Search">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="hdr-btn cart-hdr-btn" aria-label="Cart">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-dot"></span>
+      </button>
+      <button class="hdr-btn menu-hdr-btn" id="menuToggle" aria-label="Open menu">
+        <div class="hlines"><span></span><span></span></div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-backdrop" id="searchBackdrop"></div>
+  <div class="search-panel">
+    <div class="search-inner">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search honey, coffee, spices..." autocomplete="off" />
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h3 class="cart-title">Your Ritual</h3>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🌿</div>
+        <p>Your basket is empty.</p>
+        <p style="font-size:13px;color:var(--muted)">Add something from the harvest.</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+      <button class="btn-primary btn-block" id="checkoutBtn">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RITUAL DRAWER -->
+<div id="ritualDrawer" class="ritual-drawer">
+  <div class="drawer-grip"></div>
+  <div class="drawer-head">
+    <div><p class="drawer-eyebrow">PUREHARVEST</p><h2 class="drawer-title">Explore Rituals</h2></div>
+    <button class="drawer-close" id="closeDrawer" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-orbs">
+    <a href="product-honey.html" class="orb orb-active"><div class="orb-ring">🍯</div><span>Honey</span></a>
+    <a href="product-honey.html" class="orb"><div class="orb-ring">🫒</div><span>Dry Fruits</span></a>
+    <a href="product-honey.html" class="orb"><div class="orb-ring">☕</div><span>Coffee</span></a>
+    <a href="product-honey.html" class="orb"><div class="orb-ring">🌶</div><span>Spices</span></a>
+  </div>
+  <nav class="drawer-nav">
+    <a href="account.html" class="d-link"><div class="d-link-l"><div class="d-icon">👤</div><div><p class="d-link-name">My Account</p><p class="d-link-sub">Orders, rewards &amp; profile</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#story" class="d-link"><div class="d-link-l"><div class="d-icon">🌿</div><div><p class="d-link-name">Our Story</p><p class="d-link-sub">From Araku forests to your table</p></div></div><span class="d-arrow">→</span></a>
+    <a href="roots.html" class="d-link"><div class="d-link-l"><div class="d-icon">🌱</div><div><p class="d-link-name">Roots Loyalty</p><p class="d-link-sub">Earn with every harvest — from order 1</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#subscriptions" class="d-link"><div class="d-link-l"><div class="d-icon">📦</div><div><p class="d-link-name">Subscriptions</p><p class="d-link-sub">Never run out of your ritual</p></div></div><span class="d-arrow">→</span></a>
+    <a href="#" class="d-link"><div class="d-link-l"><div class="d-icon">📖</div><div><p class="d-link-name">Journal</p><p class="d-link-sub">Stories, rituals &amp; slow living</p></div></div><span class="d-arrow">→</span></a>
+    <a href="index.html#b2b" class="d-link"><div class="d-link-l"><div class="d-icon">🌍</div><div><p class="d-link-name">Exports &amp; B2B</p><p class="d-link-sub">Bringing Araku to the world</p></div></div><span class="d-arrow">→</span></a>
+    <a href="contact.html" class="d-link"><div class="d-link-l"><div class="d-icon">✉️</div><div><p class="d-link-name">Contact</p><p class="d-link-sub">We'd love to hear from you</p></div></div><span class="d-arrow">→</span></a>
+  </nav>
+  <div class="drawer-foot-card">
+    <span class="dfc-icon">🌱</span>
+    <div><p class="dfc-title">Rooted in nature.</p><p class="dfc-sub">Crafted with intention.</p></div>
+  </div>
+</div>
+
+<!-- ─── ACCOUNT PAGE ─── -->
+<main class="acct-main">
+  <div class="acct-wrap">
+
+    <!-- Sign-in view (shown by default; hidden once signed in) -->
+    <div class="acct-signin-view" id="acctSigninView">
+
+      <div class="acct-hero">
+        <p class="acct-eyebrow">Welcome back</p>
+        <h1 class="acct-h1">Your<br><em>Harvest.</em></h1>
+        <p class="acct-sub">Sign in to view your orders, redeem Roots points, and manage your profile.</p>
+      </div>
+
+      <!-- Sign-in form -->
+      <div class="acct-card">
+        <p class="acct-card-label">Sign in with your phone or email</p>
+        <div class="acct-input-group" id="acctIdentifierGroup">
+          <input
+            type="text"
+            class="acct-input"
+            id="acctIdentifier"
+            placeholder="Phone number or email"
+            inputmode="email"
+            autocomplete="username"
+          />
+          <p class="acct-hint" id="acctIdentifierHint"></p>
+        </div>
+        <button class="acct-cta" id="acctContinueBtn">Continue →</button>
+        <p class="acct-privacy">By continuing you agree to our <a href="privacy.html">Privacy Policy</a>.</p>
+      </div>
+
+      <!-- Success / OTP sent state -->
+      <div class="acct-sent" id="acctSentState">
+        <div class="acct-sent-icon">📩</div>
+        <p class="acct-sent-title">Check your inbox</p>
+        <p class="acct-sent-sub">We've sent a sign-in link to <strong id="acctSentTo"></strong>. The link expires in 15 minutes.</p>
+        <button class="acct-back" id="acctBackBtn">← Use a different address</button>
+      </div>
+
+      <!-- What you unlock after sign-in (teaser) -->
+      <div class="acct-teaser">
+        <p class="acct-teaser-label">What's inside your account</p>
+        <div class="acct-teaser-grid">
+          <div class="acct-teaser-card">
+            <span class="acct-teaser-icon">🌱</span>
+            <p class="acct-teaser-name">Roots Balance</p>
+            <p class="acct-teaser-desc">Track points earned across every order and redeem for discounts.</p>
+          </div>
+          <div class="acct-teaser-card">
+            <span class="acct-teaser-icon">📦</span>
+            <p class="acct-teaser-name">Order History</p>
+            <p class="acct-teaser-desc">View past orders, download invoices, and track deliveries.</p>
+          </div>
+          <div class="acct-teaser-card">
+            <span class="acct-teaser-icon">👤</span>
+            <p class="acct-teaser-name">Profile</p>
+            <p class="acct-teaser-desc">Saved addresses, contact details, and communication preferences.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /Sign-in view -->
+
+    <!-- Dashboard view — empty in source; JS-rendered after auth check -->
+    <div id="acctDashboard" style="display:none"></div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="section-wrap footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-origin">Est. 2026 · Araku Valley, India</span>
+        <p class="footer-desc">Raw forest honey crafted for slower mornings, mindful rituals, and intentional living. From the valley to the world.</p>
+        <div class="footer-socials"><a href="#">Instagram</a><a href="#">WhatsApp</a><a href="#">Email</a></div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Shop</h4><a href="index.html#honey">Honey</a><a href="#">Dry Fruits</a><a href="#">Coffee</a><a href="#">Spices</a><a href="index.html#subscriptions">Subscriptions</a></div>
+        <div class="footer-col"><h4>Discover</h4><a href="#">Our Story</a><a href="#">Journal</a><a href="#">Rituals</a><a href="#">Sustainability</a></div>
+        <div class="footer-col"><h4>Business</h4><a href="#">Wholesale</a><a href="#">Exports</a><a href="#">Partner With Us</a><a href="#">Catalogue</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="shipping.html">Shipping</a><a href="refund.html">Returns</a><a href="#">FAQs</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a><a href="refund.html">Refund Policy</a><a href="shipping.html">Shipping Policy</a><a href="cookie.html">Cookie Policy</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-wordmark-wrap"><p class="footer-wordmark">PureHarvest</p></div>
+  <div class="footer-bottom-bar">
+    <p>© 2026 PureHarvest Organics</p>
+    <p class="footer-credit">Designed &amp; developed by <span id="arcaneText">Arcane Labs</span></p>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="refund.html">Refund Policy</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="cookie.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script src="checkout.js"></script>
+<script src="account.js"></script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bb306b97acc943e2b715a00f781bbe0e"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
