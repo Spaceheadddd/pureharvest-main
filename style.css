@@ -210,11 +210,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: rgba(255,255,255,0.88);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255,255,255,0.72);
+  border: 1px solid rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 10px 10px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
 }
 
@@ -1923,6 +1923,44 @@ input, textarea, [contenteditable] {
 }
 .co-trust-sep { color: rgba(255,255,255,0.2); }
 
+/* ── Saved-address pills (M2) — most-used one auto-fills the form;
+   pills only switch between options, never manage them (that lives in
+   the account Profile tab). Compact by design — one row, no scrolling. ── */
+.co-addr-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.co-addr-pill {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.co-addr-pill:hover { border-color: rgba(196,144,58,0.4); }
+.co-addr-pill--active {
+  border-color: var(--honey);
+  background: rgba(196,144,58,0.14);
+  color: var(--honey);
+}
+.co-addr-pill--add { border-style: dashed; }
+.co-addr-pill--add.co-addr-pill--active { border-style: solid; }
+
+/* ── M3: one-time notice when a new address just got auto-saved ── */
+.co-addr-saved-notice {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(196,144,58,0.8);
+  margin: -8px 0 14px;
+}
+
 /* Form fields */
 .co-fields { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; }
 .co-field { display: flex; flex-direction: column; gap: 7px; }
@@ -2131,6 +2169,98 @@ input, textarea, [contenteditable] {
 .co-msg-err  { color: #f87171; }
 .co-msg-warn { color: var(--honey); }
 
+/* ── Roots redemption — live balance + stepper (M3 payment step) ──
+   Replaces blind code-entry for a customer's own Roots: shows their
+   actual balance and lets them apply it in steps of 10, right here.
+─────────────────────────────────────────────────────────── */
+.co-roots-prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--sans);
+}
+.co-roots-prompt a { color: var(--honey); text-decoration: underline; }
+
+.co-roots-card {
+  background: rgba(196,144,58,0.08);
+  border: 1px solid rgba(196,144,58,0.22);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.co-roots-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.co-roots-card-icon { font-size: 20px; }
+.co-roots-card-title {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.92);
+}
+.co-roots-card-sub {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  margin-top: 1px;
+}
+
+.co-roots-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.co-roots-step-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(196,144,58,0.35);
+  background: rgba(255,255,255,0.06);
+  color: var(--honey);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+.co-roots-step-btn:hover:not(:disabled) { background: rgba(196,144,58,0.18); }
+.co-roots-step-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.co-roots-step-val {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 64px;
+  justify-content: center;
+}
+.co-roots-step-val span:first-child {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.92);
+}
+.co-roots-step-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+}
+.co-roots-card-applied {
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(196,144,58,0.85);
+  margin-top: 12px;
+}
+
 /* ── Roots earning display (dark bg version — checkout) ──
    Shown in M1 (after subtotal) and M3 (above sticky footer).
    Honey-tinted, communicates value at point of purchase.
@@ -2288,7 +2418,7 @@ input, textarea, [contenteditable] {
   background: rgba(196,144,58,0.12);
   border-color: rgba(196,144,58,0.28);
 }
-.rht-icon { font-size: 22px; flex-shrink: 0; }
+.rht-icon { font-size: 20px; flex-shrink: 0; }
 .rht-card > div { flex: 1; min-width: 0; } /* min-width:0 prevents text overflowing card */
 .rht-name { font-size: 14px; font-weight: 500; color: white; margin-bottom: 2px; }
 .rht-sub  { font-size: 12px; color: rgba(255,255,255,0.45); }
@@ -2642,22 +2772,20 @@ input, textarea, [contenteditable] {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.38);
   margin-bottom: 8px;
   font-family: var(--sans);
 }
 
 .acct-roots-num {
   font-family: var(--serif);
-  font-size: 56px;
+  font-size: 60px;
   font-weight: 300;
   color: var(--honey);
   line-height: 1;
   margin-bottom: 10px;
 }
-
-.acct-roots-unit { font-size: 22px; color: rgba(196,144,58,0.55); }
-
+.acct-roots-unit  { font-size: 22px; color: rgba(196,144,58,0.55); }
 .acct-roots-redeem { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.5; }
 .acct-roots-redeem strong { color: rgba(255,255,255,0.85); }
 
@@ -2742,5 +2870,1940 @@ input, textarea, [contenteditable] {
   font-family: var(--sans);
   font-size: 13px;
   cursor: not-allowed;
+}
+
+/* ── Demo login button (subtle, below main CTA) ─────────── */
+.acct-demo-btn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.22);
+  font-family: var(--sans);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s, color 0.2s;
+}
+.acct-demo-btn:hover {
+  border-color: rgba(255,255,255,0.14);  /* subtle reveal on hover */
+  color: rgba(255,255,255,0.5);          /* brighten label */
+}
+
+/* ══════════════════════════════════════════════════════════
+   DEMO PIN OVERLAY
+   Full-screen modal that appears when "Demo Login" is clicked.
+   JS adds .acct-pin-overlay--visible to trigger the fade-in.
+   ══════════════════════════════════════════════════════════ */
+.acct-pin-overlay {
+  position: fixed;                          /* covers entire viewport */
+  inset: 0;                                 /* shorthand for top/right/bottom/left: 0 */
+  background: rgba(10,22,16,0.88);          /* dark forest backdrop */
+  display: flex;
+  align-items: center;                      /* vertically center the panel */
+  justify-content: center;                  /* horizontally center */
+  z-index: 9000;                            /* above everything on page */
+  opacity: 0;                               /* starts invisible */
+  transition: opacity 0.3s ease;            /* fades in smoothly */
+}
+.acct-pin-overlay--visible {
+  opacity: 1;                               /* JS adds this class to trigger fade-in */
+}
+
+/* The white card panel sitting in the center of the overlay */
+.acct-pin-panel {
+  background: #132d20;                      /* slightly lighter than page forest bg */
+  border: 1px solid rgba(255,255,255,0.08); /* subtle border */
+  border-radius: 20px;
+  padding: 36px 28px 32px;
+  text-align: center;
+  width: 320px;                             /* fixed width for numpad layout */
+  max-width: calc(100vw - 40px);            /* never wider than mobile screen */
+  position: relative;                       /* for the absolute-positioned close btn */
+}
+
+/* ✕ close button — top right corner */
+.acct-pin-close {
+  position: absolute;                       /* anchored to panel corners */
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.2s;
+}
+.acct-pin-close:hover { color: rgba(255,255,255,0.7); }
+
+/* DEMO ACCESS eyebrow label */
+.acct-pin-eyebrow {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--honey);                      /* gold accent */
+  margin-bottom: 10px;
+}
+
+/* "Enter PIN" heading */
+.acct-pin-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 6px;
+}
+
+/* Subtitle copy below heading */
+.acct-pin-sub {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 24px;
+}
+
+/* Four dot indicators that fill as digits are entered */
+.acct-pin-dots {
+  display: flex;
+  justify-content: center;
+  gap: 14px;                                /* spacing between dots */
+  margin-bottom: 8px;
+}
+.acct-pin-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+.acct-pin-dot--filled {
+  background: var(--honey);                 /* gold fill when digit entered */
+  border-color: var(--honey);
+}
+
+/* Error message shown below dots on wrong PIN */
+.acct-pin-error {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: #e07070;                           /* warm red — less alarming than pure red */
+  min-height: 18px;                         /* reserve space so layout doesn't shift */
+  margin-bottom: 16px;
+}
+
+/* 3×4 numpad grid */
+.acct-pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);    /* three equal columns */
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* Individual numpad keys */
+.acct-pin-key {
+  background: rgba(255,255,255,0.05);       /* very subtle key background */
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  color: rgba(255,255,255,0.8);
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 300;
+  padding: 14px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.acct-pin-key:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.15);
+}
+.acct-pin-key:active {
+  background: rgba(196,144,58,0.15);        /* gold flash on tap */
+}
+.acct-pin-key--empty {
+  background: none;                         /* blank cell in 3×4 grid (bottom-left) */
+  border: none;
+  cursor: default;
+}
+.acct-pin-key--del {
+  font-family: var(--sans);                 /* backspace uses sans for the ⌫ glyph */
+  font-size: 16px;
+  color: rgba(255,255,255,0.45);
+}
+
+/* Shake animation on wrong PIN */
+@keyframes acctPinShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.acct-pin-dots--shake {
+  animation: acctPinShake 0.4s ease;       /* applied by JS on wrong PIN */
+}
+
+/* Dots go green when correct PIN entered */
+.acct-pin-dots--success .acct-pin-dot {
+  background: #5cb87e;                      /* success green */
+  border-color: #5cb87e;
+}
+
+/* ── Orders list (demo + future real data) ───────────────── */
+.acct-orders-list { display: flex; flex-direction: column; gap: 1px; }
+
+.acct-order-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.acct-order-row:last-child { border-bottom: none; }
+
+.acct-order-info { flex: 1; min-width: 0; }
+.acct-order-id   { font-family: var(--sans); font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; margin-bottom: 3px; }
+.acct-order-items{ font-family: var(--sans); font-size: 12px; color: rgba(255,255,255,0.72); margin-bottom: 3px; }
+.acct-order-date { font-family: var(--sans); font-size: 11px; color: rgba(255,255,255,0.28); }
+
+.acct-order-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.acct-order-total { font-family: var(--sans); font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
+.acct-order-badge {
+  font-family: var(--sans);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: rgba(92,184,126,0.12);
+  border: 1px solid rgba(92,184,126,0.22);
+  color: #5cb87e;
+  margin-bottom: 4px;
+}
+.acct-order-roots-earned { font-family: var(--sans); font-size: 10px; color: rgba(196,144,58,0.65); }
+.acct-track-link {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: var(--honey);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.acct-track-link:hover { opacity: 1; }
+
+.acct-orders-empty {
+  text-align: center;
+  padding: 28px 16px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+}
+.acct-orders-empty span { font-size: 24px; display: block; margin-bottom: 8px; }
+
+
+/* ══════════════════════════════════════════════════════════
+   DASHBOARD — KEYFRAME ANIMATIONS
+   Used across all tabs for transitions and micro-interactions.
+   ══════════════════════════════════════════════════════════ */
+
+/* Panel tab-switch: content fades up from slight offset */
+@keyframes phFadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* Float: gentle vertical bob (available if needed for future elements) */
+@keyframes phFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+/* Shine: narrow bright stripe sweeps across the Harvest Card face on hover */
+@keyframes phShine {
+  0%   { transform: translateX(-160%); }  /* starts hidden left of card */
+  100% { transform: translateX(300%); }   /* exits right of card */
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   DASHBOARD — GENERIC CARD CONTAINER
+   .ph-card is used for every info block inside the panels:
+   tier ladder, achievements, activity feed, benefits, etc.
+   ══════════════════════════════════════════════════════════ */
+.ph-card {
+  background: rgba(255,255,255,0.04);       /* subtle raised surface */
+  border: 1px solid rgba(255,255,255,0.08); /* consistent hair-line border */
+  border-radius: 16px;
+  padding: 20px 22px;
+}
+.ph-card-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);            /* muted — structural label, not content */
+  margin-bottom: 16px;
+}
+/* Empty-state message inside a ph-card */
+.ph-card-empty {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  padding: 10px 0;
+}
+.ph-empty-msg {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  padding: 8px 0;
+}
+
+/* Info tooltip: small (i) circle button */
+.ph-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 9px;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  font-style: normal;
+  vertical-align: middle;
+  margin-left: 4px;
+  line-height: 1;
+  transition: background 0.2s;
+}
+.ph-tip:hover { background: rgba(255,255,255,0.14); }
+/* Tooltip bubble — class name matches what phInitTooltips() creates in JS */
+.ph-tip-bubble {
+  position: fixed;
+  z-index: 500;
+  background: #132d20;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 9px 13px;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.5;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  pointer-events: none;
+  animation: phFadeUp 0.15s ease both;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   HOME TAB — HARVEST VAULT CARD
+   Hero element at top of Home panel showing total ₹ value.
+   ══════════════════════════════════════════════════════════ */
+.ph-vault-card {
+  background: rgba(196,144,58,0.06);        /* warm honey tint */
+  border: 1px solid rgba(196,144,58,0.14);
+  border-radius: 22px;
+  padding: 24px 22px 20px;
+  margin-bottom: 12px;
+}
+.ph-vault-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 8px;
+}
+.ph-vault-val {
+  font-family: var(--serif);
+  font-size: 44px;                          /* large Roots count — scales up on desktop */
+  font-weight: 300;
+  color: var(--honey);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+/* " Roots" unit label inside ph-vault-val — smaller than the number */
+.ph-vault-unit {
+  font-family: var(--serif);
+  font-size: 22px;                          /* roughly half the main number size */
+  font-weight: 300;
+  color: rgba(196,144,58,0.6);             /* muted honey so number stays dominant */
+}
+.ph-vault-sub {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 16px;
+}
+/* Row of Roots + Harvest Card breakdown chips */
+.ph-vault-chips {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.ph-vault-chip {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.ph-vault-chip-l {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+}
+/* Primary value — Roots count for Roots chip, ₹ for Card chip */
+.ph-vault-chip-v {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 2px;
+}
+/* Secondary INR equivalent — shown below Roots count in the Roots chip only */
+.ph-vault-chip-inr {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.32);           /* muted — it's context, not the headline */
+}
+/* Action buttons row */
+.ph-vault-actions {
+  display: flex;
+  gap: 8px;
+}
+.ph-vault-action {
+  flex: 1;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 10px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.65);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  text-align: center;
+  white-space: nowrap;
+}
+.ph-vault-action:hover {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.9);
+}
+/* Primary action (Redeem Roots) gets honey accent */
+.ph-vault-action--primary {
+  background: rgba(196,144,58,0.12);
+  border-color: rgba(196,144,58,0.28);
+  color: var(--honey);
+}
+.ph-vault-action--primary:hover {
+  background: rgba(196,144,58,0.22);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   HOME TAB — TIER LADDER
+   ph-tier-row: one row per tier, flex horizontal
+   ph-tier-row--cur: highlights the user's current tier
+   ph-you-pill: "You" badge inside the current tier name
+   ph-prog-wrap / ph-prog-bar / ph-prog-meta: progress to next tier
+   ══════════════════════════════════════════════════════════ */
+.ph-tier-ladder {
+  display: flex;                          /* vertical list of tier rows */
+  flex-direction: column;
+  gap: 2px;
+}
+.ph-tier-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+/* Current tier row — class ph-tier-row--cur set by JS when t.id === user.tier */
+.ph-tier-row--cur {
+  background: rgba(196,144,58,0.08);
+  border: 1px solid rgba(196,144,58,0.16); /* subtle gold outline */
+}
+/* Left column — groups icon + text stack, takes all remaining width */
+.ph-tier-row-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+.ph-tier-row-icon {
+  font-size: 16px;
+  width: 20px;                            /* fixed width so icons align */
+  text-align: center;
+  flex-shrink: 0;
+}
+.ph-tier-row-name {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 2px;
+}
+.ph-tier-row--cur .ph-tier-row-name { color: rgba(255,255,255,0.88); } /* brighter on current tier */
+/* Spend range, e.g. "₹0 – ₹4,999" */
+.ph-tier-row-range {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+}
+.ph-tier-row--cur .ph-tier-row-range { color: rgba(196,144,58,0.65); } /* honey tint on current */
+/* Earn rate, e.g. "1 Root / ₹100" — right-pinned */
+.ph-tier-row-earn {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  flex-shrink: 0;
+}
+/* "You" pill — inline badge next to tier name on current row only */
+.ph-you-pill {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 99px;
+  background: rgba(196,144,58,0.18);
+  border: 1px solid rgba(196,144,58,0.3);
+  color: var(--honey);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+/* Thin progress track below tier list */
+.ph-prog-wrap {
+  margin-top: 12px;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.ph-prog-bar {
+  height: 100%;
+  background: var(--honey);              /* width set inline by JS based on tier progress */
+  border-radius: 99px;
+  transition: width 0.6s ease;
+}
+/* "₹2,000 more to 🌿 Grove" label below progress bar */
+.ph-prog-meta {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(255,255,255,0.25);
+  margin-top: 6px;
+}
+.ph-prog-meta--max { color: rgba(196,144,58,0.55); } /* gold when user is already at top tier */
+
+
+/* ══════════════════════════════════════════════════════════
+   HOME TAB — ACHIEVEMENT BADGES
+   ══════════════════════════════════════════════════════════ */
+.ph-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ph-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 11px;
+}
+/* Earned badge — gold tint, visible */
+.ph-badge--earned {
+  background: rgba(196,144,58,0.1);
+  border: 1px solid rgba(196,144,58,0.22);
+  color: rgba(255,255,255,0.75);
+}
+/* Locked badge — greyed out until criteria met */
+.ph-badge--locked {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.25);
+}
+.ph-badge-icon { font-size: 13px; }
+.ph-badge-name { font-weight: 400; }
+
+
+/* ══════════════════════════════════════════════════════════
+   HOME TAB — ACTIVITY FEED
+   Recent Roots earn/redeem rows.
+   ══════════════════════════════════════════════════════════ */
+.ph-feed-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  gap: 12px;
+}
+.ph-feed-row:last-child { border-bottom: none; }
+.ph-feed-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  flex: 1;
+  min-width: 0;                           /* prevent overflow on long text */
+}
+.ph-feed-earn   { font-family: var(--sans); font-size: 12px; font-weight: 500; color: #5cb87e; }          /* green for incoming roots */
+.ph-feed-redeem { font-family: var(--sans); font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.3); } /* muted for spent roots */
+
+
+/* ══════════════════════════════════════════════════════════
+   WALLET TAB — CARD DESCRIPTION BLOCK
+   Short copy above the 3D card explaining what it is.
+   ══════════════════════════════════════════════════════════ */
+.ph-what-is {
+  background: rgba(255,255,255,0.02);
+  border-left: 2px solid rgba(196,144,58,0.3); /* honey accent stripe left edge */
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+.ph-what-is-text {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.65;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   ROOTS TAB — TRANSACTION HISTORY
+   ph-hist-row: one row per transaction
+   ph-hist-earn / ph-hist-redeem: colour the amount right
+   ══════════════════════════════════════════════════════════ */
+.ph-hist-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.ph-hist-row:last-child { border-bottom: none; }
+.ph-hist-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 2px;
+}
+.ph-hist-date {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(255,255,255,0.25);
+}
+.ph-hist-earn   { font-family: var(--sans); font-size: 13px; font-weight: 500; color: #5cb87e; flex-shrink: 0; }               /* positive roots = green */
+.ph-hist-redeem { font-family: var(--sans); font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.35); flex-shrink: 0; } /* redeemed = muted */
+
+/* Expiry warning banner — amber strip when Roots expire within 90 days */
+.ph-expiry-warn {
+  background: rgba(196,144,58,0.1);
+  border: 1px solid rgba(196,144,58,0.25);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(196,144,58,0.85);
+  line-height: 1.55;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   ROOTS TAB — 3-STAT STRIP
+   ph-stat-row: flex row containing 3 stats + 2 dividers
+   ══════════════════════════════════════════════════════════ */
+.ph-stat-row {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+.ph-stat {
+  flex: 1;
+  text-align: center;
+  padding: 0 10px;
+}
+.ph-stat-val {
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 4px;
+}
+.ph-stat-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  line-height: 1.4;
+}
+.ph-stat-div {
+  width: 1px;
+  height: 28px;
+  background: rgba(255,255,255,0.08);   /* vertical rule separating stat columns */
+  flex-shrink: 0;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   ROOTS TAB — REFERRAL CARD
+   ph-ref-breakdown: "25 You earn → 35 They earn" visual
+   ph-ref-code-row: code span + copy button
+   ══════════════════════════════════════════════════════════ */
+/* Inner breakdown box showing Roots split */
+.ph-ref-breakdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: rgba(196,144,58,0.05);
+  border: 1px solid rgba(196,144,58,0.12);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+}
+.ph-ref-side {
+  text-align: center;                    /* big number above label */
+  flex: 1;
+}
+.ph-ref-amount {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--honey);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.ph-ref-who {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+/* "25 referral + 10 welcome" breakdown note under They earn */
+.ph-ref-split {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(255,255,255,0.25);
+  margin-top: 4px;
+}
+.ph-ref-sep {
+  font-family: var(--sans);
+  font-size: 16px;
+  color: rgba(255,255,255,0.2);
+  flex-shrink: 0;                        /* arrow separator between the two sides */
+}
+/* Row holding the code + copy button */
+.ph-ref-code-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+/* The referral code itself — large, spaced-out, honey-coloured */
+.ph-ref-code {
+  flex: 1;
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--honey);
+  background: rgba(196,144,58,0.08);
+  border: 1px solid rgba(196,144,58,0.2);
+  border-radius: 10px;
+  padding: 10px 16px;
+  text-align: center;
+}
+/* Copy button beside code */
+.ph-ref-copy {
+  font-family: var(--sans);
+  font-size: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: rgba(255,255,255,0.55);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.ph-ref-copy:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); }
+/* "3 of 5 referrals used · first order ≥ ₹999 required" */
+.ph-ref-used {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  text-align: center;
+  line-height: 1.5;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   ROOTS TAB
+   ══════════════════════════════════════════════════════════ */
+
+/* Balance hero — amber gradient background */
+.ph-roots-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: linear-gradient(135deg, rgba(196,144,58,0.18) 0%, rgba(196,144,58,0.07) 100%);
+  border: 1px solid rgba(196,144,58,0.28);
+  border-radius: 16px;
+  padding: 26px 24px 22px;
+}
+.ph-roots-hero-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  margin-bottom: 8px;
+}
+.ph-roots-hero-num {
+  font-family: var(--serif);
+  font-size: 60px;
+  font-weight: 300;
+  color: var(--honey);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.ph-roots-unit  { font-size: 22px; color: rgba(196,144,58,0.55); }
+.ph-roots-hero-val  { font-family: var(--sans); font-size: 13px; color: rgba(255,255,255,0.45); }
+
+.ph-roots-prog-link {
+  flex-shrink: 0;
+  align-self: flex-start;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--honey);
+  text-decoration: none;
+  opacity: 0.65;
+}
+.ph-roots-prog-link:hover { opacity: 1; text-decoration: underline; }
+
+/* 3D Harvest Card — CSS perspective flip on .ph-card-flipped */
+.ph-card-scene {
+  perspective: 900px;       /* tighter perspective makes the tilt feel more physical */
+  cursor: pointer;
+  width: 100%;
+  max-width: 380px;         /* slightly wider — more premium feel */
+  margin: 0 auto 20px;
+}
+.ph-card-inner {
+  position: relative;
+  width: 100%;              /* fills up to 380px max from .ph-card-scene */
+  height: 240px;            /* 380 ÷ 1.586 = 240px — exact ISO 7810 credit card ratio */
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 16px;
+  will-change: transform;   /* hint to GPU — smoother cursor-tracking */
+}
+.ph-card-flipped { transform: rotateY(180deg); }
+
+/* Both faces share base styles */
+.ph-card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Front face — brushed-metal gradient (multiple diagonal bands) with an animated shine sweep */
+.ph-card-front {
+  background:
+    radial-gradient(140% 100% at 12% 0%, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0) 38%),
+    linear-gradient(
+      120deg,
+      rgba(255,255,255,0.05) 0%,
+      rgba(255,255,255,0)    9%,
+      rgba(255,255,255,0)    44%,
+      rgba(255,255,255,0.035) 50%,
+      rgba(255,255,255,0)    56%,
+      rgba(255,255,255,0)    86%,
+      rgba(255,255,255,0.04) 100%
+    ),
+    linear-gradient(135deg, #234630 0%, #18341f 28%, #0c1f17 52%, #173120 76%, #0a1a13 100%);
+  border: 1px solid rgba(196,144,58,0.2);
+  justify-content: space-between;
+  overflow: hidden;     /* clips the ::before shine stripe to card bounds — position: absolute comes from .ph-card-face */
+}
+/* Back face uses the same brushed-metal treatment, slightly darker overall */
+.ph-card-back {
+  background:
+    radial-gradient(140% 100% at 88% 0%, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 38%),
+    linear-gradient(
+      120deg,
+      rgba(255,255,255,0.04) 0%,
+      rgba(255,255,255,0)    9%,
+      rgba(255,255,255,0)    44%,
+      rgba(255,255,255,0.03) 50%,
+      rgba(255,255,255,0)    56%,
+      rgba(255,255,255,0)    86%,
+      rgba(255,255,255,0.035) 100%
+    ),
+    linear-gradient(135deg, #15301f 0%, #0e2419 30%, #0a1a13 60%, #102619 100%);
+  overflow: hidden;
+}
+/* Shine stripe — shared by both faces, position driven by JS via --sh-x (cursor X within the card).
+   Falloff is wide and gradual (no hard stops) so the band's own bounding box never reads as an edge;
+   blur + screen blend make it behave like a soft specular highlight catching the metal, not a painted box. */
+.ph-card-front::before,
+.ph-card-back::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: 0;
+  width: 60%;
+  height: 220%;             /* tall enough to cover the card at any tilt angle */
+  background: linear-gradient(
+    105deg,
+    rgba(255,255,255,0)    0%,
+    rgba(255,255,255,0)    28%,
+    rgba(255,255,255,0.06) 50%,
+    rgba(255,255,255,0)    72%,
+    rgba(255,255,255,0)    100%
+  );
+  filter: blur(16px);                          /* diffuses the band's own edges — real metal glints aren't crisp */
+  mix-blend-mode: screen;                      /* additive light over the dark metal, not a flat overlay */
+  transform: translateX(var(--sh-x, -220%));  /* JS sets --sh-x on mousemove; resting position fully off-screen left */
+  transition: transform 0.18s ease;            /* smooth follow, not instant */
+  pointer-events: none;
+}
+/* CSS tilt removed — JS handles per-cursor rotate3d for all 4 corners, on both faces */
+/* Roots balance line on card face */
+.ph-hcard-roots-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: -4px;
+}
+.ph-hcard-roots-ct {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(196,144,58,0.75);
+  letter-spacing: 0.04em;
+}
+.ph-hcard-roots-eq {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  padding-top: 10px;
+}
+.ph-hcard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ph-hcard-brand {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+/* .ph-hcard-chip removed — chip is no longer rendered on the card */
+.ph-hcard-bal {
+  font-family: var(--serif);
+  font-size: 38px;                            /* bigger — Roots count is the hero number */
+  font-weight: 300;
+  color: rgba(255,255,255,0.9);
+  line-height: 1;
+}
+.ph-hcard-bal-unit {
+  font-family: var(--serif);
+  font-size: 18px;                            /* proportionally smaller "Roots" unit label */
+  font-weight: 300;
+  color: rgba(196,144,58,0.65);              /* muted honey — secondary to the number */
+  margin-left: 4px;
+}
+.ph-hcard-bot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.ph-hcard-num  { font-family: var(--sans); font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.12em; }
+.ph-hcard-name { font-family: var(--sans); font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; }
+.ph-hcard-hint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--sans);
+  font-size: 9px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.08em;
+}
+
+/* Back face — flipped 180deg; background/overflow set earlier alongside the front face */
+.ph-card-back {
+  border: 1px solid rgba(196,144,58,0.15);
+  transform: rotateY(180deg);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+/* Tier badge — pill showing the member's current tier on the card back */
+.ph-hcard-back-tier {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid rgba(196,144,58,0.3);
+  border-radius: 20px;
+  margin-bottom: 4px;
+}
+.ph-hcard-back-tier-icon { font-size: 13px; }
+.ph-hcard-back-tier-name {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--honey);
+}
+.ph-hcard-back-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--honey);
+}
+.ph-hcard-back-sub  { font-family: var(--sans); font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+.ph-hcard-back-note { font-family: var(--sans); font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.04em; }
+
+/* Wallet action buttons */
+.ph-wallet-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.ph-wallet-action {
+  flex: 1;
+  font-family: var(--sans);
+  font-size: 12px;
+  padding: 10px 6px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  text-align: center;
+}
+.ph-wallet-action:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); }
+.ph-wallet-action--primary {
+  background: rgba(196,144,58,0.12);
+  border-color: rgba(196,144,58,0.28);
+  color: var(--honey);
+}
+.ph-wallet-action--primary:hover { background: rgba(196,144,58,0.22); }
+
+/* Inline "Load from Roots" expand panel */
+.ph-load-panel {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  animation: phFadeUp 0.25s ease both;
+}
+.ph-load-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ph-load-max { color: rgba(255,255,255,0.3); }
+.ph-load-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.ph-load-input {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  outline: none;
+}
+.ph-load-input:focus { border-color: rgba(196,144,58,0.4); }
+.ph-load-preview {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--honey);
+  flex-shrink: 0;
+}
+.ph-load-rate { font-family: var(--sans); font-size: 11px; color: rgba(255,255,255,0.25); margin-bottom: 12px; }
+.ph-load-btns { display: flex; gap: 8px; }
+.ph-load-confirm {
+  flex: 1;
+  font-family: var(--sans);
+  font-size: 12px;
+  background: rgba(196,144,58,0.12);
+  border: 1px solid rgba(196,144,58,0.3);
+  border-radius: 10px;
+  padding: 9px;
+  color: var(--honey);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.ph-load-confirm:hover { background: rgba(196,144,58,0.22); }
+.ph-load-confirm:disabled { opacity: 0.5; cursor: default; }
+.ph-load-cancel {
+  font-family: var(--sans);
+  font-size: 12px;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 9px 14px;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+}
+.ph-load-cancel:hover { color: rgba(255,255,255,0.7); }
+
+/* Benefit rows (Wallet + Grove) */
+.ph-benefit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.ph-benefit-row:last-child { border-bottom: none; padding-bottom: 0; }
+.ph-benefit-icon { font-size: 17px; flex-shrink: 0; width: 22px; text-align: center; margin-top: 1px; }
+.ph-benefit-name { font-family: var(--sans); font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.75); margin-bottom: 2px; }
+.ph-benefit-desc { font-family: var(--sans); font-size: 11px; color: rgba(255,255,255,0.32); line-height: 1.5; }
+
+.ph-card-empty {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.28);
+  text-align: center;
+  padding: 10px 0;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   GROVE TAB
+   ══════════════════════════════════════════════════════════ */
+
+/* Demo planning toggle — switches between Approved and New Member views */
+.ph-grove-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.ph-grove-toggle-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+.ph-grove-toggle-btn {
+  font-family: var(--sans);
+  font-size: 11px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 5px 14px;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.ph-grove-toggle-btn.active {
+  background: rgba(196,144,58,0.12);
+  border-color: rgba(196,144,58,0.28);
+  color: var(--honey);
+}
+
+/* Approved status banner */
+.ph-grove-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+}
+.ph-grove-status--approved {
+  background: rgba(92,184,126,0.08);
+  border: 1px solid rgba(92,184,126,0.2);
+}
+.ph-grove-dot  { font-size: 10px; color: #5cb87e; flex-shrink: 0; }
+.ph-grove-status-title { font-family: var(--sans); font-size: 13px; font-weight: 500; color: #5cb87e; margin-bottom: 2px; }
+.ph-grove-status-sub   { font-family: var(--sans); font-size: 11px; color: rgba(92,184,126,0.65); }
+
+/* Stats grid — 2×2 */
+.ph-grove-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.ph-grove-stat {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+.ph-grove-stat-label { font-family: var(--sans); font-size: 10px; color: rgba(255,255,255,0.3); margin-bottom: 6px; line-height: 1.4; }
+.ph-grove-stat-val   { font-family: var(--sans); font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.85); }
+.ph-grove-pos        { color: #5cb87e; }
+
+/* New member — teaser section */
+.ph-grove-teaser {
+  background: rgba(196,144,58,0.06);
+  border: 1px solid rgba(196,144,58,0.12);
+  border-radius: 18px;
+  padding: 22px 22px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.ph-grove-teaser-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 8px;
+}
+.ph-grove-teaser-sub {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.6;
+}
+
+/* Application form */
+.ph-grove-form { display: flex; flex-direction: column; gap: 10px; }
+.ph-grove-input,
+.ph-grove-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.78);
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+.ph-grove-input::placeholder,
+.ph-grove-textarea::placeholder { color: rgba(255,255,255,0.25); }
+.ph-grove-input:focus,
+.ph-grove-textarea:focus { border-color: rgba(196,144,58,0.35); }
+.ph-grove-apply-btn {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 13px;
+  background: rgba(196,144,58,0.12);
+  border: 1px solid rgba(196,144,58,0.3);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--honey);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.ph-grove-apply-btn:hover { background: rgba(196,144,58,0.22); }
+.ph-grove-form-note {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  text-align: center;
+  line-height: 1.5;
+}
+
+
+/* ── Profile tab — account details + address book management ── */
+.ph-profile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.ph-profile-row:last-child { border-bottom: none; }
+.ph-profile-row-label { font-family: var(--sans); font-size: 13px; color: rgba(255,255,255,0.45); }
+.ph-profile-row-val { font-family: var(--sans); font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.88); }
+.ph-profile-addr-count {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: rgba(255,255,255,0.3);
+}
+
+.ph-addr-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.ph-addr-card-main { flex: 1; min-width: 0; }
+.ph-addr-card-label { font-family: var(--sans); font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.88); margin-bottom: 2px; }
+.ph-addr-card-summary {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ph-addr-card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.ph-addr-edit-btn, .ph-addr-del-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--sans);
+  font-size: 11px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.ph-addr-edit-btn:hover { color: var(--honey); border-color: rgba(196,144,58,0.4); }
+.ph-addr-del-btn:hover { color: #f87171; border-color: rgba(248,113,113,0.4); }
+.ph-addr-del-btn--armed { color: #f87171; border-color: rgba(248,113,113,0.5); }
+
+.ph-profile-add-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed rgba(255,255,255,0.18);
+  border-radius: 10px;
+  padding: 10px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: rgba(196,144,58,0.85);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.ph-profile-add-btn:hover { border-color: var(--honey); background: rgba(196,144,58,0.06); }
+
+.ph-addr-form { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.ph-addr-form-row { display: flex; gap: 10px; }
+.ph-addr-form-row .ph-grove-input { flex: 1; min-width: 0; }
+.ph-addr-form-actions { display: flex; gap: 8px; }
+.ph-addr-form-actions .ph-grove-apply-btn { flex: 1; }
+.ph-addr-form-cancel {
+  flex: 1;
+  font-family: var(--sans);
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 10px;
+  padding: 12px;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+}
+.ph-addr-form-cancel:hover { color: rgba(255,255,255,0.8); }
+
+
+/* ══════════════════════════════════════════════════════════
+   ACCOUNT DASHBOARD — BASE STYLES
+   Greeting bar, tab nav, and panel container.
+   These were stripped out; restored here.
+   ══════════════════════════════════════════════════════════ */
+
+/* Greeting bar — sits above tab nav, always visible after login */
+.ph-db-bar {
+  display: flex;                              /* greeting left, sign-out button right */
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px 14px;                   /* default mobile padding */
+  border-bottom: 1px solid rgba(255,255,255,0.07); /* subtle divider line */
+}
+.ph-db-bar-left {
+  flex: 1;                                    /* takes all space, pushing sign-out right */
+  min-width: 0;                               /* prevents text overflow breaking layout */
+}
+
+/* "Good afternoon, Jayesh" — large serif greeting */
+.ph-db-greet {
+  font-family: var(--serif);                  /* Cormorant Garamond — brand voice */
+  font-size: 44px;                            /* premium scale — user requested 40px+ */
+  font-weight: 300;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+/* The time-of-day word ("afternoon") shown in gold italic */
+.ph-db-time {
+  font-style: italic;
+  color: var(--honey);                        /* gold accent for dynamic time word */
+}
+/* "Member since January 2026" — small muted text */
+.ph-db-since {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.32);
+}
+/* Sign out button — top right corner of bar */
+.ph-signout {
+  flex-shrink: 0;                             /* never compress; always full size */
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.ph-signout:hover {
+  color: rgba(255,255,255,0.75);
+  border-color: rgba(255,255,255,0.25);
+}
+
+/* 6-tab horizontal navigation bar */
+.ph-nav {
+  display: flex;                              /* tabs in a row */
+  justify-content: center;                   /* center tabs within the nav bar */
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  padding: 0 8px;
+  overflow-x: auto;                          /* scrollable on narrow screens */
+  scrollbar-width: none;                     /* hide scrollbar on Firefox */
+}
+.ph-nav::-webkit-scrollbar { display: none; } /* hide scrollbar on Chrome/Safari */
+
+/* Individual tab button */
+.ph-tab {
+  flex-shrink: 0;                            /* never wrap to next line */
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.38);             /* muted when inactive */
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;     /* placeholder for active underline */
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.ph-tab:hover { color: rgba(255,255,255,0.72); }
+/* Active tab: gold text + gold underline */
+.ph-tab--active {
+  color: var(--honey);
+  border-bottom-color: var(--honey);
+  font-weight: 500;
+}
+
+/* Tab content panel — single column flex, rebuilt on every tab switch */
+.ph-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;                                  /* consistent gap between stacked cards */
+  padding: 24px 20px 56px;                   /* default mobile padding */
+}
+/* Slide-up fade plays on each tab switch (class toggled by JS) */
+.ph-panel-anim {
+  animation: phFadeUp 0.28s ease both;
+}
+
+/* Stagger helpers — first child fades in immediately, second after 160ms */
+.ph-anim-1 { animation: phFadeUp 0.4s ease 0ms   both; }
+.ph-anim-2 { animation: phFadeUp 0.4s ease 160ms  both; }
+
+
+/* ══════════════════════════════════════════════════════════
+   COMMON PANEL UTILITIES
+   Section headers, link styles, empty states used across tabs.
+   ══════════════════════════════════════════════════════════ */
+/* Section heading row — label + optional right-side link */
+.ph-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.ph-section-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);          /* muted grey label above card groups */
+  letter-spacing: 0.04em;
+}
+/* Parenthetical muted note inline inside section label */
+.ph-section-muted {
+  font-weight: 400;
+  color: rgba(255,255,255,0.22);          /* even more muted — secondary context */
+}
+/* Generic inline link: "Explore plans →", "Start shopping →" */
+.ph-link {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--honey);
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 0.15s;
+}
+.ph-link:hover { opacity: 1; text-decoration: underline; }
+/* "Track →" link on individual order rows */
+.ph-track-link {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 10px;
+  color: var(--honey);
+  text-decoration: none;
+  opacity: 0.7;
+  margin-top: 4px;
+  transition: opacity 0.15s;
+}
+.ph-track-link:hover { opacity: 1; text-decoration: underline; }
+
+/* "View full catalogue →" link below harvest grid */
+.ph-view-all-link {
+  display: block;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--honey);
+  text-decoration: none;
+  opacity: 0.65;
+  text-align: right;
+  padding: 4px 0 2px;
+  transition: opacity 0.15s;
+}
+.ph-view-all-link:hover { opacity: 1; }
+
+
+/* ══════════════════════════════════════════════════════════
+   ROOTS TAB — ROOTS NUMBER ANIMATION
+   ph-roots-float: the big number; used to count up on load
+   ══════════════════════════════════════════════════════════ */
+.ph-roots-float {
+  display: inline;                        /* sits inline inside .ph-roots-hero-num */
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   HARVEST TAB — MARKET HEADER + WELCOME STATE
+   ══════════════════════════════════════════════════════════ */
+/* Top header row: "The Harvest Market" + subtitle */
+.ph-harvest-hdr {
+  margin-bottom: 22px;
+}
+.ph-harvest-eyebrow {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--honey);
+  margin-bottom: 8px;
+}
+.ph-harvest-title {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1.1;
+  color: rgba(255,255,255,0.95);
+  margin-bottom: 6px;
+}
+.ph-harvest-sub {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+}
+/* Shown to first-time visitors with no orders yet */
+.ph-harvest-welcome {
+  text-align: center;
+  padding: 28px 20px;
+}
+.ph-harvest-welcome-icon { font-size: 32px; margin-bottom: 10px; }
+.ph-harvest-welcome-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 6px;
+}
+.ph-harvest-welcome-sub {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(255,255,255,0.32);
+  margin-bottom: 16px;
+}
+/* "Explore the full catalogue →" CTA on empty state */
+.ph-harvest-cta {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--honey);
+  text-decoration: none;
+  border: 1px solid rgba(196,144,58,0.3);
+  border-radius: 8px;
+  padding: 8px 18px;
+  transition: background 0.2s;
+}
+.ph-harvest-cta:hover { background: rgba(196,144,58,0.1); }
+/* Bottom row footer link */
+.ph-harvest-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 0 2px;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   HARVEST TAB — PRODUCT CARDS GRID
+   ph-prod-grid: responsive 2-col wrap
+   ph-prod: individual card
+   ══════════════════════════════════════════════════════════ */
+.ph-prod-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;        /* 2-up grid of product cards */
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.ph-prod {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.ph-prod-img {
+  font-size: 32px;                        /* emoji stands in for product photo */
+  text-align: center;
+  padding: 16px 8px 8px;
+  background: rgba(255,255,255,0.02);
+}
+.ph-prod-body {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.ph-prod-name {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.78);
+  margin-bottom: 2px;
+}
+.ph-prod-size {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(255,255,255,0.28);
+  margin-bottom: 8px;
+}
+.ph-prod-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;                       /* pushes price row to bottom of card */
+}
+.ph-prod-price {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.8);
+}
+.ph-prod-roots {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(196,144,58,0.6);           /* honey tint — shows Roots earned */
+}
+/* "Add" button on each product card */
+.ph-prod-add {
+  font-family: var(--sans);
+  font-size: 11px;
+  background: rgba(196,144,58,0.1);
+  border: 1px solid rgba(196,144,58,0.25);
+  border-radius: 8px;
+  padding: 5px 10px;
+  color: var(--honey);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.ph-prod-add:hover { background: rgba(196,144,58,0.2); }
+
+
+/* ══════════════════════════════════════════════════════════
+   ORDERS TAB — SUBSCRIPTION + ORDER HISTORY ROWS
+   ph-sub-row: one subscription per row
+   ph-order-row: one order per row
+   ══════════════════════════════════════════════════════════ */
+/* Subscription row */
+.ph-sub-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.ph-sub-row:last-child { border-bottom: none; }
+.ph-sub-info { flex: 1; min-width: 0; }
+.ph-sub-name {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.78);
+  margin-bottom: 3px;
+}
+/* Interval chip: "Monthly", "Bi-weekly" */
+.ph-sub-tag {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 99px;
+  background: rgba(196,144,58,0.1);
+  border: 1px solid rgba(196,144,58,0.2);
+  color: rgba(196,144,58,0.75);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.ph-sub-meta {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.28);
+}
+.ph-sub-action { color: rgba(255,255,255,0.5); }
+/* "Manage" button right side of sub row */
+.ph-sub-manage-btn {
+  font-family: var(--sans);
+  font-size: 11px;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 5px 12px;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.2s, border-color 0.2s;
+}
+.ph-sub-manage-btn:hover { color: rgba(255,255,255,0.75); border-color: rgba(255,255,255,0.2); }
+/* Expanded manage panel below sub row */
+.ph-sub-manage-panel {
+  padding: 8px 0 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+/* Inline action buttons inside manage panel */
+.ph-sub-action {
+  font-family: var(--sans);
+  font-size: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s, color 0.2s;
+}
+.ph-sub-action:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.8); }
+/* Danger variant — cancel subscription */
+.ph-sub-action--danger { color: rgba(220,80,80,0.65); border-color: rgba(220,80,80,0.15); }
+.ph-sub-action--danger:hover { background: rgba(220,80,80,0.08); color: rgba(220,80,80,0.9); }
+/* "Saving ₹XX/yr" note below manage buttons */
+.ph-sub-saved {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(92,184,126,0.65);          /* green tint — positive saving */
+  padding: 4px 0 0;
+}
+
+/* Order history row */
+.ph-order-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.ph-order-row:last-child { border-bottom: none; }
+.ph-order-left { flex: 1; min-width: 0; }
+.ph-order-id {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 2px;
+}
+.ph-order-items {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ph-order-date {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(255,255,255,0.22);
+}
+.ph-order-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+.ph-order-total {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.78);
+  margin-bottom: 4px;
+}
+/* Status chip: "Delivered", "In transit", etc. */
+.ph-order-badge {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: rgba(92,184,126,0.1);
+  border: 1px solid rgba(92,184,126,0.2);
+  color: #5cb87e;
+  margin-bottom: 4px;
+}
+/* "+" Roots earned label below badge */
+.ph-order-roots-earned {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(196,144,58,0.55);          /* honey tint — reward reminder */
+}
+/* Empty state when no orders yet */
+.ph-orders-empty {
+  text-align: center;
+  padding: 24px 16px;
+  color: rgba(255,255,255,0.3);
+  font-family: var(--sans);
+  font-size: 13px;
+}
+.ph-orders-empty span { display: block; font-size: 28px; margin-bottom: 10px; }
+.ph-orders-empty p { margin-bottom: 12px; }
+
+
+/* ══════════════════════════════════════════════════════════
+   LEGACY ACCOUNT DASHBOARD CLASSES
+   These remain for backward compatibility with the tab/panel
+   system that existed in v2. The PIN pad and sign-in view
+   still use acct- prefixed classes defined earlier in this file.
+   ══════════════════════════════════════════════════════════ */
+/* Tab panel show/hide (kept for any residual references) */
+.acct-panel { display: none; }
+.acct-panel--active { display: block; }
+
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — DESKTOP (481px+)
+   Single clean column, wider container, breathing room.
+   ══════════════════════════════════════════════════════════ */
+@media (min-width: 481px) {
+  .acct-wrap { max-width: 720px; padding: 0 40px; }   /* 720px — clean centered column, fixes sign-in width too */
+  .ph-db-bar { padding: 28px 40px 20px; }              /* more air above the greeting */
+  .ph-nav    { padding: 0 16px; }
+  .ph-panel  { padding: 28px 40px 64px; gap: 16px; }  /* single-column, consistent gap */
+
+  /* Vault and Roots numbers scale up on wider screens */
+  .ph-vault-val      { font-size: 52px; }
+  .ph-vault-unit     { font-size: 26px; }
+  .ph-roots-hero-num { font-size: 68px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE (max 480px)
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .ph-panel    { padding: 14px 16px 40px; }
+  .ph-db-bar   { padding: 14px 16px 12px; }
+  .ph-nav      { padding: 0 4px; }
+  .ph-tab      { padding: 10px 12px; font-size: 12px; }
+
+  /* Greeting */
+  .ph-greeting      { font-size: 22px; }
+
+  /* Vault */
+  .ph-vault-val     { font-size: 36px; }
+  .ph-vault-actions { flex-wrap: wrap; }
+  .ph-vault-action  { flex: 1 1 40%; }
+
+  /* Roots hero */
+  .ph-roots-hero        { flex-direction: column; gap: 8px; }
+  .ph-roots-hero-num    { font-size: 48px; }
+  .ph-roots-prog-link   { align-self: flex-start; }
+
+  /* Stats */
+  .ph-stat-val { font-size: 14px; }
+  .ph-stat     { padding: 0 8px; }
+
+  /* Products — single column on small screens */
+  .ph-prod-grid { grid-template-columns: 1fr; }
+
+  /* Grove stats — single column */
+  .ph-grove-stats { grid-template-columns: 1fr; }
+
+  /* Referral breakdown */
+  .ph-ref-breakdown { padding: 12px 14px; }
+  .ph-ref-amount    { font-size: 28px; }
+
+  /* 3D card — slightly shorter */
+  .ph-card-inner { height: 180px; }
+
+  /* Wallet actions */
+  .ph-wallet-actions { flex-wrap: wrap; }
+  .ph-wallet-action  { flex: 1 1 40%; }
 }
 

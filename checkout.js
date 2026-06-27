@@ -14,9 +14,76 @@
      updateCartBadge(), renderCartItems()
 
    Namespace: .co-* (checkout prefix, no conflicts)
-   Razorpay: set window.RAZORPAY_KEY before this script loads.
-             Falls back to dev-mode confirm if key is absent.
+   Payment gateway: Cashfree. Unlike a client-only SDK, Cashfree requires a
+   server-side order creation call (secret key never touches the browser) —
+   see the PAY BUTTON section below for the exact swap point. Until that
+   backend function exists and window.CASHFREE_APP_ID is set, this falls
+   back to dev-mode confirm (no real payment taken).
 ======================================== */
+
+
+/* ============================================================
+   ADDRESS BOOK — shared between checkout.js (M2) and account.js
+   (Profile tab). Plain top-level functions (not inside the IIFE
+   below) so both files can call them by name, the same way
+   account.js's phGetSession/phSetSession are plain globals.
+
+   BACKEND MIGRATION: every function here is a pure data transform
+   — given an addresses array, return a new one. None of them touch
+   localStorage. Callers read the session via phCheckoutSession() /
+   phGetSession() and persist via phCheckoutSetSession() / phSetSession()
+   today; swapping those two for real API calls later never requires
+   touching this logic, since it doesn't know storage exists.
+
+   Address shape: { id, label, name, phone, email, pincode, flat,
+   building, area, city, state, usageCount, lastUsedAt }
+   Cap: 2 saved addresses per user (label defaults: "Home" then "Work").
+   ============================================================ */
+
+/* Which saved address should auto-fill the M2 form: most-used first,
+   most-recently-used as the tiebreak. Returns null if there are none. */
+function phAddrPickDefault(addresses) {
+  if (!addresses || !addresses.length) return null;
+  return addresses.slice().sort(function (a, b) {
+    var byUsage = (b.usageCount || 0) - (a.usageCount || 0);
+    return byUsage !== 0 ? byUsage : (b.lastUsedAt || 0) - (a.lastUsedAt || 0);
+  })[0];
+}
+
+/* addrId given → updates that address's fields in place.
+   addrId null → adds a new one (if under the 2-address cap) with an
+   auto-assigned label. Returns { addresses, savedNew } — savedNew is
+   the newly-created address (or null if updating, or null if at cap). */
+function phAddrUpsert(addresses, addrId, fields) {
+  addresses = addresses || [];
+
+  if (addrId) {
+    return {
+      addresses: addresses.map(function (a) { return a.id === addrId ? Object.assign({}, a, fields) : a; }),
+      savedNew: null
+    };
+  }
+
+  if (addresses.length >= 2) return { addresses: addresses, savedNew: null }; /* at cap — caller decides how to inform the user */
+
+  var usedLabels = addresses.map(function (a) { return a.label; });
+  var label = usedLabels.indexOf('Home') === -1 ? 'Home' : (usedLabels.indexOf('Work') === -1 ? 'Work' : 'Address');
+  var newAddr = Object.assign({ id: 'addr_' + Date.now(), label: label, usageCount: 0, lastUsedAt: 0 }, fields);
+  return { addresses: addresses.concat([newAddr]), savedNew: newAddr };
+}
+
+function phAddrDelete(addresses, addrId) {
+  return (addresses || []).filter(function (a) { return a.id !== addrId; });
+}
+
+/* Bumps usage stats — call when an address is actually used for an order,
+   so phAddrPickDefault favors it next time. */
+function phAddrTouch(addresses, addrId) {
+  return (addresses || []).map(function (a) {
+    return a.id === addrId ? Object.assign({}, a, { usageCount: (a.usageCount || 0) + 1, lastUsedAt: Date.now() }) : a;
+  });
+}
+
 
 (function () {
   'use strict';
@@ -89,6 +156,10 @@
     '<div class="co-moment" id="coM2">',
     '  <p class="co-eyebrow">Delivery</p>',
     '  <h2 class="co-h2">Where shall we<br><em>send it?</em></h2>',
+    /* Saved-address pills — only populated (via renderAddrPills) for a signed-in user
+       with at least one saved address. The most-used one auto-fills the form below on
+       open; pills just let you switch if that's not the right one this time. */
+    '  <div id="coSavedAddrs"></div>',
     '  <div class="co-fields">',
 
     /* Full name */
@@ -165,19 +236,28 @@
     '  <h2 class="co-h2">Complete your<br><em>ritual</em></h2>',
     '  <div class="co-pay-summary" id="coPaySummary"></div>',
     '  <div class="co-pay-addr" id="coPayAddr"></div>',
+    /* One-time light notice — only shown right after a new address gets auto-saved in M2 */
+    '  <p class="co-addr-saved-notice" id="coAddrSavedNotice" style="display:none"></p>',
     '  <div class="co-divider"></div>',
     '  <div class="co-row">',
     '    <span class="co-label-sm">Shipping</span>',
     '    <span class="co-total-val" id="coM3Shipping">—</span>',
+    '  </div>',
+    /* Roots-applied row — hidden until the user actually redeems some */
+    '  <div class="co-row" id="coRootsRow" style="display:none">',
+    '    <span class="co-label-sm">Roots applied</span>',
+    '    <span class="co-total-val co-free" id="coRootsDiscountVal">−₹0</span>',
     '  </div>',
     '  <div class="co-row co-pay-total-row">',
     '    <span class="co-label-sm">Total</span>',
     '    <span class="co-pay-total" id="coPayTotal">₹0</span>',
     '  </div>',
     '  <div class="co-divider"></div>',
-    /* Harvest Card / Coupon code field */
+    /* Roots redemption — live balance + stepper, fully rendered/wired by renderRootsSection() */
+    '  <div id="coRootsSection"></div>',
+    /* Coupon code field — separate now that Roots has its own dedicated, live UI above */
     '  <div class="co-discount-section">',
-    '    <p class="co-discount-label">Harvest Card or Coupon</p>',
+    '    <p class="co-discount-label">Coupon code</p>',
     '    <div class="co-discount-row">',
     '      <input type="text" class="co-code-input" id="coCodeInput" placeholder="Enter code e.g. WELCOME15" maxlength="24" autocomplete="off" />',
     '      <button class="co-code-apply" id="coCodeApply">Apply</button>',
@@ -208,7 +288,7 @@
        Lives outside .co-scrollable so it never scrolls away.
     ── */
     '<div class="co-pay-footer" id="coPayFooter">',
-    '  <p class="co-foot-trust">🔒 Secured by Razorpay · SSL encrypted · Ships in 48h</p>',
+    '  <p class="co-foot-trust">🔒 Secured by Cashfree · SSL encrypted · Ships in 48h</p>',
     '  <button class="co-cta co-cta-honey" id="coPayBtn">',
     '    Pay&nbsp;<span id="coPayAmt">₹0</span>',
     '  </button>',
@@ -222,17 +302,27 @@
 
   /* ──────────────────────────────────────
      STATE
-     _items       — current items array for this checkout
-     _step        — active step number (1–4)
-     _delivery    — collected M2 delivery details
-     _discount    — applied coupon/card { code, amount, type, label }
-     _pinVerified — true once India Post API confirmed the pincode
+     _items             — current items array for this checkout
+     _step              — active step number (1–4)
+     _delivery          — collected M2 delivery details
+     _discount          — applied coupon { code, amount, type, label }
+     _rootsRedeemed     — Roots applied this checkout (flat ₹10/Root, see redeemable Helpers below)
+     _pinVerified       — true once India Post API confirmed the pincode
+     _session           — signed-in user's session, re-read fresh on every openCheckout()
+     _editingAddressId  — id of the saved address currently loaded into the M2 form
+                          (null = a brand-new address, not yet saved)
+     _justSavedLabel    — set when M2 Continue auto-saves a brand-new address; shown
+                          once as a light notice on M3, then irrelevant until next save
   ────────────────────────────────────── */
-  var _items       = [];
-  var _step        = 1;
-  var _delivery    = {};
-  var _discount    = { code: '', amount: 0, type: '', label: '' };
-  var _pinVerified = false;
+  var _items            = [];
+  var _step             = 1;
+  var _delivery         = {};
+  var _discount         = { code: '', amount: 0, type: '', label: '' };
+  var _rootsRedeemed    = 0;
+  var _pinVerified      = false;
+  var _session          = null;
+  var _editingAddressId = null;
+  var _justSavedLabel   = null;
 
 
   /* ──────────────────────────────────────
@@ -259,9 +349,13 @@
     if (!_items.length) return; /* nothing to checkout, do nothing */
 
     /* Reset checkout state for a clean open */
-    _step        = 1;
-    _discount    = { code: '', amount: 0, type: '', label: '' };
-    _pinVerified = false;
+    _step             = 1;
+    _discount         = { code: '', amount: 0, type: '', label: '' };
+    _rootsRedeemed    = 0;
+    _pinVerified      = false;
+    _editingAddressId = null;
+    _justSavedLabel   = null;
+    _session          = phCheckoutSession(); /* re-read fresh — picks up sign-in/out since the last checkout */
 
     /* Clear any previous coupon UI from a prior open */
     var codeInput = document.getElementById('coCodeInput');
@@ -277,6 +371,7 @@
     if (buildingInput) buildingInput.value = '';
     if (pinLocEl)  { pinLocEl.textContent = ''; }
 
+    applyDefaultAddress(); /* auto-fills the most-used saved address, if any, and renders the pills */
 
     renderM1();
     gotoStep(1);
@@ -383,8 +478,47 @@
     return rawTotal() >= 999 ? 0 : 99;
   }
 
+  /* ──────────────────────────────────────
+     ROOTS REDEMPTION — session + cap math
+     Reads the same localStorage key account.js writes (checkout.js has no
+     hard dependency on account.js — most pages load checkout without it).
+     Rules from ROOTS-PROGRAM.md, kept flat (₹10/Root, no bonus tiers) to
+     match what the wallet card already shows the customer:
+       - Minimum balance after redemption: 3 Roots must always remain
+       - Minimum redemption: 10 Roots, in steps of 10
+       - Per-order cap: 25% of order value, shared between Roots + coupon
+  ────────────────────────────────────── */
+  function phCheckoutSession() {
+    try { return JSON.parse(localStorage.getItem('ph_session') || 'null'); }
+    catch (e) { return null; }
+  }
+
+  /* Mirrors account.js's phSetSession — same localStorage key, kept local since
+     most pages load checkout.js without account.js being present. */
+  function phCheckoutSetSession(session) {
+    localStorage.setItem('ph_session', JSON.stringify(session));
+  }
+
+  function combinedCapAmt() {
+    return Math.round(rawTotal() * 0.25);
+  }
+
+  function rootsDiscountAmt() {
+    return _rootsRedeemed * 10;
+  }
+
+  /* Largest Roots amount (in steps of 10) the signed-in user could redeem right now */
+  function maxRedeemableRoots(session) {
+    if (!session || !session.roots) return 0;
+    var keepMin       = 3; /* customer always retains at least 3 Roots */
+    var balanceAvail  = Math.max(0, session.roots - keepMin);
+    var capRupeesLeft = Math.max(0, combinedCapAmt() - _discount.amount); /* coupon already eats into the shared cap */
+    var capRoots      = Math.floor(capRupeesLeft / 10);
+    return Math.floor(Math.min(balanceAvail, capRoots) / 10) * 10;
+  }
+
   function calcTotal() {
-    return Math.max(0, rawTotal() + calcShipping() - _discount.amount);
+    return Math.max(0, rawTotal() + calcShipping() - _discount.amount - rootsDiscountAmt());
   }
 
   function calcRoots(total) {
@@ -479,6 +613,87 @@
   overlay.querySelectorAll('.co-input').forEach(function (inp) {
     inp.addEventListener('input', function () { inp.classList.remove('co-err'); });
   });
+
+
+  /* ──────────────────────────────────────
+     SAVED-ADDRESS PILLS (signed-in users only, max 2)
+     The most-used saved address (see phAddrPickDefault) auto-fills the
+     form the moment checkout opens — no tap required for the common
+     case. Pills exist purely to switch when that default isn't right
+     this time; tapping one (or "+ New") is the only thing that ever
+     changes what's in the form. Saving itself is automatic on Continue
+     (see the coM2Cta handler) — no checkbox, just a light notice on M3.
+  ────────────────────────────────────── */
+  function fillFormFromAddress(addr) {
+    nameInput.value  = addr.name || '';
+    emailInput.value = addr.email || '';
+    phoneInput.value = addr.phone || '';
+    flatInput.value  = addr.flat || '';
+    document.getElementById('coBuilding').value = addr.building || '';
+    areaInput.value  = addr.area || '';
+    pinInput.value   = addr.pincode || '';
+    /* Re-run the real pincode lookup so _pinVerified and the district badge are
+       set exactly as they would be from typing — the cache makes repeats instant */
+    pinInput.dispatchEvent(new Event('input', { bubbles: true }));
+    _editingAddressId = addr.id;
+  }
+
+  /* Deselects whichever saved address was loaded and clears the form, so
+     continuing creates a new entry instead of silently overwriting the one
+     that was just being viewed. */
+  function clearM2FormForNewAddress() {
+    [nameInput, emailInput, phoneInput, pinInput, areaInput, flatInput, cityInput, stateInput].forEach(function (el) {
+      if (el) el.value = '';
+    });
+    var buildingInput = document.getElementById('coBuilding');
+    if (buildingInput) buildingInput.value = '';
+    if (pinLocEl) pinLocEl.textContent = '';
+    _pinVerified      = false;
+    _editingAddressId = null;
+  }
+
+  /* Auto-fills the default address (if any) when checkout opens — runs
+     before the user has done anything, which is fine here precisely
+     because it's a single, well-defined default, not a silent guess
+     among several. */
+  function applyDefaultAddress() {
+    var addrs = (_session && _session.addresses) || [];
+    var def   = phAddrPickDefault(addrs);
+    if (def) fillFormFromAddress(def); else _editingAddressId = null;
+    renderAddrPills();
+  }
+
+  function renderAddrPills() {
+    var container = document.getElementById('coSavedAddrs');
+    if (!container) return;
+
+    var addrs = (_session && _session.addresses) || [];
+    if (!addrs.length) { container.innerHTML = ''; return; }
+
+    container.innerHTML = [
+      '<div class="co-addr-pills">',
+      addrs.map(function (a) {
+        return '<button type="button" class="co-addr-pill' + (_editingAddressId === a.id ? ' co-addr-pill--active' : '') + '" data-pick="' + a.id + '">' + a.label + '</button>';
+      }).join(''),
+      '<button type="button" class="co-addr-pill co-addr-pill--add' + (_editingAddressId === null ? ' co-addr-pill--active' : '') + '" data-add="1">+ New</button>',
+      '</div>'
+    ].join('');
+
+    container.querySelectorAll('[data-pick]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var addr = addrs.filter(function (a) { return a.id === el.getAttribute('data-pick'); })[0];
+        if (addr) fillFormFromAddress(addr);
+        renderAddrPills(); /* refresh which pill looks active */
+      });
+    });
+    var addBtn = container.querySelector('[data-add]');
+    if (addBtn) {
+      addBtn.addEventListener('click', function () {
+        clearM2FormForNewAddress();
+        renderAddrPills();
+      });
+    }
+  }
 
 
   /* ──────────────────────────────────────
@@ -767,16 +982,41 @@
       address:  addrParts.join(', ') /* full address string for display */
     };
 
+    /* Persist to the address book — fully automatic, no opt-in checkbox.
+       Editing a picked address updates it in place; a fresh one auto-saves
+       under the 2-address cap with an assigned label, surfaced as a light
+       one-time notice on M3 (never silent, never a blocking prompt either). */
+    _justSavedLabel = null;
+    if (_session) {
+      var addrFields = { name: name, email: email, phone: phone, pincode: pincode, flat: flat, building: building, area: area, city: city, state: state };
+      var addrs      = _session.addresses || [];
+
+      if (_editingAddressId) {
+        addrs = phAddrUpsert(addrs, _editingAddressId, addrFields).addresses;
+        addrs = phAddrTouch(addrs, _editingAddressId);
+      } else {
+        var result = phAddrUpsert(addrs, null, addrFields);
+        addrs = result.addresses;
+        if (result.savedNew) {
+          addrs           = phAddrTouch(addrs, result.savedNew.id);
+          _justSavedLabel = result.savedNew.label;
+        }
+      }
+
+      _session.addresses = addrs;
+      phCheckoutSetSession(_session);
+    }
+
     renderM3();
     gotoStep(3);
   });
 
 
   /* ──────────────────────────────────────
-     COUPON / HARVEST CARD VALIDATION
+     COUPON VALIDATION
      Codes are validated client-side for now.
-     Harvest Card codes (PH-HARV-*) are stubbed — no backend yet.
-     Combined discount cap: 25% of order value.
+     Combined discount cap: 25% of order value, shared with any Roots
+     redemption already applied above (see maxRedeemableRoots).
 
      TO ADD A COUPON: add an entry to COUPON_CODES below.
      type 'pct' = percentage off | type 'fixed' = fixed INR off
@@ -800,15 +1040,6 @@
       return;
     }
 
-    /* Harvest Card pattern check — backend required for actual balance lookup */
-    if (raw.indexOf('PH-HARV-') === 0) {
-      _discount = { code: raw, amount: 0, type: 'harvestcard', label: '' };
-      msg.textContent = 'Harvest Cards will be fully redeemable once accounts launch — coming soon!';
-      msg.className   = 'co-code-msg co-msg-warn';
-      updateM3Totals();
-      return;
-    }
-
     /* Coupon code lookup */
     var coupon = COUPON_CODES[raw];
     if (!coupon) {
@@ -824,13 +1055,15 @@
       ? Math.round(base * coupon.value / 100)
       : coupon.value;
 
-    /* Cap at 25% of order value (combined discount limit — protects margins) */
-    var maxDiscount = Math.round(base * 0.25);
+    /* Cap at 25% of order value, minus whatever Roots already claimed from that same cap */
+    var maxDiscount = Math.max(0, Math.round(base * 0.25) - rootsDiscountAmt());
     if (discountAmt > maxDiscount) discountAmt = maxDiscount;
 
     _discount = { code: raw, amount: discountAmt, type: 'coupon', label: coupon.label };
-    msg.textContent = coupon.label + ' — ₹' + discountAmt.toLocaleString('en-IN') + ' off applied!';
-    msg.className   = 'co-code-msg co-msg-ok';
+    msg.textContent = discountAmt > 0
+      ? coupon.label + ' — ₹' + discountAmt.toLocaleString('en-IN') + ' off applied!'
+      : 'Your Roots redemption already uses the full 25% order discount cap.';
+    msg.className   = discountAmt > 0 ? 'co-code-msg co-msg-ok' : 'co-code-msg co-msg-warn';
 
     updateM3Totals();
   });
@@ -856,13 +1089,30 @@
                  + (_delivery.pincode ? ' ' + _delivery.pincode : '');
     document.getElementById('coPayAddr').textContent =
       'Delivering to ' + _delivery.name + ' · ' + addrLine;
+
+    /* Light one-time notice when M2 just auto-saved a brand-new address */
+    var noticeEl = document.getElementById('coAddrSavedNotice');
+    if (noticeEl) {
+      if (_justSavedLabel) {
+        noticeEl.textContent  = 'Saved as ' + _justSavedLabel + ' for faster checkout next time — manage it from your account.';
+        noticeEl.style.display = '';
+      } else {
+        noticeEl.style.display = 'none';
+      }
+    }
   }
 
-  /* Update M3 total and pay button amount — called on render and after coupon apply */
+  /* Update M3 total and pay button amount — called on render, after coupon apply,
+     and after every Roots stepper click (it re-renders the Roots section too, since
+     the cap/max can shift whenever the coupon or shipping changes). */
   function updateM3Totals() {
-    var total    = calcTotal(); /* post-discount, includes shipping */
+    var session = phCheckoutSession();
+    var max     = maxRedeemableRoots(session);
+    if (_rootsRedeemed > max) _rootsRedeemed = max; /* shrink if a coupon ate into the shared cap */
+
+    var total    = calcTotal(); /* post-discount, includes shipping, includes Roots redemption */
     var shipping = calcShipping();
-    var roots    = calcRoots(rawTotal()); /* Roots on pre-discount product spend only */
+    var roots    = calcRoots(rawTotal()); /* Roots EARNED on pre-discount product spend only */
 
     var m3Ship = document.getElementById('coM3Shipping');
     if (m3Ship) {
@@ -875,40 +1125,140 @@
       }
     }
 
+    var rootsRow = document.getElementById('coRootsRow');
+    var rootsVal = document.getElementById('coRootsDiscountVal');
+    if (rootsRow && rootsVal) {
+      if (_rootsRedeemed > 0) {
+        rootsRow.style.display = '';
+        rootsVal.textContent   = '−₹' + rootsDiscountAmt().toLocaleString('en-IN');
+      } else {
+        rootsRow.style.display = 'none';
+      }
+    }
+
     document.getElementById('coPayAmt').textContent     = '₹' + total.toLocaleString('en-IN');
     document.getElementById('coPayTotal').textContent   = '₹' + total.toLocaleString('en-IN');
     document.getElementById('coRootsNumM3').textContent = roots;
+
+    renderRootsSection(session);
+  }
+
+  /* ──────────────────────────────────────
+     ROOTS REDEMPTION UI
+     Renders one of three states into #coRootsSection:
+       1. No session            → quiet sign-in prompt
+       2. Session, but < 13 Roots (10 redeemable + 3 retained) → "keep growing" note
+       3. Session, room to redeem → live stepper, steps of 10 Roots
+     Rebuilt from scratch on every call (own buttons rewired each time) —
+     same pattern the rest of this codebase uses after innerHTML swaps.
+  ────────────────────────────────────── */
+  function renderRootsSection(session) {
+    var container = document.getElementById('coRootsSection');
+    if (!container) return;
+
+    if (!session) {
+      container.innerHTML =
+        '<div class="co-roots-prompt"><span>🌱</span><span>Sign in to pay with your Roots — <a href="account.html">sign in</a></span></div>';
+      return;
+    }
+
+    var roots = session.roots || 0;
+    var max   = maxRedeemableRoots(session);
+
+    if (roots < 13) {
+      container.innerHTML =
+        '<div class="co-roots-prompt"><span>🌱</span><span>' + roots + ' Roots banked — redeemable from 13 Roots onward</span></div>';
+      return;
+    }
+
+    if (max < 10) {
+      container.innerHTML =
+        '<div class="co-roots-prompt"><span>🌱</span><span>' + roots + ' Roots available — order total too small to redeem this time</span></div>';
+      return;
+    }
+
+    container.innerHTML = [
+      '<div class="co-roots-card">',
+      '  <div class="co-roots-card-head">',
+      '    <span class="co-roots-card-icon">🌱</span>',
+      '    <div>',
+      '      <p class="co-roots-card-title">Pay with Roots</p>',
+      '      <p class="co-roots-card-sub">' + roots + ' Roots available · 1 Root = ₹10</p>',
+      '    </div>',
+      '  </div>',
+      '  <div class="co-roots-stepper">',
+      '    <button type="button" class="co-roots-step-btn" id="coRootsMinus" aria-label="Use fewer Roots">−</button>',
+      '    <div class="co-roots-step-val"><span id="coRootsCount">' + _rootsRedeemed + '</span><span class="co-roots-step-label">Roots</span></div>',
+      '    <button type="button" class="co-roots-step-btn" id="coRootsPlus" aria-label="Use more Roots">+</button>',
+      '  </div>',
+      '  <p class="co-roots-card-applied" id="coRootsApplied">' +
+           (_rootsRedeemed > 0
+             ? '₹' + rootsDiscountAmt().toLocaleString('en-IN') + ' off applied'
+             : 'Move the stepper to redeem, in steps of 10') +
+      '</p>',
+      '</div>'
+    ].join('');
+
+    var minusBtn = document.getElementById('coRootsMinus');
+    var plusBtn  = document.getElementById('coRootsPlus');
+    minusBtn.disabled = _rootsRedeemed <= 0;
+    plusBtn.disabled  = _rootsRedeemed >= max;
+
+    minusBtn.addEventListener('click', function () {
+      _rootsRedeemed = Math.max(0, _rootsRedeemed - 10);
+      updateM3Totals();
+    });
+    plusBtn.addEventListener('click', function () {
+      _rootsRedeemed = Math.min(max, _rootsRedeemed + 10);
+      updateM3Totals();
+    });
   }
 
 
   /* ──────────────────────────────────────
      PAY BUTTON
      In sticky footer (.co-pay-footer).
-     Live mode: opens Razorpay sheet when window.RAZORPAY_KEY is set.
-     Dev mode: calls showConfirm directly (no payment gateway).
+
+     CASHFREE SWAP POINT — unlike a client-only gateway SDK, Cashfree
+     requires the order to be created server-side first (the secret key
+     can never reach the browser), which returns a payment_session_id.
+     Steps to go live:
+       1. Add <script src="https://sdk.cashfree.com/js/v3/cashfree.js">
+          to every page that loads checkout.js (same as Razorpay's tag was).
+       2. Build a Cloudflare Pages Function (mirror functions/api/track.js)
+          at /api/create-cashfree-order that calls Cashfree's Orders API
+          server-side with the real App ID + Secret Key, and returns
+          { payment_session_id }.
+       3. Set window.CASHFREE_APP_ID on the page (public, safe client-side)
+          and window.CASHFREE_MODE = 'sandbox' | 'production'.
+     Until window.CASHFREE_APP_ID is set, this falls back to dev mode —
+     no real payment gateway, straight to confirmation.
   ────────────────────────────────────── */
   document.getElementById('coPayBtn').addEventListener('click', function () {
     var total = calcTotal();
 
-    if (typeof Razorpay !== 'undefined' && window.RAZORPAY_KEY) {
-      /* ── Live Razorpay payment ── */
-      var uniqueNames = [];
-      _items.forEach(function (i) { if (uniqueNames.indexOf(i.name) === -1) uniqueNames.push(i.name); });
-
-      var rzp = new Razorpay({
-        key:         window.RAZORPAY_KEY,
-        amount:      total * 100,           /* Razorpay expects paise, not rupees */
-        currency:    'INR',
-        name:        'PureHarvest Organics',
-        description: uniqueNames.join(', '),
-        prefill: {
-          name:    _delivery.name,
-          contact: '+91' + _delivery.phone  /* phone without country code */
-        },
-        theme: { color: '#c4903a' },        /* honey amber accent */
-        handler: function () { showConfirm(total); }
-      });
-      rzp.open();
+    if (typeof Cashfree !== 'undefined' && window.CASHFREE_APP_ID) {
+      /* ── Live Cashfree payment ── */
+      fetch('/api/create-cashfree-order', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: total,
+          customer: { name: _delivery.name, phone: _delivery.phone, email: _delivery.email }
+        })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var cashfree = Cashfree({ mode: window.CASHFREE_MODE || 'sandbox' });
+          cashfree.checkout({
+            paymentSessionId: data.payment_session_id,
+            redirectTarget:   '_modal'
+          }).then(function () { showConfirm(total); });
+        })
+        .catch(function () {
+          /* Backend swap point not built yet, or the call failed — never hard-block checkout */
+          showConfirm(total);
+        });
     } else {
       /* ── Dev mode — skip payment, go straight to confirmation ── */
       showConfirm(total);

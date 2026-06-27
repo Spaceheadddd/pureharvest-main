@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Account — PureHarvest Organics</title>
+  <title>Track Your Order — PureHarvest Organics</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
@@ -136,73 +136,44 @@
   </div>
 </div>
 
-<!-- ─── ACCOUNT PAGE ─── -->
-<main class="acct-main">
-  <div class="acct-wrap">
+<!-- ─── TRACKING PAGE ─── -->
+<main class="trk-main">
+  <div class="trk-wrap">
 
-    <!-- Sign-in view (shown by default; hidden once signed in) -->
-    <div class="acct-signin-view" id="acctSigninView">
-
-      <div class="acct-hero">
-        <p class="acct-eyebrow">Welcome back</p>
-        <h1 class="acct-h1">Your<br><em>Harvest.</em></h1>
-        <p class="acct-sub">Sign in to view your orders, redeem Roots points, and manage your profile.</p>
-      </div>
-
-      <!-- Sign-in form -->
-      <div class="acct-card">
-        <p class="acct-card-label">Sign in with your phone or email</p>
-        <div class="acct-input-group" id="acctIdentifierGroup">
-          <input
-            type="text"
-            class="acct-input"
-            id="acctIdentifier"
-            placeholder="Phone number or email"
-            inputmode="email"
-            autocomplete="username"
-          />
-          <p class="acct-hint" id="acctIdentifierHint"></p>
-        </div>
-        <button class="acct-cta" id="acctContinueBtn">Continue →</button>
-        <button class="acct-demo-btn" id="acctDemoBtn">Demo Login</button>
-        <p class="acct-privacy">By continuing you agree to our <a href="privacy.html">Privacy Policy</a>.</p>
-      </div>
-
-      <!-- Success / OTP sent state -->
-      <div class="acct-sent" id="acctSentState">
-        <div class="acct-sent-icon">📩</div>
-        <p class="acct-sent-title">Check your inbox</p>
-        <p class="acct-sent-sub">We've sent a sign-in link to <strong id="acctSentTo"></strong>. The link expires in 15 minutes.</p>
-        <button class="acct-back" id="acctBackBtn">← Use a different address</button>
-      </div>
-
-      <!-- What you unlock after sign-in (teaser) -->
-      <div class="acct-teaser">
-        <p class="acct-teaser-label">What's inside your account</p>
-        <div class="acct-teaser-grid">
-          <div class="acct-teaser-card">
-            <span class="acct-teaser-icon">🌱</span>
-            <p class="acct-teaser-name">Roots Balance</p>
-            <p class="acct-teaser-desc">Track points earned across every order and redeem for discounts.</p>
-          </div>
-          <div class="acct-teaser-card">
-            <span class="acct-teaser-icon">📦</span>
-            <p class="acct-teaser-name">Order History</p>
-            <p class="acct-teaser-desc">View past orders, download invoices, and track deliveries.</p>
-          </div>
-          <div class="acct-teaser-card">
-            <span class="acct-teaser-icon">👤</span>
-            <p class="acct-teaser-name">Profile</p>
-            <p class="acct-teaser-desc">Saved addresses, contact details, and communication preferences.</p>
-          </div>
-        </div>
-      </div>
-
+    <!-- Page header -->
+    <div class="trk-hero">
+      <p class="trk-eyebrow">India Post · Registered Article</p>
+      <h1 class="trk-h1">Track your<br><em>Harvest.</em></h1>
+      <p class="trk-sub">Enter your consignment number from your dispatch notification to see real-time delivery status.</p>
     </div>
-    <!-- /Sign-in view -->
 
-    <!-- Dashboard view — empty in source; JS-rendered after auth check -->
-    <div id="acctDashboard" style="display:none"></div>
+    <!-- Search / lookup form — shown when no cn param or to track another -->
+    <div class="trk-search-card" id="trkSearchCard">
+      <div class="trk-input-row">
+        <input
+          type="text"
+          class="trk-input"
+          id="trkInput"
+          placeholder="e.g. RL123456789IN"
+          maxlength="13"
+          autocomplete="off"
+          autocapitalize="characters"
+          spellcheck="false"
+        />
+        <button class="trk-btn" id="trkBtn">Track →</button>
+      </div>
+      <p class="trk-input-hint" id="trkInputHint"></p>
+      <p class="trk-input-note">Your consignment number was sent in your dispatch notification. It looks like <strong>RL123456789IN</strong> — 13 characters starting with two letters.</p>
+    </div>
+
+    <!-- Loading state — hidden by default; shown while fetching -->
+    <div class="trk-loading" id="trkLoading" style="display:none">
+      <div class="trk-spinner"></div>
+      <p class="trk-loading-text">Fetching from India Post…</p>
+    </div>
+
+    <!-- Result area — empty in source; JS-rendered after API response -->
+    <div id="trkResult" style="display:none"></div>
 
   </div>
 </main>
@@ -241,7 +212,7 @@
 
 <script src="script.js"></script>
 <script src="checkout.js"></script>
-<script src="account.js"></script>
+<script src="track.js"></script>
 
 <!-- Cloudflare Web Analytics -->
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bb306b97acc943e2b715a00f781bbe0e"}'></script>
