@@ -355,10 +355,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   margin-bottom: 8px; 
 }
 .drawer-title {
-  font-family: var(--serif); 
-  font-size: clamp(48px, 8vw, 88px);
-  line-height: 0.92; 
-  color: var(--forest); 
+  font-family: var(--serif);
+  font-size: clamp(36px, 6vw, 58px); /* was clamp(48px,8vw,88px) — 88px was outsized for a nav drawer */
+  line-height: 0.95;
+  color: var(--forest);
   font-weight: 500;
   text-align: center;
   width: 100%;
@@ -783,6 +783,18 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   justify-content: space-between;
 }
 .p-add--active:hover { background: var(--forest-2); border-color: var(--forest-2); }
+
+/* Featured product stepper — same state but full-width, taller padding to match btn-block */
+#addToCart.p-add--active {
+  width: 100%;
+  justify-content: center;     /* centre the − qty + trio on the wide button */
+  gap: 28px;                   /* more breathing room on a full-width button */
+  padding: 16px 24px;          /* match original btn-block height */
+  font-size: 16px;
+}
+#addToCart .p-add-minus,
+#addToCart .p-add-plus  { font-size: 18px; }
+#addToCart .p-add-qty   { font-size: 16px; min-width: 24px; }
 .p-add-minus, .p-add-plus {
   font-size: 15px; font-weight: 600; line-height: 1;
   padding: 0 2px; cursor: pointer;
@@ -847,7 +859,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ==============================
    CATEGORY GRID (Stretch style)
 ============================== */
-.cat-grid-section { padding: 80px 20px 80px; }
+.cat-grid-section { padding: 100px 20px; } /* was 80px — increased for desktop breathing room */
 .cat-header { margin-bottom: 44px; }
 .cat-desc {
   font-size: 15px; color: var(--gray);
@@ -901,7 +913,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ==============================
    BRAND STORY
 ============================== */
-.story { padding: 80px 20px; background: var(--warm); }
+.story { padding: 100px 20px; background: var(--warm); } /* was 80px — desktop breathing room */
 .story-inner {
   display: flex; flex-direction: column; gap: 64px;
 }
@@ -952,7 +964,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ==============================
    FEATURED PRODUCT
 ============================== */
-.featured { padding: 80px 20px; background: var(--white); }
+.featured { padding: 100px 20px; background: var(--white); } /* was 80px */
 .featured-inner { display: flex; flex-direction: column; gap: 60px; }
 @media (min-width: 768px) {
   .featured-inner { flex-direction: row; align-items: center; gap: 80px; }
@@ -1027,7 +1039,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ==============================
    TESTIMONIALS
 ============================== */
-.testimonials { padding: 80px 20px; background: var(--off-white); }
+.testimonials { padding: 100px 20px; background: var(--off-white); } /* was 80px */
 
 .testi-hdr { margin-bottom: 48px; }
 .testi-h2 {
@@ -1048,14 +1060,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: var(--white); border: 1px solid var(--border);
   border-radius: var(--r-lg); padding: 28px; display: flex; flex-direction: column; height: 100%;
 }
-.t-stars { color: var(--honey); font-size: 26px; letter-spacing: 2px; margin-bottom: 16px; }
+.t-stars { color: var(--honey); font-size: 18px; letter-spacing: 2px; margin-bottom: 16px; } /* was 26px — scaled down to not overpower card */
 .t-quote {
-  font-family: var(--serif); font-size: 25px; line-height: 1.72;
-  color: var(--dark-2); font-style: italic; margin-bottom: 24px;flex-grow: 1;
-}
-
-.t-card{
-  min-height:400px;
+  font-family: var(--serif); font-size: 18px; line-height: 1.7; /* was 25px — quote was larger than the section title */
+  color: var(--dark-2); font-style: italic; margin-bottom: 24px; flex-grow: 1;
 }
 
 .t-user { display: flex; align-items: center; gap: 12px; }
@@ -1068,10 +1076,99 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .t-name { font-size: 16px; font-weight: 500; color: var(--dark); margin-bottom: 2px; }
 .t-loc  { font-size: 14.5px; color: var(--muted); }
 
+/* ── Testimonials: rating summary box ─────────────────────────────
+   Mirrors .pd-rev-summary from product-honey.html in layout and sizing */
+.testi-summary {
+  display: grid;
+  grid-template-columns: 120px 1fr auto; /* rating | bars | cta */
+  gap: 48px;
+  align-items: center;
+  padding: 36px 40px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  margin: 48px 0;
+}
+@media (max-width: 768px) {
+  .testi-summary { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+}
+.testi-sum-big   { font-family: var(--serif); font-size: 64px; font-weight: 400; color: var(--dark); line-height: 1; }
+.testi-sum-stars { color: var(--honey); font-size: 18px; letter-spacing: 2px; margin-bottom: 6px; }
+.testi-sum-total { font-size: 13px; color: var(--muted); font-family: var(--sans); }
+
+.testi-sum-bars  { display: flex; flex-direction: column; gap: 8px; }
+.testi-bar-row   { display: flex; align-items: center; gap: 10px; }
+.testi-bar-lbl   { font-size: 12px; color: var(--muted); min-width: 18px; text-align: right; font-family: var(--sans); }
+.testi-bar-track { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.testi-bar-fill  { height: 100%; background: var(--honey); border-radius: 3px; }
+
+.testi-sum-cta {
+  padding: 13px 26px;
+  border: 1.5px solid rgba(26,48,40,0.28);
+  border-radius: var(--r-pill);
+  font-size: 14px; font-weight: 500;
+  color: var(--forest); font-family: var(--sans);
+  transition: background var(--ease), color var(--ease);
+  white-space: nowrap;
+}
+.testi-sum-cta:hover { background: var(--forest); color: white; border-color: var(--forest); }
+
+/* ── Review cards — matches pd-rev-card from product page ── */
+.testi-rev-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+}
+.testi-rev-head  { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.testi-rev-name  { font-size: 14px; font-weight: 600; color: var(--dark); font-family: var(--sans); margin-bottom: 2px; }
+.testi-rev-date  { font-size: 11px; color: var(--muted); font-family: var(--sans); }
+.testi-rev-stars { color: var(--honey); font-size: 13px; letter-spacing: 0.8px; margin-bottom: 8px; }
+.testi-rev-verified {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #16a34a;
+  background: rgba(22,163,74,0.1);
+  padding: 3px 9px; border-radius: var(--r-pill);
+  display: inline-block; margin-bottom: 10px; font-family: var(--sans);
+}
+.testi-rev-title { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 7px; font-family: var(--sans); }
+.testi-rev-body  { font-size: 13px; color: var(--gray); line-height: 1.65; }
+
+/* ── Desktop marquee — matches pd-rev-track-wrap pattern ── */
+@media (min-width: 769px) {
+  .testi-track-wrap {
+    overflow: hidden;
+    margin: 0 -20px;    /* bleed to section edge so fade masks align */
+    position: relative;
+  }
+  .testi-track-wrap::before,
+  .testi-track-wrap::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+  }
+  .testi-track-wrap::before { left: 0; background: linear-gradient(to right, var(--off-white), transparent); }
+  .testi-track-wrap::after  { right: 0; background: linear-gradient(to left, var(--off-white), transparent); }
+  .testi-rev-grid {
+    display: flex !important; flex-wrap: nowrap !important;
+    gap: 16px; padding: 6px 20px 12px;
+    width: max-content;
+    animation: testiMarquee 32s linear infinite;
+  }
+  .testi-rev-grid:hover { animation-play-state: paused; } /* pause on hover */
+  .testi-rev-card { flex: 0 0 320px; width: 320px; }
+}
+@keyframes testiMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── Mobile: stacked cards, clones hidden ── */
+@media (max-width: 768px) {
+  .testi-rev-grid  { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
+  .testi-rev-clone { display: none !important; } /* hide duplicate cards on mobile */
+  .testi-rev-card  { padding: 20px; }
+}
+
 /* ==============================
    JOURNAL
 ============================== */
-.journal { padding: 80px 20px; background: var(--white); }
+.journal { padding: 100px 20px; background: var(--white); } /* was 80px */
 
 .journal-hdr {
   display: flex; justify-content: space-between;
@@ -1124,44 +1221,89 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ==============================
    B2B
 ============================== */
-.b2b { background: var(--forest); padding: 80px 20px; }
-.b2b-inner { display: flex; flex-direction: column; gap: 56px; }
+.b2b { background: var(--forest); padding: 100px 20px; } /* was 80px */
+.b2b-inner { display: flex; flex-direction: column; gap: 48px; } /* tighter gap between cols on mobile */
 @media (min-width: 768px) {
-  .b2b-inner { flex-direction: row; align-items: flex-start; gap: 80px; }
-  .b2b-left  { flex: 1; max-width: 480px; }
-  .b2b-right { flex: 1; display: flex; align-items: flex-start; padding-top: 8px; }
+  .b2b-inner { flex-direction: row; align-items: flex-start; gap: 72px; } /* was 80px — slightly tighter to fill better */
+  .b2b-left  { flex: 1; max-width: 460px; }                               /* was 480px — less greedy */
+  .b2b-right { flex: 1; display: flex; flex-direction: column; align-items: flex-start; padding-top: 0; } /* column so label sits above grid */
 }
 
-.b2b-eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+/* eyebrow shared between left and right */
+.b2b-eyebrow,
+.b2b-perks-eyebrow {
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); margin-bottom: 16px;
+}
+
 .b2b-h2 {
   font-family: var(--serif);
-  font-size: clamp(44px, 5vw, 64px);
-  line-height: 1; color: #f7f1e7; font-weight: 400; margin-bottom: 16px;
+  font-size: clamp(40px, 3.8vw, 52px); /* was clamp(44px,5vw,64px) — 64px was too dominant on desktop */
+  line-height: 1.05; color: #f7f1e7; font-weight: 400; margin-bottom: 16px;
 }
 .b2b-h2 em { font-style: italic; color: var(--honey); }
-.b2b-p { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.62); margin-bottom: 32px; }
+.b2b-p { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.62); margin-bottom: 28px; } /* was 32px */
 
+/* ── Stats grid ─────────────────────────────────────
+   Mobile: 2×2 grid (default)
+   Desktop (768px+): single row 4-col with left border as dividers */
 .b2b-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 36px; }
 .b-stat { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 14px; }
+
+@media (min-width: 768px) {
+  .b2b-stats {
+    grid-template-columns: repeat(4, 1fr); /* 4 equal columns in a single horizontal row */
+    gap: 0;                                /* gap replaced by border-left dividers below */
+    margin-bottom: 40px;
+  }
+  .b-stat {
+    border-top: none;                              /* remove mobile top border */
+    border-left: 1px solid rgba(255,255,255,0.14); /* left border as column divider */
+    padding: 0 0 0 20px;                           /* space from divider line */
+  }
+  .b-stat:first-child { border-left: none; padding-left: 0; } /* no leading border on first stat */
+}
+
 .b-num  { font-family: var(--serif); font-size: 36px; color: #f7f1e7; font-weight: 400; line-height: 1; margin-bottom: 4px; }
 .b-lab  { font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.5px; }
 
 .b2b-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 
+/* ── Right column perks grid ── */
 .b2b-perks {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 12px; width: 100%;
+  gap: 16px; width: 100%; /* was 12px gap — slightly more breathing room between cards */
 }
+
+/* ── Each solution card — dimensions match .pd-diff-col on product page ── */
 .b-perk {
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: var(--r-md); padding: 16px 18px;
-  font-size: 14px; color: rgba(255,255,255,0.78);
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;               /* matches pd-diff-col border-radius */
+  padding: 28px 22px;                /* matches pd-diff-col padding exactly */
+  display: flex; flex-direction: column;
   transition: background var(--ease), border-color var(--ease);
-  display: flex; align-items: flex-start; gap: 10px;
 }
 .b-perk:hover {
   background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.22);
+}
+
+.b-perk-icon {
+  font-size: 36px;                   /* matches pd-diff-icon font-size */
+  line-height: 1;
+  margin-bottom: 14px;               /* matches pd-diff-icon margin-bottom */
+}
+.b-perk-title {
+  font-family: var(--sans);
+  font-size: 14px; font-weight: 600; /* matches pd-diff-title */
+  color: rgba(255,255,255,0.92);
+  margin-bottom: 7px;                /* matches pd-diff-title margin-bottom */
+  line-height: 1.3;
+}
+.b-perk-desc {
+  font-size: 12px;                   /* matches pd-diff-desc */
+  color: rgba(255,255,255,0.5);
+  line-height: 1.55;                 /* matches pd-diff-desc */
 }
 
 /* ==============================
@@ -1172,8 +1314,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .eyebrow {font-size: 13px; }
 .nl-h2 {
   font-family: var(--serif);
-  font-size: clamp(56px, 6.5vw, 70px);
-  line-height: 1; color: var(--dark); font-weight: 400; margin-bottom: 16px;
+  font-size: clamp(52px, 4.5vw, 72px); /* title must dominate the form — input was visually overpowering it */
+  line-height: 1.1; color: var(--dark); font-weight: 400; margin-bottom: 16px;
 }
 .nl-h2 em { font-style: italic; color: var(--honey); }
 .nl-p { font-size: 16px; color: var(--gray); line-height: 1.75; margin-bottom: 36px; }
@@ -1182,18 +1324,18 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @media (min-width: 500px) { .nl-form { flex-direction: row; } }
 
 .nl-input {
-  flex: 1; height: 70px;
+  flex: 1; height: 52px;                       /* was 70px — reduced so title dominates */
   border: 1px solid var(--border-md); border-radius: var(--r-pill);
-  padding: 0 24px; font-size: 16px; font-family: var(--sans);
+  padding: 0 20px; font-size: 15px; font-family: var(--sans);
   background: var(--white); outline: none;
   transition: border-color var(--ease), box-shadow var(--ease);
 }
 .nl-input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(26,48,40,0.08); }
-.nl-btn { white-space: nowrap; padding: 0 28px; height: 64px; border-radius: var(--r-pill); font-size: 15px; }
-/* MOBILE: Join the Circle input/button height — increase height value here to make taller */
+.nl-btn { white-space: nowrap; padding: 0 24px; height: 52px; border-radius: var(--r-pill); font-size: 14px; } /* was 64px/15px */
+/* MOBILE: Join the Circle — stacked layout */
 @media (max-width: 499px) {
-  .nl-input { flex: none; width: 100%; height: 76px; font-size: 16px; padding: 0 28px; } /* for mobile */
-  .nl-btn { height: 76px; width: 100%; font-size: 16px; }
+  .nl-input { flex: none; width: 100%; height: 52px; font-size: 15px; padding: 0 20px; } /* was 76px */
+  .nl-btn { height: 52px; width: 100%; font-size: 15px; }                                /* was 76px */
 }
 .nl-note { font-size: 16px; color: var(--muted); }
 
@@ -1534,7 +1676,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ==============================
    SUBSCRIPTIONS
 ============================== */
-.subscriptions { padding: 80px 20px; background: var(--warm); }
+.subscriptions { padding: 100px 20px; background: var(--warm); } /* was 80px */
 .subs-inner { max-width: var(--max); margin: 0 auto; }
 .subs-hdr { margin-bottom: 48px; }
 .subs-h2 {
@@ -1562,6 +1704,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   overflow: hidden;
   transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
   position: relative;
+  display: flex;          /* flex column so all cards share the same height in a grid row */
+  flex-direction: column;
 }
 .sub-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
 .sub-card.sub-featured {
@@ -1584,12 +1728,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .sub-img-1 { background: linear-gradient(155deg, #f7e070, #c49038, #8b5e1a); }
 .sub-img-2 { background: linear-gradient(155deg, #e8c050, #a07030, #5a3810); }
 .sub-img-3 { background: linear-gradient(155deg, #5a8060, #1a4030, #0a2018); }
-.sub-body { padding: 24px; }
+.sub-body {
+  padding: 24px;
+  flex: 1;                /* grow to fill card height */
+  display: flex;
+  flex-direction: column;
+}
 .sub-body h3 {
   font-family: var(--serif); font-size: 24px; font-weight: 400;
   color: var(--dark); margin-bottom: 6px;
 }
-.sub-body > p { font-size: 13px; color: var(--muted); margin-bottom: 18px; line-height: 1.6; }
+.sub-body > p {
+  font-size: 13px; color: var(--muted); line-height: 1.6;
+  flex: 1;                /* stretch to push price + CTA to the bottom */
+  margin-bottom: 18px;
+}
 .sub-price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .sub-price { font-family: var(--serif); font-size: 22px; color: var(--dark); font-weight: 500; }
 .sub-save {
@@ -4893,5 +5046,80 @@ input, textarea, [contenteditable] {
   /* Wallet actions */
   .ph-wallet-actions { flex-wrap: wrap; }
   .ph-wallet-action  { flex: 1 1 40%; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   HOME PAGE — MOBILE SCALE  (max 480px)
+   All section headings use clamp() with minimums that are fine
+   on desktop but too large at 375px. These overrides bring them
+   down to a readable, proportional scale on small screens.
+   Section padding is also halved to eliminate the huge blank
+   gaps between sections that appear on mobile.
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+
+  /* ── Section padding ───────────────────────────────────── */
+  .story,
+  .featured,
+  .testimonials,
+  .journal,
+  .b2b,
+  .cat-grid-section { padding: 48px 20px; }    /* was 80px — halved for mobile */
+  .subscriptions    { padding: 48px 20px; }
+  .newsletter       { padding: 60px 20px; }    /* was 100px */
+  .roots-home       { padding: 48px 20px; }
+
+  /* ── Hero ──────────────────────────────────────────────── */
+  .hero-h1  { font-size: 44px; }               /* clamp min was 58px — too large at 375px */
+  .hero-p   { font-size: 15px; }
+
+  /* ── Section headings ──────────────────────────────────── */
+  .story-h2       { font-size: 30px; line-height: 1.1; }   /* clamp min was 40px */
+  .feat-h2        { font-size: 30px; line-height: 1.1; }   /* clamp min was 40px */
+  .testi-h2       { font-size: 28px; line-height: 1.15; }  /* clamp min was 40px */
+  .b2b-h2         { font-size: 30px; line-height: 1.1; }   /* clamp min was 44px */
+  .subs-h2        { font-size: 26px; line-height: 1.2; }   /* clamp min was 36px */
+  .nl-h2          { font-size: 40px; line-height: 1.2; }   /* 46px wraps "Thoughtful updates." at 375px; 40px fits with margin */
+  .journal-h2     { font-size: 26px; line-height: 1.2; }   /* clamp min was 36px */
+  .roots-home-h2  { font-size: 26px; line-height: 1.2; }   /* clamp min was 36px */
+  .section-h2     { font-size: 26px; }
+
+  /* ── Featured product section ──────────────────────────── */
+  .featured-inner { flex-direction: column; }              /* stack image above content */
+  .feat-visual    { width: 100%; }
+  .feat-content   { padding-top: 0; }
+  /* feat-img-wrap: no height override — aspect-ratio:1 + max-width:400px govern size naturally */
+
+  /* ── Story section ─────────────────────────────────────── */
+  .story-h2 { margin-bottom: 18px; }
+
+  /* ── B2B section ───────────────────────────────────────── */
+  .b2b-inner { gap: 36px; }                                     /* was 48px */
+  .b2b-stats { grid-template-columns: 1fr 1fr; gap: 14px; }    /* 2-col on mobile (4-col only on desktop) */
+  .b-stat    { border-top: 1px solid rgba(255,255,255,0.12); border-left: none; padding: 14px 0 0 0; } /* re-apply top border on mobile */
+  .b-stat:first-child { border-left: none; padding-left: 0; }   /* reset desktop first-child rule */
+  .b-num     { font-size: 28px; }                               /* was 36px */
+  .b2b-perks { grid-template-columns: 1fr; }                   /* single column on mobile */
+  .b-perk    { padding: 20px 18px; }                           /* slightly tighter on mobile than desktop 28px/22px */
+  .b-perk-icon  { font-size: 28px; margin-bottom: 10px; }     /* scale down icon on mobile */
+  .b-perk-title { font-size: 13px; }
+  .b-perk-desc  { font-size: 12px; }
+  .b2b-ctas  { flex-direction: column; }
+  .b2b-ctas .btn-inv-p,
+  .b2b-ctas .btn-inv-g { width: 100%; text-align: center; }    /* was .btn-primary/.btn-ghost — wrong class names */
+
+  /* ── Testimonials ──────────────────────────────────────── */
+  .testi-hdr    { margin-bottom: 28px; }
+  .testi-grid   { gap: 14px; }
+  .t-card       { padding: 20px; }
+
+  /* ── Subscriptions ─────────────────────────────────────── */
+  .subs-grid    { gap: 16px; }
+
+  /* ── Newsletter ────────────────────────────────────────── */
+  .nl-h2        { margin-bottom: 12px; }
+
+  /* ── Journal ───────────────────────────────────────────── */
+  .journal-hdr  { flex-direction: column; gap: 8px; align-items: flex-start; }
 }
 

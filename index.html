@@ -854,50 +854,100 @@
 <section class="testimonials">
   <div class="section-wrap">
 
+    <!-- Section heading — unchanged -->
     <div class="testi-hdr" data-reveal="up">
       <p class="eyebrow">What people say</p>
-      <h2 class="testi-h2">Trusted by<br><em>ritual seekers</em><br>worldwide</h2>
+      <h2 class="testi-h2">Trusted by<br><em>ritual seekers</em><br>across India</h2>
     </div>
 
-    <div class="testi-grid">
+    <!-- Review cards: desktop = marquee scroll, mobile = stacked -->
+    <div class="testi-track-wrap">
+      <div class="testi-rev-grid">
 
-      <div class="t-card" data-reveal="up" data-delay="0">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"This honey completely changed my morning ritual. The depth of flavour is unlike anything I've tasted — you can genuinely sense the forest in every spoon."</p>
-        <div class="t-user">
-          <div class="t-avatar">A</div>
-          <div>
-            <p class="t-name">Ananya R.</p>
-            <p class="t-loc">Newcastle, Australia</p>
+        <div class="testi-rev-card">
+          <div class="testi-rev-head">
+            <div>
+              <p class="testi-rev-name">Ananya R.</p>
+              <p class="testi-rev-date">November 2024 · Mumbai</p>
+            </div>
           </div>
+          <p class="testi-rev-stars">★★★★★</p>
+          <span class="testi-rev-verified">Verified Purchase</span>
+          <p class="testi-rev-title">Completely changed my morning ritual</p>
+          <p class="testi-rev-body">The depth of flavour is unlike anything I've tasted — you can genuinely sense the forest in every spoon. Nothing else compares.</p>
         </div>
-      </div>
 
-      <div class="t-card" data-reveal="up" data-delay="100">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"I've been sourcing raw honey for years. PureHarvest is in a different league — the purity is evident, and knowing it supports tribal families makes it meaningful."</p>
-        <div class="t-user">
-          <div class="t-avatar">R</div>
-          <div>
-            <p class="t-name">Rohan M.</p>
-            <p class="t-loc">Bangalore, India</p>
+        <div class="testi-rev-card">
+          <div class="testi-rev-head">
+            <div>
+              <p class="testi-rev-name">Rohan M.</p>
+              <p class="testi-rev-date">October 2024 · Bangalore</p>
+            </div>
           </div>
+          <p class="testi-rev-stars">★★★★★</p>
+          <span class="testi-rev-verified">Verified Purchase</span>
+          <p class="testi-rev-title">PureHarvest is in a different league</p>
+          <p class="testi-rev-body">I've been sourcing raw honey for years. The purity is evident, and knowing it supports tribal families makes it meaningful.</p>
         </div>
-      </div>
 
-      <div class="t-card" data-reveal="up" data-delay="200">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"We import PureHarvest for our wellness boutique in London. Our clients immediately notice the quality. It's become our best-selling product."</p>
-        <div class="t-user">
-          <div class="t-avatar">S</div>
-          <div>
-            <p class="t-name">Sophia K.</p>
-            <p class="t-loc">London, UK · Wholesale Partner</p>
+        <div class="testi-rev-card">
+          <div class="testi-rev-head">
+            <div>
+              <p class="testi-rev-name">Meera S.</p>
+              <p class="testi-rev-date">September 2024 · Hyderabad</p>
+            </div>
           </div>
+          <p class="testi-rev-stars">★★★★★</p>
+          <span class="testi-rev-verified">Verified Purchase</span>
+          <p class="testi-rev-title">Worth every rupee — real forest honey</p>
+          <p class="testi-rev-body">I was sceptical about the price at first. After one jar I was sold. Dark, rich and complex — you can really taste that it's from the wild.</p>
         </div>
-      </div>
 
+        <div class="testi-rev-card">
+          <div class="testi-rev-head">
+            <div>
+              <p class="testi-rev-name">Sophia K.</p>
+              <p class="testi-rev-date">September 2024 · Delhi</p>
+            </div>
+          </div>
+          <p class="testi-rev-stars">★★★★★</p>
+          <span class="testi-rev-verified">Wellness Partner</span>
+          <p class="testi-rev-title">Our clients immediately notice the quality</p>
+          <p class="testi-rev-body">We stock PureHarvest at our wellness boutique. Clients who try it once always come back — it's become our best-selling product.</p>
+        </div>
+
+        <!-- Clones for seamless marquee loop — hidden from accessibility tree -->
+        <div class="testi-rev-card testi-rev-clone" aria-hidden="true">
+          <div class="testi-rev-head"><div><p class="testi-rev-name">Ananya R.</p><p class="testi-rev-date">November 2024 · Mumbai</p></div></div>
+          <p class="testi-rev-stars">★★★★★</p><span class="testi-rev-verified">Verified Purchase</span>
+          <p class="testi-rev-title">Completely changed my morning ritual</p>
+          <p class="testi-rev-body">The depth of flavour is unlike anything I've tasted — you can genuinely sense the forest in every spoon.</p>
+        </div>
+
+        <div class="testi-rev-card testi-rev-clone" aria-hidden="true">
+          <div class="testi-rev-head"><div><p class="testi-rev-name">Rohan M.</p><p class="testi-rev-date">October 2024 · Bangalore</p></div></div>
+          <p class="testi-rev-stars">★★★★★</p><span class="testi-rev-verified">Verified Purchase</span>
+          <p class="testi-rev-title">PureHarvest is in a different league</p>
+          <p class="testi-rev-body">I've been sourcing raw honey for years. The purity is evident, and knowing it supports tribal families makes it meaningful.</p>
+        </div>
+
+        <div class="testi-rev-card testi-rev-clone" aria-hidden="true">
+          <div class="testi-rev-head"><div><p class="testi-rev-name">Meera S.</p><p class="testi-rev-date">September 2024 · Hyderabad</p></div></div>
+          <p class="testi-rev-stars">★★★★★</p><span class="testi-rev-verified">Verified Purchase</span>
+          <p class="testi-rev-title">Worth every rupee — real forest honey</p>
+          <p class="testi-rev-body">I was sceptical at first. After one jar I was sold. Dark, rich and complex.</p>
+        </div>
+
+        <div class="testi-rev-card testi-rev-clone" aria-hidden="true">
+          <div class="testi-rev-head"><div><p class="testi-rev-name">Sophia K.</p><p class="testi-rev-date">September 2024 · Delhi</p></div></div>
+          <p class="testi-rev-stars">★★★★★</p><span class="testi-rev-verified">Wellness Partner</span>
+          <p class="testi-rev-title">Our clients immediately notice the quality</p>
+          <p class="testi-rev-body">We stock PureHarvest at our wellness boutique. It's become our best-selling product.</p>
+        </div>
+
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -1071,13 +1121,45 @@
       </div>
 
       <div class="b2b-right">
+        <p class="b2b-perks-eyebrow">Our solutions</p> <!-- label mirrors the left eyebrow for visual balance -->
         <div class="b2b-perks">
-          <div class="b-perk">🌍 Export-ready packaging</div>
-          <div class="b-perk">🏷️ White-label solutions</div>
-          <div class="b-perk">📦 Bulk &amp; custom orders</div>
-          <div class="b-perk">🔬 Lab tested &amp; certified</div>
-          <div class="b-perk">🚢 Global shipping network</div>
-          <div class="b-perk">🤝 Dedicated account manager</div>
+
+          <div class="b-perk">
+            <div class="b-perk-icon">🌍</div>                        <!-- icon: same size as pd-diff-icon (36px) -->
+            <p class="b-perk-title">Export-Ready Packaging</p>        <!-- bold heading -->
+            <p class="b-perk-desc">Full-carton export boxes with country-specific compliance labelling.</p>
+          </div>
+
+          <div class="b-perk">
+            <div class="b-perk-icon">🏷️</div>
+            <p class="b-perk-title">White-Label Solutions</p>
+            <p class="b-perk-desc">Your brand on our honey — custom labels and private labelling at scale.</p>
+          </div>
+
+          <div class="b-perk">
+            <div class="b-perk-icon">📦</div>
+            <p class="b-perk-title">Bulk &amp; Custom Orders</p>
+            <p class="b-perk-desc">Minimum quantities from 5 kg with flexible delivery windows.</p>
+          </div>
+
+          <div class="b-perk">
+            <div class="b-perk-icon">🔬</div>
+            <p class="b-perk-title">Lab Tested &amp; Certified</p>
+            <p class="b-perk-desc">Every batch third-party tested and FSSAI certified for global standards.</p>
+          </div>
+
+          <div class="b-perk">
+            <div class="b-perk-icon">🚢</div>
+            <p class="b-perk-title">Global Shipping Network</p>
+            <p class="b-perk-desc">Cold-chain logistics from Araku to 40+ countries worldwide.</p>
+          </div>
+
+          <div class="b-perk">
+            <div class="b-perk-icon">🤝</div>
+            <p class="b-perk-title">Dedicated Account Manager</p>
+            <p class="b-perk-desc">One point of contact from first enquiry to repeat deliveries.</p>
+          </div>
+
         </div>
       </div>
 

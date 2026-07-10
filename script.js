@@ -297,20 +297,81 @@ if (size500 && size1000) {
    ADD TO CART (Featured Product)
 ======================================== */
 
-const addToCart = document.getElementById('addToCart');
+/* ── Featured product: Add to Ritual stepper ───────────────────────────────
+   Mirrors the +/- stepper on the product cards — first tap adds to cart
+   and opens the sidebar, subsequent taps silently increment. Minus resets
+   to the plain button when qty hits zero. Tracks qty per selected size so
+   switching 500g ↔ 1kg resets the stepper cleanly. */
+(function() {
+  const btn = document.getElementById('addToCart');
+  if (!btn) return;
 
-if (addToCart) {
-  addToCart.addEventListener('click', () => {
-    const price = parseInt((productPrice?.textContent || '').replace(/[₹,]/g, '')) || 699;
-    addToCartItem('Araku Forest Honey', price, 'feat-img', addToCart);
-    addToCart.textContent = '✓ Added to Ritual';
-    addToCart.style.background = '#16a34a';
-    setTimeout(() => {
-      addToCart.textContent = 'Add to Ritual →';
-      addToCart.style.background = '';
-    }, 1600);
+  let qty  = 0;
+  let activeName  = 'Araku Forest Honey · 500g'; /* tracks current variant */
+  let activePrice = 699;
+
+  function getVariant() {
+    const p = parseInt((document.getElementById('productPrice')?.textContent || '').replace(/[₹,]/g, '')) || 699;
+    const sz = document.querySelector('.sz-btn.sz-active')?.textContent?.trim() || '500g';
+    return { name: 'Araku Forest Honey · ' + sz, price: p };
+  }
+
+  function renderStepper() {
+    btn.innerHTML =
+      '<span class="p-add-minus feat-minus" aria-label="Remove one">−</span>' +
+      '<span class="p-add-qty">' + qty + '</span>' +
+      '<span class="p-add-plus feat-plus" aria-label="Add one">+</span>';
+    btn.classList.add('p-add--active');   /* reuse existing stepper CSS */
+    btn.style.borderRadius = '';
+    btn.style.letterSpacing = '';
+  }
+
+  function resetBtn() {
+    qty = 0;
+    btn.innerHTML = 'Add to Ritual →';
+    btn.classList.remove('p-add--active');
+  }
+
+  /* When the user switches size, reset the stepper so qty stays honest */
+  document.querySelectorAll('.sz-btn').forEach(sz => {
+    sz.addEventListener('click', () => {
+      resetBtn();
+      const v = getVariant();
+      activeName  = v.name;
+      activePrice = v.price;
+    });
   });
-}
+
+  btn.addEventListener('click', e => {
+
+    /* ── MINUS ── */
+    if (e.target.classList.contains('feat-minus')) {
+      e.stopPropagation();
+      if (qty <= 0) return;
+      qty--;
+      const idx = cartItems.findIndex(i => i.name === activeName && String(i.price) === String(activePrice));
+      if (idx !== -1) cartItems.splice(idx, 1);
+      renderCartItems();
+      updateCartBadge();
+      if (qty === 0) { resetBtn(); return; }
+      renderStepper();
+      return;
+    }
+
+    /* ── PLUS or initial tap ── */
+    if (e.target.classList.contains('feat-plus') || qty === 0) {
+      e.stopPropagation();
+      const v = getVariant();
+      activeName  = v.name;
+      activePrice = v.price;
+      const firstAdd = (qty === 0);
+      qty++;
+      addToCartItem(activeName, activePrice, 'feat-img', btn);
+      renderStepper();
+      if (firstAdd) openCartSidebar();   /* open sidebar only on the very first add */
+    }
+  });
+})();
 
 
 /* (p-add handlers moved below with cart integration) */
@@ -642,12 +703,12 @@ updateCartBadge();
 ======================================== */
 
 /* ── Add-to-cart: inline +/- stepper ───────────────────────────────
-   First tap adds the item and opens the cart sidebar; the "Add" label
-   transforms into a live qty stepper (− qty +) inline in the button.
-   Tapping − when qty = 1 resets to "Add". Cart stays open on each tap.
-   qty is tracked per-button so multiple products work independently. */
+   First tap: adds item + opens cart sidebar once.
+   Subsequent + taps: silently increment, no sidebar re-open.
+   − tap at qty 1: removes item and resets button to "Add".
+   qty guard is checked BEFORE decrement to prevent going negative. */
 document.querySelectorAll('.p-add').forEach(btn => {
-  let qty = 0; /* quantity in cart for this card */
+  let qty = 0; /* quantity in cart tracked per-button */
 
   const card     = btn.closest('.p-card');
   const imgEl    = card ? card.querySelector('.p-img') : null;
@@ -656,12 +717,11 @@ document.querySelectorAll('.p-add').forEach(btn => {
   const price    = btn.dataset.price   || 0;
 
   function renderStepper() {
-    /* Replace button content with − qty + controls */
     btn.innerHTML =
       '<span class="p-add-minus" aria-label="Remove one">−</span>' +
       '<span class="p-add-qty">' + qty + '</span>' +
       '<span class="p-add-plus" aria-label="Add one">+</span>';
-    btn.classList.add('p-add--active'); /* CSS: green fill, stepper layout */
+    btn.classList.add('p-add--active');
   }
 
   function resetBtn() {
@@ -671,26 +731,30 @@ document.querySelectorAll('.p-add').forEach(btn => {
   }
 
   btn.addEventListener('click', e => {
-    /* − button inside the stepper */
+
+    /* ── MINUS ── */
     if (e.target.classList.contains('p-add-minus')) {
       e.stopPropagation();
+      if (qty <= 0) return; /* guard first — impossible to go negative */
       qty--;
-      /* Remove one unit from cart */
+      /* Remove exactly one matching item from the cart array */
       const idx = cartItems.findIndex(i => i.name === name && String(i.price) === String(price));
       if (idx !== -1) cartItems.splice(idx, 1);
-      renderCartSidebar();
+      renderCartItems();  /* re-render the cart panel to reflect removal */
       updateCartBadge();
-      if (qty <= 0) { resetBtn(); return; }
+      if (qty === 0) { resetBtn(); return; } /* back to "Add" */
       renderStepper();
       return;
     }
-    /* + button inside the stepper, or initial "Add" tap */
+
+    /* ── PLUS or initial ADD ── */
     if (e.target.classList.contains('p-add-plus') || qty === 0) {
       e.stopPropagation();
+      const firstAdd = (qty === 0); /* capture before increment */
       qty++;
       addToCartItem(name, price, imgClass, btn);
       renderStepper();
-      openCartSidebar(); /* open cart on every addition so user sees the update */
+      if (firstAdd) openCartSidebar(); /* open sidebar only on the very first add */
     }
   });
 });
