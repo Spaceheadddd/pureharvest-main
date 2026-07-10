@@ -769,6 +769,28 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-family: var(--sans); white-space: nowrap;
 }
 .p-add:hover { background: var(--forest); color: white; border-color: var(--forest); }
+
+/* Stepper state — inline − qty + after first add */
+.p-add--active {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--forest);
+  color: white;
+  border-color: var(--forest);
+  padding: 7px 12px;
+  min-width: 90px;
+  justify-content: space-between;
+}
+.p-add--active:hover { background: var(--forest-2); border-color: var(--forest-2); }
+.p-add-minus, .p-add-plus {
+  font-size: 15px; font-weight: 600; line-height: 1;
+  padding: 0 2px; cursor: pointer;
+  opacity: 0.9;
+}
+.p-add-minus:hover, .p-add-plus:hover { opacity: 1; }
+.p-add-qty { font-size: 13px; font-weight: 600; min-width: 14px; text-align: center; }
+
 .p-buy {
   font-size: 12px; color: white; font-weight: 500;
   padding: 8px 14px;
@@ -777,6 +799,47 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transition: background var(--ease), transform var(--ease);
 }
 .p-buy:hover { background: var(--forest-2); transform: translateY(-1px); }
+
+/* Buy Now conflict dialog — bottom-anchored sheet on mobile, pill on desktop */
+.ph-buynow-dialog {
+  position: fixed;
+  bottom: 24px; left: 50%; transform: translateX(-50%) translateY(16px);
+  z-index: 200000; /* above cart sidebar (99997) and all overlays */
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+  padding: 22px 20px 18px;
+  width: min(380px, calc(100vw - 32px));
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.22s ease;
+  pointer-events: none;
+}
+.ph-buynow-dialog--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+.ph-buynow-q {
+  font-family: var(--sans); font-size: 14px; color: var(--dark);
+  line-height: 1.5; margin-bottom: 16px; text-align: center;
+}
+.ph-buynow-actions { display: flex; flex-direction: column; gap: 8px; }
+.ph-buynow-btn {
+  padding: 13px 18px; border-radius: var(--r-pill);
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  cursor: pointer; border: none; transition: background 0.15s;
+  text-align: center;
+}
+.ph-buynow-with { background: var(--forest); color: white; }
+.ph-buynow-with:hover { background: var(--forest-2); }
+.ph-buynow-solo { background: var(--warm); color: var(--dark); border: 1px solid var(--border-md); }
+.ph-buynow-solo:hover { background: var(--border); }
+.ph-buynow-cancel {
+  background: none; border: none; color: var(--gray);
+  font-family: var(--sans); font-size: 12px; cursor: pointer;
+  padding: 6px; text-align: center;
+}
+.ph-buynow-cancel:hover { color: var(--dark); }
 
 /* Product hidden/shown by filter */
 .p-card.p-hidden { display: none; }
@@ -1633,11 +1696,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .sub-harvest-grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 10px; margin-bottom: 28px;
+  align-items: stretch; /* all cells same height in each row */
 }
-.sub-harvest-chip { position: relative; cursor: pointer; }
+.sub-harvest-chip { position: relative; cursor: pointer; display: flex; } /* flex so span fills height */
 .sub-harvest-chip input { position: absolute; opacity: 0; width: 0; height: 0; }
 .sub-harvest-chip span {
   display: flex; align-items: center; gap: 10px;
+  flex: 1;                /* stretch to fill chip height */
   padding: 14px 18px; border-radius: var(--r-md);
   border: 1.5px solid var(--border-md);
   font-size: 15px; font-weight: 500; color: var(--dark);
@@ -2069,12 +2134,33 @@ input, textarea, [contenteditable] {
 
 /* Confirmation */
 .co-moment-confirm { text-align: center; padding-top: 20px; position: relative; }
-.co-glow {
-  position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
-  width: 260px; height: 260px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(196,144,58,0.18) 0%, transparent 70%);
-  pointer-events: none;
+.co-glow { display: none; } /* removed — decorative glow on confirmation screen */
+/* M3 itemized breakdown */
+.co-m3-items { margin-bottom: 10px; }
+.co-m3-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  gap: 12px;
 }
+.co-m3-item-row:last-child { border-bottom: none; }
+.co-m3-item-name {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  flex: 1;
+  min-width: 0;
+}
+.co-m3-item-price {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  white-space: nowrap;
+}
+
 .co-confirm-icon { font-size: 52px; margin-bottom: 20px; position: relative; }
 .co-confirm-h2 { margin-bottom: 8px; }
 .co-confirm-sub { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 28px; }
@@ -3710,20 +3796,22 @@ input, textarea, [contenteditable] {
 
 /* 3D Harvest Card — CSS perspective flip on .ph-card-flipped */
 .ph-card-scene {
-  perspective: 900px;       /* tighter perspective makes the tilt feel more physical */
+  perspective: 900px;          /* tighter perspective makes the tilt feel more physical */
   cursor: pointer;
   width: 100%;
-  max-width: 380px;         /* slightly wider — more premium feel */
+  max-width: 380px;            /* slightly wider — more premium feel */
   margin: 0 auto 20px;
+  touch-action: manipulation;  /* removes 300ms tap delay + stops scroll competing with tap */
+  -webkit-tap-highlight-color: transparent; /* no flash on tap — already a styled card */
 }
 .ph-card-inner {
   position: relative;
-  width: 100%;              /* fills up to 380px max from .ph-card-scene */
-  height: 240px;            /* 380 ÷ 1.586 = 240px — exact ISO 7810 credit card ratio */
+  width: 100%;                 /* fills up to 380px max from .ph-card-scene */
+  aspect-ratio: 1.586 / 1;    /* ISO 7810 credit card ratio — scales correctly at any width */
   transform-style: preserve-3d;
   transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 16px;
-  will-change: transform;   /* hint to GPU — smoother cursor-tracking */
+  will-change: transform;      /* hint to GPU — smoother cursor-tracking */
 }
 .ph-card-flipped { transform: rotateY(180deg); }
 
@@ -4769,7 +4857,10 @@ input, textarea, [contenteditable] {
 @media (max-width: 480px) {
   .ph-panel    { padding: 14px 16px 40px; }
   .ph-db-bar   { padding: 14px 16px 12px; }
-  .ph-nav      { padding: 0 4px; }
+
+  /* Tab nav — switch to flex-start so horizontal scroll works both ways.
+     justify-content: center clips the leftmost tab when content overflows. */
+  .ph-nav      { padding: 0 4px; justify-content: flex-start; }
   .ph-tab      { padding: 10px 12px; font-size: 12px; }
 
   /* Greeting */
@@ -4798,9 +4889,6 @@ input, textarea, [contenteditable] {
   /* Referral breakdown */
   .ph-ref-breakdown { padding: 12px 14px; }
   .ph-ref-amount    { font-size: 28px; }
-
-  /* 3D card — slightly shorter */
-  .ph-card-inner { height: 180px; }
 
   /* Wallet actions */
   .ph-wallet-actions { flex-wrap: wrap; }

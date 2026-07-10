@@ -232,9 +232,10 @@ function phAddrTouch(addresses, addrId) {
 
     /* M3 — Payment (pay button lives in sticky footer, not here) */
     '<div class="co-moment" id="coM3">',
-    '  <p class="co-eyebrow">Complete</p>',
+    '  <p class="co-eyebrow">Payment</p>',
     '  <h2 class="co-h2">Complete your<br><em>ritual</em></h2>',
-    '  <div class="co-pay-summary" id="coPaySummary"></div>',
+    /* Item breakdown — populated by renderM3() with one row per unique product */
+    '  <div class="co-m3-items" id="coM3Items"></div>',
     '  <div class="co-pay-addr" id="coPayAddr"></div>',
     /* One-time light notice — only shown right after a new address gets auto-saved in M2 */
     '  <p class="co-addr-saved-notice" id="coAddrSavedNotice" style="display:none"></p>',
@@ -1077,12 +1078,24 @@ function phAddrTouch(addresses, addrId) {
   function renderM3() {
     updateM3Totals();
 
-    /* Unique product names summary line (comma-separated) */
-    var uniqueNames = [];
+    /* Itemized breakdown — group by name+price, show qty and line total */
+    var grouped = {};
     _items.forEach(function (item) {
-      if (uniqueNames.indexOf(item.name) === -1) uniqueNames.push(item.name);
+      var key = item.name + '|' + item.price;
+      if (!grouped[key]) grouped[key] = { name: item.name, price: Number(item.price), qty: 0 };
+      grouped[key].qty++;
     });
-    document.getElementById('coPaySummary').textContent = uniqueNames.join(' · ');
+    var itemsEl = document.getElementById('coM3Items');
+    if (itemsEl) {
+      itemsEl.innerHTML = Object.values(grouped).map(function (g) {
+        var lineTotal = '₹' + (g.price * g.qty).toLocaleString('en-IN');
+        var qtyLabel  = g.qty > 1 ? ' × ' + g.qty : '';
+        return '<div class="co-m3-item-row">'
+          + '<span class="co-m3-item-name">' + g.name + qtyLabel + '</span>'
+          + '<span class="co-m3-item-price">' + lineTotal + '</span>'
+          + '</div>';
+      }).join('');
+    }
 
     /* Delivery preview — structured address: name · flat, area, city pincode */
     var addrLine = [_delivery.flat, _delivery.area, _delivery.city].filter(Boolean).join(', ')

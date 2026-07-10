@@ -641,29 +641,114 @@ updateCartBadge();
    PRODUCT CARD — ADD & BUY NOW
 ======================================== */
 
+/* ── Add-to-cart: inline +/- stepper ───────────────────────────────
+   First tap adds the item and opens the cart sidebar; the "Add" label
+   transforms into a live qty stepper (− qty +) inline in the button.
+   Tapping − when qty = 1 resets to "Add". Cart stays open on each tap.
+   qty is tracked per-button so multiple products work independently. */
 document.querySelectorAll('.p-add').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const name  = btn.dataset.product || 'Item';
-    const price = btn.dataset.price   || 0;
-    const card  = btn.closest('.p-card');
-    const imgEl = card ? card.querySelector('.p-img') : null;
-    const imgClass = imgEl ? [...imgEl.classList].find(c => c !== 'p-img') : '';
+  let qty = 0; /* quantity in cart for this card */
 
-    addToCartItem(name, price, imgClass, btn);
+  const card     = btn.closest('.p-card');
+  const imgEl    = card ? card.querySelector('.p-img') : null;
+  const imgClass = imgEl ? [...imgEl.classList].find(c => c !== 'p-img') : '';
+  const name     = btn.dataset.product || 'Item';
+  const price    = btn.dataset.price   || 0;
 
-    const orig = btn.textContent;
-    btn.textContent = '✓ Added';
-    btn.style.background = 'var(--forest)';
-    btn.style.color = 'white';
-    btn.style.borderColor = 'var(--forest)';
-    setTimeout(() => {
-      btn.textContent = orig;
-      btn.style.background = '';
-      btn.style.color = '';
-      btn.style.borderColor = '';
-    }, 1400);
+  function renderStepper() {
+    /* Replace button content with − qty + controls */
+    btn.innerHTML =
+      '<span class="p-add-minus" aria-label="Remove one">−</span>' +
+      '<span class="p-add-qty">' + qty + '</span>' +
+      '<span class="p-add-plus" aria-label="Add one">+</span>';
+    btn.classList.add('p-add--active'); /* CSS: green fill, stepper layout */
+  }
+
+  function resetBtn() {
+    qty = 0;
+    btn.innerHTML = 'Add';
+    btn.classList.remove('p-add--active');
+  }
+
+  btn.addEventListener('click', e => {
+    /* − button inside the stepper */
+    if (e.target.classList.contains('p-add-minus')) {
+      e.stopPropagation();
+      qty--;
+      /* Remove one unit from cart */
+      const idx = cartItems.findIndex(i => i.name === name && String(i.price) === String(price));
+      if (idx !== -1) cartItems.splice(idx, 1);
+      renderCartSidebar();
+      updateCartBadge();
+      if (qty <= 0) { resetBtn(); return; }
+      renderStepper();
+      return;
+    }
+    /* + button inside the stepper, or initial "Add" tap */
+    if (e.target.classList.contains('p-add-plus') || qty === 0) {
+      e.stopPropagation();
+      qty++;
+      addToCartItem(name, price, imgClass, btn);
+      renderStepper();
+      openCartSidebar(); /* open cart on every addition so user sees the update */
+    }
   });
 });
+
+
+/* ── Buy Now: smart logic ───────────────────────────────────────────
+   If the cart is empty → go straight to checkout for this item only.
+   If the cart has items → show an inline dialog asking the user whether
+   to combine or buy only this item — no accidental cart abandonment. */
+
+function showBuyNowDialog(name, price, imgClass, triggerBtn) {
+  /* Remove any existing dialog first */
+  const old = document.getElementById('phBuyNowDialog');
+  if (old) old.remove();
+
+  const dialog = document.createElement('div');
+  dialog.id = 'phBuyNowDialog';
+  dialog.className = 'ph-buynow-dialog';
+  dialog.innerHTML =
+    '<p class="ph-buynow-q">Buy <strong>' + name + '</strong> with your cart items, or just this one?</p>' +
+    '<div class="ph-buynow-actions">' +
+      '<button class="ph-buynow-btn ph-buynow-with" id="phBnWith">Add to cart &amp; checkout</button>' +
+      '<button class="ph-buynow-btn ph-buynow-solo" id="phBnSolo">Buy only this item</button>' +
+      '<button class="ph-buynow-cancel" id="phBnCancel">Cancel</button>' +
+    '</div>';
+  document.body.appendChild(dialog);
+
+  /* Animate in — short delay so the --visible class lands after the current event
+     stack clears; avoids the Buy Now click itself immediately triggering close */
+  setTimeout(() => dialog.classList.add('ph-buynow-dialog--visible'), 20);
+
+  function close() { dialog.classList.remove('ph-buynow-dialog--visible'); setTimeout(() => dialog.remove(), 220); }
+
+  document.getElementById('phBnWith').addEventListener('click', () => {
+    /* Add this item to existing cart, then open checkout with everything */
+    addToCartItem(name, price, imgClass, triggerBtn);
+    close();
+    if (typeof openCheckout === 'function') openCheckout(cartItems.slice());
+    else openCartSidebar();
+  });
+
+  document.getElementById('phBnSolo').addEventListener('click', () => {
+    /* Checkout with only this item — existing cart untouched */
+    close();
+    if (typeof openCheckout === 'function') openCheckout([{ name, price: Number(price), imgClass }]);
+    else { addToCartItem(name, price, imgClass, triggerBtn); openCartSidebar(); }
+  });
+
+  document.getElementById('phBnCancel').addEventListener('click', close);
+
+  /* Outside-click closes — 300ms delay ensures the current click (Buy Now) has
+     fully propagated before we start listening, so it can't close its own dialog */
+  setTimeout(() => {
+    document.addEventListener('click', function outside(e) {
+      if (!dialog.contains(e.target)) { close(); document.removeEventListener('click', outside); }
+    });
+  }, 300);
+}
 
 document.querySelectorAll('.p-buy').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -673,11 +758,17 @@ document.querySelectorAll('.p-buy').forEach(btn => {
     const imgEl    = card ? card.querySelector('.p-img') : null;
     const imgClass = imgEl ? [...imgEl.classList].find(c => c !== 'p-img') : '';
 
-    if (typeof openCheckout === 'function') {
-      openCheckout([{ name, price, imgClass }]);
+    if (cartItems.length > 0) {
+      /* Cart has items — ask the user before doing anything */
+      showBuyNowDialog(name, price, imgClass, btn);
     } else {
-      addToCartItem(name, price, imgClass, btn);
-      openCartSidebar();
+      /* Empty cart — go straight to checkout for this item */
+      if (typeof openCheckout === 'function') {
+        openCheckout([{ name, price: Number(price), imgClass }]);
+      } else {
+        addToCartItem(name, price, imgClass, btn);
+        openCartSidebar();
+      }
     }
   });
 });

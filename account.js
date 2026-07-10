@@ -196,15 +196,21 @@ function phInitTooltips() {
       tip.textContent = btn.getAttribute('data-tip');
       document.body.appendChild(tip);
 
-      /* Position below the button, clamped to viewport edges */
-      var rect = btn.getBoundingClientRect();
-      var tipW = Math.min(240, window.innerWidth - 24);
-      var left = rect.left + rect.width / 2 - tipW / 2;
-      left = Math.max(12, Math.min(left, window.innerWidth - tipW - 12));
+      /* Position near the button — fixed to viewport so scrollY is irrelevant.
+         Prefer below the button; flip above if it would clip the viewport bottom. */
+      var rect    = btn.getBoundingClientRect();
+      var tipW    = Math.min(240, window.innerWidth - 24);
+      var tipH    = tip.offsetHeight || 60; /* measure after append */
+      var left    = rect.left + rect.width / 2 - tipW / 2;
+      left        = Math.max(12, Math.min(left, window.innerWidth - tipW - 12));
+      var spaceBelow = window.innerHeight - rect.bottom - 8;
+      var top     = spaceBelow > tipH
+        ? rect.bottom + 8         /* enough room below */
+        : rect.top - tipH - 8;   /* flip above the button */
 
       tip.style.cssText = [
         'width:'  + tipW + 'px',
-        'top:'    + (rect.bottom + window.scrollY + 8) + 'px',
+        'top:'    + top  + 'px',
         'left:'   + left + 'px',
       ].join(';');
 
@@ -864,31 +870,58 @@ function phWireWallet(user) {
   var front = inner.querySelector('.ph-card-front');
   var back  = inner.querySelector('.ph-card-back');
 
+  /* Touch detection — on touch devices we skip the mouse tilt entirely (pointer events
+     can map touch→mousemove on some mobile browsers, causing the card to jitter mid-scroll).
+     The flip still works via touchend below; click fires after touch but we block it there
+     to prevent double-flipping. */
+  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
   /* rotY rests at exactly 0 (front) or ±180 (back) — never accumulates past a single flip's
      worth of rotation. The sign only matters for which way the OUTGOING flip spins (set by
      tapped side); the return trip always settles back to 0 the way it came. Shared with the
      tilt handler below so the two never fight over what the "resting" rotation should be. */
   var rotY       = 0;
-  var isFlipping = false; /* true for the duration of the flip's own transition — tilt and mouseleave must not touch transform/transition while this is set, or they hijack the flip mid-flight and the card visibly stutters/re-flips */
+  var isFlipping = false; /* true for the duration of the flip's own transition */
 
-  function isFlipped() {
-    return rotY !== 0;
-  }
+  function isFlipped() { return rotY !== 0; }
 
-  /* Flip — direction follows the tapped side: right half spins one way, left half the other,
-     on both the front and the back, since this only reads where on the card you clicked.
-     Ignored entirely while a flip is already animating, so rapid clicks/taps can't stack. */
-  scene.addEventListener('click', function (e) {
+  /* Core flip — called by both touch and click paths with the tapped X position */
+  function doFlip(clientX) {
     if (isFlipping) return;
-    var rect = scene.getBoundingClientRect();
-    var tappedRight = (e.clientX - rect.left) > rect.width / 2;
-    rotY = isFlipped() ? 0 : (tappedRight ? 180 : -180); /* always exactly 0 or ±180 — no accumulating past one flip */
+    var rect       = scene.getBoundingClientRect();
+    var tappedRight = (clientX - rect.left) > rect.width / 2;
+    rotY = isFlipped() ? 0 : (tappedRight ? 180 : -180); /* always exactly 0 or ±180 */
     inner.classList.toggle('ph-card-flipped', isFlipped());
     isFlipping = true;
     inner.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
-    inner.style.transform = 'rotateY(' + rotY + 'deg)';
+    inner.style.transform  = 'rotateY(' + rotY + 'deg)';
     setTimeout(function () { isFlipping = false; }, 700);
-  });
+  }
+
+  /* Touch path — touchend gives us the last finger position for direction detection.
+     preventDefault() stops the browser from firing a follow-up synthetic click (which would
+     double-flip), and also prevents scroll competing with the tap on the card. */
+  if (isTouch) {
+    var touchStartX = 0; /* recorded on touchstart so touchend can detect swipe-vs-tap */
+    scene.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX; /* note where finger landed */
+    }, { passive: true });
+
+    scene.addEventListener('touchend', function (e) {
+      var dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
+      if (dx > 8) return; /* ignore swipes — only act on taps (< 8px drift) */
+      e.preventDefault(); /* block synthetic click so it doesn't double-flip */
+      doFlip(e.changedTouches[0].clientX);
+    }, { passive: false }); /* passive: false required to call preventDefault */
+
+    return; /* skip mouse listeners entirely on touch devices */
+  }
+
+  /* Mouse path (desktop only below this point) */
+
+  /* Click flip — direction follows the clicked side: right half spins one way, left the other.
+     Ignored while a flip is already animating so rapid clicks can't stack. */
+  scene.addEventListener('click', function (e) { doFlip(e.clientX); });
 
   /* Cursor-driven tilt — all 4 corners respond to mouse position, on either face */
   scene.addEventListener('mousemove', function (e) {
@@ -899,7 +932,7 @@ function phWireWallet(user) {
     var tiltY =  nx * 10; /* cursor right -> right edge tilts away */
     var tiltX = -ny * 7;  /* cursor bottom -> bottom edge tilts away */
     inner.style.transition = 'transform 0.08s linear';
-    inner.style.transform = 'rotateX(' + tiltX + 'deg) rotateY(' + (rotY + tiltY) + 'deg)'; /* tilt rides on top of the current flip rotation */
+    inner.style.transform  = 'rotateX(' + tiltX + 'deg) rotateY(' + (rotY + tiltY) + 'deg)'; /* tilt rides on top of the current flip rotation */
 
     /* Shimmer light follows cursor X, sweeping fully off either edge of the card */
     var pct = nx * 220; /* maps -1..+1 to -220%..+220% — clears both edges completely */
@@ -909,8 +942,8 @@ function phWireWallet(user) {
 
   /* On leave — ease back to the resting flip rotation (no tilt) and hide the shimmer.
      Guarded the same way: mid-flip, the card's perspective-foreshortened bounding box can
-     shrink thin enough near 90° that the cursor falls "outside" it and this fires — without
-     the guard it would hijack the flip's own transition exactly like mousemove did. */
+     shrink thin enough near 90° that the cursor falls "outside" it and fires this without
+     the guard, hijacking the flip's own transition exactly like mousemove would. */
   scene.addEventListener('mouseleave', function () {
     if (isFlipping) return;
     inner.style.transition = 'transform 0.5s ease';
